@@ -36204,6 +36204,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5830969471790504888, guid: 5bfb5433f1a0e774b94cf4eba107a1ad, type: 3}
+      propertyPath: aggro
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7662795784396926773, guid: 5bfb5433f1a0e774b94cf4eba107a1ad, type: 3}
       propertyPath: m_Name
       value: SecurityGuard

@@ -33,6 +33,7 @@ public class NPC : MonoBehaviour
     public float attackRate;
     private float lastAttackTime;
     public float attackDistance;
+    public bool aggro = true;
 
     private float playerDistance;     // player와의 거리를 담아 둘 변수
 
@@ -127,7 +128,7 @@ public class NPC : MonoBehaviour
         }
 
         // 플레이어가 감지 범위에 들어오면 공격 상태로 전환
-        if (playerDistance < detectDistance)
+        if (playerDistance < detectDistance && aggro == true)
         {
             SetState(AIState.Attacking);
         }
