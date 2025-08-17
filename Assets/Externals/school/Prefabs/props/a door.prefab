@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4556694855844174}
   - component: {fileID: 33652672654408418}
   - component: {fileID: 23151539147022078}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Boole_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 23072247148951056}
   - component: {fileID: 7219536460378865218}
   - component: {fileID: 3521041487995749636}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube_10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,9 +222,9 @@ GameObject:
   - component: {fileID: 4173873760860446}
   - component: {fileID: 5078982329545259419}
   - component: {fileID: 2841655461646228228}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: a door
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
