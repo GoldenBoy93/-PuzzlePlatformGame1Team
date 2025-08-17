@@ -7,10 +7,10 @@ using UnityEngine.InputSystem;
 public class PlayerController1 : MonoBehaviour //Character Controller Àü¿ë
 { 
     [Header("Movement")]
-    public float speed = 5f;
-    public float runSpeed = 8f;
-    public float smooth = 10f;
-    public float gravity = -9.81f;
+    float speed = 2f;
+    float runSpeed = 4f;
+    float smooth = 20f;
+    float gravity = -9.81f;
 
     [Header("Object")]
     public bool toggleCameraRotation;
