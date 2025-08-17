@@ -21,7 +21,7 @@ public class Door : MonoBehaviour
 
     private void Update()
     {
-        // Open 상태일때 애니메이터의 PlayAnimation 파라미터를 true로 설정
+        // Open 상태일때 애니메이터의 파라미터를 true로 설정
         animator.SetBool("DoorOpen", state == DoorState.Open);
     }
 
