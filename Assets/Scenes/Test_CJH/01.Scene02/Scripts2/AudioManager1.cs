@@ -16,9 +16,9 @@ public class AudioManager1 : MonoBehaviour
     public static AudioManager1 Instance;
 
     [Header("BGM Clips")]
-    public AudioClip menuBgm;
-    public AudioClip gameBgm;
-    public AudioClip bossBgm;
+    public AudioClip bgmStart;
+    public AudioClip bgmGame;
+    public AudioClip bgm1;
     private AudioSource bgmSource;
 
     [Header("SFX Clips")]
@@ -88,13 +88,13 @@ public class AudioManager1 : MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.buildIndex == 0)
-            PlayBGM(menuBgm);
+            PlayBGM(bgmStart);
         else if (scene.buildIndex == 1)
-            PlayBGM(gameBgm);
+            PlayBGM(bgmGame);
         else if (scene.buildIndex == 2)
-            PlayBGM(bossBgm);
+            PlayBGM(bgm1);
         else if (scene.buildIndex == 3)
-            PlayBGM(bossBgm);
+            PlayBGM(bgm1);
     }
 
     public void PlayBGM(AudioClip clip)

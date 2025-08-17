@@ -13,9 +13,26 @@ public class FlashLight : MonoBehaviour
     float minShakeAmount = 5f; // 흔들림 각도
     float maxShakeAmount = 30f;  // Blend=1일 때 흔들림 크기
     float shakeSpeed = 3f;
+    Quaternion baseRotation;
+    public Rigidbody joint;
+    Vector3 joint_Pos;
+    Quaternion joint_Rot;
 
-    private Quaternion baseRotation;
+    private void Awake()
+    {
+        joint_Pos = joint.transform.localPosition;
+        joint_Rot = joint.transform.localRotation;
+    }
+    private void OnEnable()
+    {
+        // Rigidbody 초기화
+        joint.velocity = Vector3.zero;
+        joint.angularVelocity = Vector3.zero;
 
+        // Transform 초기화
+        joint.transform.localPosition = joint_Pos;
+        joint.transform.localRotation = joint_Rot;
+    }
     void Start()
     {
         if (flashlight == null)
