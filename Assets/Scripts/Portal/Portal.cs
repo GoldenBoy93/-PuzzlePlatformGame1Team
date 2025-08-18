@@ -57,16 +57,16 @@ public class Portal : MonoBehaviour
 
         //    Debug.LogWarning("There is no exit point of portal");
         //}
-            
-        // 포탈 약간 앞으로 밀기
-        //Vector3 pushDir = (exitPoint ? exitPoint.forward : exitPortal.transform.forward);
-        //outPos += pushDir * exitOffset;
-        
+
+        // push forward
+        Vector3 pushDir = exitPoint ? exitPoint.right : target.transform.right;
+        outPos += pushDir * exitOffset;
+
         // apply to player
         if (travelerTransform.TryGetComponent<Rigidbody>(out var rb))           // 물리 이동형 플레이어
         {
             Vector3 localVel = transform.InverseTransformDirection(rb.velocity);
-            Vector3 outVel = target.transform.TransformDirection(localVel);
+            Vector3 outVel = (exitPoint ? exitPoint : target.transform).TransformDirection(localVel);
             rb.position = outPos;
             rb.rotation = outRot;
             rb.velocity = outVel;
@@ -91,8 +91,8 @@ public class Portal : MonoBehaviour
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireCube(transform.position, new Vector3(1f, 2f, 0.05f));
-        var forward = exitPoint ? exitPoint.forward : transform.forward;
+        var dir = exitPoint ? exitPoint.right : transform.right;
         var origin = exitPoint ? exitPoint.position : transform.position;
-        Gizmos.DrawRay(origin, forward * 0.6f);
+        Gizmos.DrawRay(origin, dir * 0.6f);
     }
 }

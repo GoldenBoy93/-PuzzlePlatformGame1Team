@@ -46,32 +46,22 @@ public class PortalGun : MonoBehaviour
             // check tag
             if (!hit.collider.CompareTag(surfaceTag)) return;
 
-            // calculate transform
-            Vector3 pos = hit.point + hit.normal * wallOffset;
-            Quaternion rot = RotationOnSurface(hit.normal, cam.transform.up);
+            // up 계산
+            Vector3 normal = hit.normal;                 // -> portal.right
+            Vector3 right = normal;
+            Vector3 up = Vector3.Cross(right, cam.transform.right);
+            if (up.sqrMagnitude < 1e-6f) up = Vector3.up;
+            up = Vector3.Normalize(up);
+            Vector3 forward = Vector3.Cross(up, right);  // 표면 접선
 
-            // 포탈이 표면에 들어맞는지 박스캐스트로 검증 가능
-            // if (!ValidateSpace(pos, rot)) return;
+            Quaternion rot = Quaternion.LookRotation(forward, up);
+            Vector3 pos = hit.point + normal * wallOffset;
 
-            // place and reuse
-            if (slot == null)
-            {
-                slot = Instantiate(prefab, pos, rot).GetComponent<Portal>();
-            }
-            else
-            {
-                slot.transform.SetPositionAndRotation(pos, rot);
-            }
+            if (slot == null) slot = Instantiate(prefab, pos, rot).GetComponent<Portal>();
+            else slot.transform.SetPositionAndRotation(pos, rot);
 
-            //// ExitPoint가 없다면 기본 세팅 보정(앞으로 살짝)
-            //if (slot.exitPoint == null)
-            //{
-            //    var exit = new GameObject("ExitPoint").transform;
-            //    exit.SetParent(slot.transform, false);
-            //    exit.localPosition = Vector3.forward * 0.4f;
-            //    exit.localRotation = Quaternion.identity;
-            //    slot.exitPoint = exit;
-            //}
+            // ExitPoint가 있다면, localPosition은 +X 방향으로 (지금처럼 0.5,0,0 OK)
+            // slot.exitPoint.localPosition = new Vector3(0.4f, 0f, 0f); // 참고
         }
     }
 
