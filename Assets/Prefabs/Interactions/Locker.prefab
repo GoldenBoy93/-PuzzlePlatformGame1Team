@@ -256,6 +256,7 @@ GameObject:
   - component: {fileID: 8973056806551577057}
   - component: {fileID: 8228278375239232861}
   - component: {fileID: 5368090025984521322}
+  - component: {fileID: 6703947326736631397}
   m_Layer: 0
   m_Name: Locker
   m_TagString: Untagged
@@ -324,7 +325,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -409,6 +410,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6703947326736631397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2167797175795212414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2fa66daea46aea4d9218887ccabb30e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openable: 0
 --- !u!1 &2863877018466203734
 GameObject:
   m_ObjectHideFlags: 0
