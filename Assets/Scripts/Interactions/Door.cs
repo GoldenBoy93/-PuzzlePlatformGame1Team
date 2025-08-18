@@ -13,6 +13,7 @@ public class Door : MonoBehaviour
 {
     private DoorState state;
     private Animator animator;
+    public bool openable;
 
     private void Awake()
     {
