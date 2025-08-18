@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class DirectionManager : MonoBehaviour
 {
     public Animator _animator;
+    public PlayerController1 _playerController1;
 
     public static DirectionManager Instance;
     void Awake()
@@ -23,10 +24,10 @@ public class DirectionManager : MonoBehaviour
     }
     IEnumerator IntroSequence()
     {
-        _animator.SetBool("CanMove",false);
+        _playerController1.LockInputOn();
         // 연출 시간 대기
         yield return new WaitForSecondsRealtime(5.5f);
         // 연출 끝나면 입력 활성화
-        _animator.SetBool("CanMove",true);
+        _playerController1.LockInputOff();
     }
 }
