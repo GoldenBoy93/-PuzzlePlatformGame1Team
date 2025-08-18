@@ -57,7 +57,8 @@ public class AudioManager1 : MonoBehaviour
                 else
                     Debug.LogWarning($"[AudioManager] 중복된 SFX 이름: {sfx.name}");
             }
-            SceneManager.sceneLoaded += OnSceneLoaded;
+
+            PlayBGM(bgmStart);
         }
         else
         {
@@ -83,18 +84,6 @@ public class AudioManager1 : MonoBehaviour
                 AudioManager1.Instance.PlayClickSFX();
             }
         }
-    }
-
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.buildIndex == 0)
-            PlayBGM(bgmStart);
-        else if (scene.buildIndex == 1)
-            PlayBGM(bgmGame);
-        else if (scene.buildIndex == 2)
-            PlayBGM(bgm1);
-        else if (scene.buildIndex == 3)
-            PlayBGM(bgm1);
     }
 
     public void PlayBGM(AudioClip clip)
@@ -139,5 +128,34 @@ public class AudioManager1 : MonoBehaviour
     public void SetSfxVolume(float volume)
     {
         sfxVolume = Mathf.Clamp01(volume);
+    }
+
+    IEnumerator NextBGM(AudioClip newClip, float duration)
+    { //StartCoroutine(FadeBGM(bgmGame, 5f)); // 5초 페이드
+        // 1. 현재 BGM 볼륨 줄이기
+        float startVolume = bgmSource.volume;
+        float time = 0f;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            bgmSource.volume = Mathf.Lerp(startVolume, 0f, time / duration);
+            yield return null;
+        }
+
+        // 2. 새 BGM 설정
+        bgmSource.clip = newClip;
+        bgmSource.Play();
+
+        // 3. 새 BGM 볼륨 올리기
+        time = 0f;
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            bgmSource.volume = Mathf.Lerp(0f, bgmVolume, time / duration);
+            yield return null;
+        }
+
+        bgmSource.volume = bgmVolume; // 최종 볼륨 보정
     }
 }

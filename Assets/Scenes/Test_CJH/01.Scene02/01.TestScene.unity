@@ -1145,6 +1145,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 412627327}
   m_CullTransparentMesh: 1
+--- !u!1 &452495017
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 452495018}
+  m_Layer: 0
+  m_Name: -------------------------------------
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &452495018
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452495017}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.1663303, y: -1.6927071, z: 3.518012}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &478173763
 GameObject:
   m_ObjectHideFlags: 0
@@ -1693,9 +1724,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ed04a638f505064895a28e298507050, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuBgm: {fileID: 0}
-  gameBgm: {fileID: 0}
-  bossBgm: {fileID: 0}
+  bgmStart: {fileID: 8300000, guid: b64af4f1d05491b45a5b17508246ff34, type: 3}
+  bgmGame: {fileID: 8300000, guid: 1cb63f0f2a7507d47b4d4287d31b0079, type: 3}
+  bgm1: {fileID: 0}
   sfxClips: []
   sfxPoolSize: 5
   bgmVolume: 0.5
@@ -2419,7 +2450,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1349196137}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.31892893, y: 0.61347324, z: -0.29710755, w: 0.6585303}
+  m_LocalRotation: {x: 0.3189289, y: 0.61347324, z: -0.29710755, w: 0.6585303}
   m_LocalPosition: {x: -1.6427875, y: 3.1975658, z: -0.5996913}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2708,7 +2739,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1706854236}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.05474382, y: 0.090803035, z: -0.045349196, w: -0.99332845}
+  m_LocalRotation: {x: 0.05474382, y: 0.090803, z: -0.045349177, w: -0.99332845}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -19919,14 +19950,15 @@ SceneRoots:
   m_Roots:
   - {fileID: 864003083}
   - {fileID: 1236452402}
-  - {fileID: 261538695}
   - {fileID: 1119511109527052491}
   - {fileID: 5827031046419480902}
   - {fileID: 478173765}
-  - {fileID: 1925262799}
   - {fileID: 7453218318733565537}
   - {fileID: 4441278676263742191}
-  - {fileID: 978056624}
   - {fileID: 704902047}
+  - {fileID: 261538695}
   - {fileID: 1455086223385931642}
   - {fileID: 6978413776070502365}
+  - {fileID: 452495018}
+  - {fileID: 978056624}
+  - {fileID: 1925262799}
