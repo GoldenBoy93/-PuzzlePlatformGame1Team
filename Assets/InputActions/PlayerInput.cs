@@ -93,18 +93,18 @@ namespace UnityEngine.InputSystem
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Interaction"",
+                    ""name"": ""Action"",
                     ""type"": ""Button"",
-                    ""id"": ""72bd4b27-0b1e-41ea-95c4-46d6fb84f6db"",
+                    ""id"": ""4ed34c8b-dfa9-4beb-806e-68fe87344c4e"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""NumberKey"",
+                    ""name"": ""Interaction"",
                     ""type"": ""Button"",
-                    ""id"": ""7a22b01a-d0b3-4687-84cd-a397ba5108b3"",
+                    ""id"": ""72bd4b27-0b1e-41ea-95c4-46d6fb84f6db"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -376,72 +376,6 @@ namespace UnityEngine.InputSystem
                 },
                 {
                     ""name"": """",
-                    ""id"": ""65af1590-33e2-46b2-9acf-40845f6e70f6"",
-                    ""path"": ""<Keyboard>/1"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""NumberKey"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""0121afa1-d24b-4236-85c6-dc06123c4551"",
-                    ""path"": ""<Keyboard>/2"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""NumberKey"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e341fb48-655c-4fa5-9722-eadb9264ef94"",
-                    ""path"": ""<Keyboard>/3"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""NumberKey"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c0698a55-4182-4ad5-905d-e2c9384196fa"",
-                    ""path"": ""<Keyboard>/4"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""NumberKey"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""714035ac-2f7e-4a19-a22c-360adb9ecc10"",
-                    ""path"": ""<Keyboard>/5"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""NumberKey"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""212700a2-d8c1-4f0d-bed6-32c3b4279e1b"",
-                    ""path"": ""<Keyboard>/6"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""NumberKey"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""e1d1c7cf-0b71-400e-ac0c-458ce88d9a6d"",
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
@@ -470,6 +404,17 @@ namespace UnityEngine.InputSystem
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e6d7e9b4-4f06-4181-ad82-d7f2a14a6152"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Action"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1064,8 +1009,8 @@ namespace UnityEngine.InputSystem
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
             m_Player_Flash = m_Player.FindAction("Flash", throwIfNotFound: true);
             m_Player_CameraToggle = m_Player.FindAction("CameraToggle", throwIfNotFound: true);
+            m_Player_Action = m_Player.FindAction("Action", throwIfNotFound: true);
             m_Player_Interaction = m_Player.FindAction("Interaction", throwIfNotFound: true);
-            m_Player_NumberKey = m_Player.FindAction("NumberKey", throwIfNotFound: true);
             m_Player_Menu = m_Player.FindAction("Menu", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -1147,8 +1092,8 @@ namespace UnityEngine.InputSystem
         private readonly InputAction m_Player_Jump;
         private readonly InputAction m_Player_Flash;
         private readonly InputAction m_Player_CameraToggle;
+        private readonly InputAction m_Player_Action;
         private readonly InputAction m_Player_Interaction;
-        private readonly InputAction m_Player_NumberKey;
         private readonly InputAction m_Player_Menu;
         public struct PlayerActions
         {
@@ -1161,8 +1106,8 @@ namespace UnityEngine.InputSystem
             public InputAction @Jump => m_Wrapper.m_Player_Jump;
             public InputAction @Flash => m_Wrapper.m_Player_Flash;
             public InputAction @CameraToggle => m_Wrapper.m_Player_CameraToggle;
+            public InputAction @Action => m_Wrapper.m_Player_Action;
             public InputAction @Interaction => m_Wrapper.m_Player_Interaction;
-            public InputAction @NumberKey => m_Wrapper.m_Player_NumberKey;
             public InputAction @Menu => m_Wrapper.m_Player_Menu;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
@@ -1194,12 +1139,12 @@ namespace UnityEngine.InputSystem
                 @CameraToggle.started += instance.OnCameraToggle;
                 @CameraToggle.performed += instance.OnCameraToggle;
                 @CameraToggle.canceled += instance.OnCameraToggle;
+                @Action.started += instance.OnAction;
+                @Action.performed += instance.OnAction;
+                @Action.canceled += instance.OnAction;
                 @Interaction.started += instance.OnInteraction;
                 @Interaction.performed += instance.OnInteraction;
                 @Interaction.canceled += instance.OnInteraction;
-                @NumberKey.started += instance.OnNumberKey;
-                @NumberKey.performed += instance.OnNumberKey;
-                @NumberKey.canceled += instance.OnNumberKey;
                 @Menu.started += instance.OnMenu;
                 @Menu.performed += instance.OnMenu;
                 @Menu.canceled += instance.OnMenu;
@@ -1228,12 +1173,12 @@ namespace UnityEngine.InputSystem
                 @CameraToggle.started -= instance.OnCameraToggle;
                 @CameraToggle.performed -= instance.OnCameraToggle;
                 @CameraToggle.canceled -= instance.OnCameraToggle;
+                @Action.started -= instance.OnAction;
+                @Action.performed -= instance.OnAction;
+                @Action.canceled -= instance.OnAction;
                 @Interaction.started -= instance.OnInteraction;
                 @Interaction.performed -= instance.OnInteraction;
                 @Interaction.canceled -= instance.OnInteraction;
-                @NumberKey.started -= instance.OnNumberKey;
-                @NumberKey.performed -= instance.OnNumberKey;
-                @NumberKey.canceled -= instance.OnNumberKey;
                 @Menu.started -= instance.OnMenu;
                 @Menu.performed -= instance.OnMenu;
                 @Menu.canceled -= instance.OnMenu;
@@ -1426,8 +1371,8 @@ namespace UnityEngine.InputSystem
             void OnJump(InputAction.CallbackContext context);
             void OnFlash(InputAction.CallbackContext context);
             void OnCameraToggle(InputAction.CallbackContext context);
+            void OnAction(InputAction.CallbackContext context);
             void OnInteraction(InputAction.CallbackContext context);
-            void OnNumberKey(InputAction.CallbackContext context);
             void OnMenu(InputAction.CallbackContext context);
         }
         public interface IUIActions

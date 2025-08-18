@@ -69,18 +69,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Interaction",
+                    "name": "Action",
                     "type": "Button",
-                    "id": "72bd4b27-0b1e-41ea-95c4-46d6fb84f6db",
+                    "id": "4ed34c8b-dfa9-4beb-806e-68fe87344c4e",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "NumberKey",
+                    "name": "Interaction",
                     "type": "Button",
-                    "id": "7a22b01a-d0b3-4687-84cd-a397ba5108b3",
+                    "id": "72bd4b27-0b1e-41ea-95c4-46d6fb84f6db",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -352,72 +352,6 @@
                 },
                 {
                     "name": "",
-                    "id": "65af1590-33e2-46b2-9acf-40845f6e70f6",
-                    "path": "<Keyboard>/1",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "NumberKey",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "0121afa1-d24b-4236-85c6-dc06123c4551",
-                    "path": "<Keyboard>/2",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "NumberKey",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e341fb48-655c-4fa5-9722-eadb9264ef94",
-                    "path": "<Keyboard>/3",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "NumberKey",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c0698a55-4182-4ad5-905d-e2c9384196fa",
-                    "path": "<Keyboard>/4",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "NumberKey",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "714035ac-2f7e-4a19-a22c-360adb9ecc10",
-                    "path": "<Keyboard>/5",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "NumberKey",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "212700a2-d8c1-4f0d-bed6-32c3b4279e1b",
-                    "path": "<Keyboard>/6",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "NumberKey",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "e1d1c7cf-0b71-400e-ac0c-458ce88d9a6d",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
@@ -446,6 +380,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e6d7e9b4-4f06-4181-ad82-d7f2a14a6152",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

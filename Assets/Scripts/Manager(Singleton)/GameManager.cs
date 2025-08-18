@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
     // GameState 타입을 사용하는 이벤트 함수 OnGameStateChanged를 선언
     public static event Action<GameState> OnGameStateChanged;
     private GameState _currentState;
-    private UIManager uiManager;
     bool IsPause = false;
 
     public static GameManager Instance
@@ -36,6 +35,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    private UI_Manager _UIManager;
+    public UI_Manager UIManager
+    {
+        get { return _UIManager; }
+        set { _UIManager = value; }
+    }
+
+    private PlayerManager _PlayerManager;
+    public PlayerManager PlayerManager
+    {
+        get { return _PlayerManager; }
+        set { _PlayerManager = value; }
+    }
+
+
+
+
     public GameState CurrentGameState
     {
         // CurrentGameState 호출한 곳에 _currentState 반환
@@ -50,15 +67,12 @@ public class GameManager : MonoBehaviour
     }
 
     // Player 인스턴스에 접근하기 위한 Instance 함수
-    public Player PlayerInstance
-    {
-        get { return _player; }
-        set { _player = value; }
-    }
-    private Player _player;
 
     private void Awake()
     {
+        var direction = DirectionManager.Instance;
+        var audio = AudioManager.Instance;
+
         // Awake가 호출 될 때라면 이미 매니저 오브젝트는 생성되어 있는 것이고, '_instance'에 자신을 할당
         if (_instance == null)
         {
@@ -75,7 +89,6 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        uiManager = UIManager.Instance;
     }
 
     // GameState 전환 함수
