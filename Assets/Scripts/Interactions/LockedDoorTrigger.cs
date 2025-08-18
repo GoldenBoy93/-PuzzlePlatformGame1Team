@@ -16,6 +16,11 @@ public class LockedDoorTrigger : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         // 퍼즐매니저의 키체크 함수를 호출
-        PuzzleManager.Instance.KeyCheck(other);
+        if(PuzzleManager.Instance.KeyCheck(other, wallCollider))
+        {
+            audioSource.PlayOneShot(soundEffect);
+        }
+
+        return;
     }
 }
