@@ -2668,8 +2668,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3329783435458929090}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.059678983, y: 0.000000002930551, z: 1.7520457e-10, w: 0.99821764}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalRotation: {x: 0.032186806, y: 0.9653082, z: -0.14441219, w: 0.21514957}
+  m_LocalPosition: {x: -0.04686153, y: 1.5116417, z: 0.81962764}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8162,6 +8162,7 @@ GameObject:
   - component: {fileID: 702804464329609590}
   - component: {fileID: 1508183724766810559}
   - component: {fileID: 7883795979129046294}
+  - component: {fileID: 7117087708642256504}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -8250,6 +8251,21 @@ MonoBehaviour:
   light: {fileID: 4536563270140479028}
   flashLight: {fileID: 4246904948486894070}
   uiAction: {fileID: 0}
+--- !u!114 &7117087708642256504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8236291291834606546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fbde0682a1051f42902be1c52c962d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footstepClips: []
+  footstepthreshold: 5
+  footstepRate: 5
 --- !u!1 &8262648607187405284
 GameObject:
   m_ObjectHideFlags: 0
