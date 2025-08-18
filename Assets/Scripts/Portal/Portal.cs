@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
-    [Header("Exit Portal")]
-    public Portal exitPortal;
+    [Header("Linked Portal")]
+    public Portal target;
     public Transform exitPoint;
 
     [Header("Options")]
@@ -28,7 +28,7 @@ public class Portal : MonoBehaviour
     private void TryTeleport(Collider hit)
     {
         // if no exit portal, do nothing
-        if (!exitPortal) return;
+        if (!target) return;
 
         // check colider has PortalTraveler
         PortalTraveler traveler = hit.GetComponentInParent<PortalTraveler>();
@@ -66,24 +66,24 @@ public class Portal : MonoBehaviour
         if (travelerTransform.TryGetComponent<Rigidbody>(out var rb))           // 물리 이동형 플레이어
         {
             Vector3 localVel = transform.InverseTransformDirection(rb.velocity);
-            Vector3 outVel = exitPortal.transform.TransformDirection(localVel);
+            Vector3 outVel = target.transform.TransformDirection(localVel);
             rb.position = outPos;
             rb.rotation = outRot;
             rb.velocity = outVel;
         }
-        //else if (t.TryGetComponent<CharacterController>(out var cc)) // CC 이동형
-        //{
-        //    cc.enabled = false;
-        //    t.SetPositionAndRotation(outPos, outRot);
-        //    cc.enabled = true;
-        //}
+        else if (travelerTransform.TryGetComponent<CharacterController>(out var cc)) // CC 이동형
+        {
+            cc.enabled = false;
+            travelerTransform.SetPositionAndRotation(outPos, outRot);
+            cc.enabled = true;
+        }
         else
         {
             travelerTransform.SetPositionAndRotation(outPos, outRot);
         }
 
         // block re-enter to portal until cooldown
-        traveler.SetCooldown(exitPortal, reenterBlockTime);
+        traveler.SetCooldown(target, reenterBlockTime);
     }
 
     // view in editer
