@@ -6,7 +6,7 @@ using UnityEngine;
 // (ex.GameManager.Instance.PlayerInstance.playerController)
 public class Player : MonoBehaviour
 {
-    public PlayerController playerController;
+    public PlayerController1 playerController;
     public PlayerCondition playerCondition;
     public Rigidbody playerRigidbody;
     public Animator playerAnimator;
@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     {
         // 싱글톤매니저에 Player를 참조할 수 있게 데이터를 넘긴다.
         GameManager.Instance.PlayerInstance = this;
-        playerController = GetComponent<PlayerController>();
+        playerController = GetComponent<PlayerController1>();
         playerCondition = GetComponent<PlayerCondition>();
         playerRigidbody = GetComponent<Rigidbody>();
         playerAnimator = GetComponentInChildren<Animator>();
