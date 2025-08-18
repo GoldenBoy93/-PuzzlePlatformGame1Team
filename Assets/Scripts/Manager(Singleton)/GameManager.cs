@@ -12,7 +12,7 @@ public enum GameState
     GameOver,
 }
 
-public class GameManager : MonoBehaviour
+public partial class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
     // GameState 타입을 사용하는 이벤트 함수 OnGameStateChanged를 선언
