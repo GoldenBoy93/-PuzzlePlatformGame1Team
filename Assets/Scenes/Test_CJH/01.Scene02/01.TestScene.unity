@@ -1436,7 +1436,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 704147060}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.085989654, y: 0.09218573, z: -0.042467948, w: -0.9911126}
+  m_LocalRotation: {x: 0.085989654, y: 0.09218576, z: -0.042467963, w: -0.9911126}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2450,7 +2450,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1349196137}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.3189289, y: 0.61347324, z: -0.29710755, w: 0.6585303}
+  m_LocalRotation: {x: 0.31892893, y: 0.61347324, z: -0.29710755, w: 0.6585303}
   m_LocalPosition: {x: -1.6427875, y: 3.1975658, z: -0.5996913}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2739,7 +2739,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1706854236}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.05474382, y: 0.090803, z: -0.045349177, w: -0.99332845}
+  m_LocalRotation: {x: 0.05474382, y: 0.090803035, z: -0.045349196, w: -0.99332845}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2997,7 +2997,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1959171560}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.07039096, y: 0.09150642, z: -0.04391259, w: -0.99234235}
+  m_LocalRotation: {x: 0.07039096, y: 0.09150639, z: -0.043912575, w: -0.99234235}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -18059,12 +18059,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 217138800701438299}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3ddea7294aebd846bfe19464e759031, type: 3}
+  m_Script: {fileID: 11500000, guid: a194d3fa5852dec41b424e83b1ab3395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   toggleCameraRotation: 0
-  light: {fileID: 250283435}
-  flashLight: {fileID: 5263708194519698061}
+  light: {fileID: 0}
+  flashLight: {fileID: 0}
 --- !u!1 &8129300792052038642
 GameObject:
   m_ObjectHideFlags: 0
