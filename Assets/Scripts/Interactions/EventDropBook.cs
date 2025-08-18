@@ -5,15 +5,12 @@ using UnityEngine;
 public class EventDropBook : MonoBehaviour
 {
     private Animator animator;
-    public AudioClip soundEffect;
-    private AudioSource audioSource;
 
     private bool hasTriggered = false;
 
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
-        animator = GetComponentInParent<Animator>();
+        animator = GetComponent<Animator>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -22,18 +19,7 @@ public class EventDropBook : MonoBehaviour
         {
             animator.SetTrigger("EnterCollider");
 
-            // 소리 재생
-            audioSource.Play();
-
             hasTriggered = true;
-        }
-    }
-
-    public void PlaySoundEffect()
-    {
-        if (soundEffect != null && audioSource != null)
-        {
-            audioSource.PlayOneShot(soundEffect);
         }
     }
 }
