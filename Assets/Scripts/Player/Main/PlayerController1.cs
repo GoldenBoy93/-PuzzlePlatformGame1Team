@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 
 public class PlayerController1 : MonoBehaviour //Character Controller 전용
 { 
@@ -12,10 +13,13 @@ public class PlayerController1 : MonoBehaviour //Character Controller 전용
     float smooth = 20f;
     float gravity = -9.81f;
 
+    [Header("Camera")]
+
     [Header("Object")]
     public bool toggleCameraRotation;
     public GameObject light;
     public GameObject flashLight;
+    public GameObject uiAction;
 
     Animator _animator;
     Camera _camera;
@@ -42,8 +46,9 @@ public class PlayerController1 : MonoBehaviour //Character Controller 전용
         input.Player.Jump.started += OnJump;
         input.Player.Flash.started += OnFlash;
         input.Player.CameraToggle.started += OnToggleCamera;
+        input.Player.Action.performed += OnAction;
+        input.Player.Action.canceled += OnAction;
         input.Player.Interaction.started += OnInteraction;
-        input.Player.NumberKey.started += OnNumberKey;
         input.Player.Menu.started += OnMenu;
         input.Player.Enable();
     }
@@ -58,7 +63,6 @@ public class PlayerController1 : MonoBehaviour //Character Controller 전용
             velocity.y = -2f;
         velocity.y += gravity * Time.deltaTime; //중력 적용
         _controller.Move(velocity * Time.deltaTime);
-
         Move();
     }
     private void LateUpdate()
@@ -74,8 +78,6 @@ public class PlayerController1 : MonoBehaviour //Character Controller 전용
 
     void Move()
     {
-        if (!_animator.GetBool("CanMove")) return;
-
         float finalSpeed = isRun ? runSpeed : speed;
 
         // 카메라 기준 forward/right
@@ -84,6 +86,7 @@ public class PlayerController1 : MonoBehaviour //Character Controller 전용
         // 입력 기반 이동 방향
         Vector3 moveDir = camForward * dir.y + camRight * dir.x;
         moveDir.Normalize();
+
         Vector3 move = moveDir * finalSpeed + new Vector3(0, velocity.y, 0);
         _controller.Move(move * Time.deltaTime);
         // 캐릭터 회전 (이동 방향으로)
@@ -97,6 +100,10 @@ public class PlayerController1 : MonoBehaviour //Character Controller 전용
         float percent = (isRun ? 1 : 0.5f) * new Vector2(dir.x, dir.y).magnitude;
         _animator.SetFloat("Blend", percent, 0.3f, Time.deltaTime);
     }
+
+    
+    public void LockInputOn() => input.Disable();
+    public void LockInputOff() => input.Enable();
 
     void OnMove(InputAction.CallbackContext context)
     {
@@ -115,11 +122,7 @@ public class PlayerController1 : MonoBehaviour //Character Controller 전용
         if (context.started) // 버튼 눌렀을 때만
             toggleCameraRotation = !toggleCameraRotation; // true ↔ false 토글
     }
-    void CanMove()
-    {
-        bool cur = _animator.GetBool("CanMove");
-        _animator.SetBool("CanMove", !cur);
-    }
+
     void OnFlash(InputAction.CallbackContext context)
     {
         int state = _animator.GetInteger("IsFlash");
@@ -147,37 +150,27 @@ public class PlayerController1 : MonoBehaviour //Character Controller 전용
             flashLight.SetActive(false);
         }
     }
+    void OnAction(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            uiAction.SetActive(true);   // 누르는 동안 켜기
+            Time.timeScale = 0.2f;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            uiAction.SetActive(false);  // 떼면 끄기
+            Time.timeScale = 1f;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
+
     void OnInteraction(InputAction.CallbackContext context) //상호작용키 E
     {
         _animator.SetTrigger("IsInteraction");
     }
-    void OnNumberKey(InputAction.CallbackContext context)
-    {
-        if (!_animator.GetBool("CanMove")) return;
-        int keyNumber = (int)context.ReadValue<float>();
-        Debug.Log(keyNumber);
-        switch (keyNumber)
-        {
-            case 1:
-                StartCoroutine(PlayAnimOnce(1)); break;
-            case 2:
-                StartCoroutine(PlayAnimOnce(2)); break;
-            case 3:
-                StartCoroutine(PlayAnimOnce(3)); break;
-            case 4:
-                StartCoroutine(PlayAnimOnce(4)); break;
-            case 5:
-                StartCoroutine(PlayAnimOnce(5)); break;
-            case 6:
-                StartCoroutine(PlayAnimOnce(6)); break;
-        }
-    }
-    IEnumerator PlayAnimOnce(int animValue)
-    {
-        _animator.SetInteger("animBaseInt", animValue); // 애니메이션 실행
-        yield return new WaitForSeconds(1f); // 약간 지연
-        _animator.SetInteger("animBaseInt", 0); // 다시 0으로 리셋
-    }
+
     void OnMenu(InputAction.CallbackContext context)
     {
 
