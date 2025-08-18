@@ -27589,10 +27589,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7450395385674281266, guid: 82cc91198607a9d4492e5f54c7f8b6b6, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 8089975594775128424, guid: 82cc91198607a9d4492e5f54c7f8b6b6, type: 3}
       propertyPath: m_Name
       value: Event_DropBook
@@ -36186,7 +36182,7 @@ Transform:
   m_GameObject: {fileID: 1412584520}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.9099998, y: -5.94, z: -12.139999}
+  m_LocalPosition: {x: 12.01, y: -5.94, z: 6.49}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -58122,21 +58118,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Event_MovingStatue
       objectReference: {fileID: 0}
-    - target: {fileID: 3697188693330479299, guid: 5f2f3d11bd8832947b8539a0bbe33c52, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3896068637441775411, guid: 5f2f3d11bd8832947b8539a0bbe33c52, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.148
+      value: 11.515
       objectReference: {fileID: 0}
     - target: {fileID: 3896068637441775411, guid: 5f2f3d11bd8832947b8539a0bbe33c52, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.461
+      value: -6.02
       objectReference: {fileID: 0}
     - target: {fileID: 3896068637441775411, guid: 5f2f3d11bd8832947b8539a0bbe33c52, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11.889
+      value: 8.936
       objectReference: {fileID: 0}
     - target: {fileID: 3896068637441775411, guid: 5f2f3d11bd8832947b8539a0bbe33c52, type: 3}
       propertyPath: m_LocalRotation.w
