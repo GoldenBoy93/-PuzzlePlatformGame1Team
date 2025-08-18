@@ -2,15 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UI_InGame : MonoBehaviour
+public class Motion : MonoBehaviour
 {
-
-    void Start()
+    public virtual void OnAttackInput()
     {
-    }
 
-
-    void Update()
-    {
     }
 }

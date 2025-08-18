@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 
-public class PlayerController1 : MonoBehaviour //Character Controller 전용
+public class PlayerController : MonoBehaviour //Character Controller 전용
 { 
     [Header("Movement")]
     float speed = 2f;
@@ -17,14 +18,14 @@ public class PlayerController1 : MonoBehaviour //Character Controller 전용
 
     [Header("Object")]
     public bool toggleCameraRotation;
-    public GameObject light;
-    public GameObject flashLight;
     public GameObject uiAction;
+    public List<GameObject> flashLights;
 
     Animator _animator;
     Camera _camera;
-    UnityEngine.CharacterController _controller;
+    CharacterController _controller;
     PlayerInput input;
+
     Vector2 dir;
     Vector3 velocity;
     bool isRun;
@@ -34,7 +35,7 @@ public class PlayerController1 : MonoBehaviour //Character Controller 전용
     {
         _animator = GetComponent<Animator>();
         _camera = Camera.main;
-        _controller = GetComponent<UnityEngine.CharacterController>();
+        _controller = GetComponent<CharacterController>();
         input = new PlayerInput();
     }
     private void OnEnable()
@@ -139,15 +140,15 @@ public class PlayerController1 : MonoBehaviour //Character Controller 전용
             _animator.SetInteger("IsFlash", 2);
             _animator.SetLayerWeight(1, 1f);
             _animator.CrossFadeInFixedTime("Blend_Flash", 0.2f, 1, 0f);
-            light.SetActive(true);
-            flashLight.SetActive(true);
+            foreach (var light in flashLights)
+                light.SetActive(true);
         }
         else if (state == 0) // 기본 Idle 전환
         {
             _animator.SetInteger("IsFlash", 0);
             _animator.SetLayerWeight(1, 0f);
-            light.SetActive(false);
-            flashLight.SetActive(false);
+            foreach (var light in flashLights)
+                light.SetActive(false);
         }
     }
     void OnAction(InputAction.CallbackContext context)

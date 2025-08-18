@@ -11,9 +11,28 @@ public class NamedSFX
     public string name;
     public AudioClip clip;
 }
-public class AudioManager1 : MonoBehaviour
+public class AudioManager : MonoBehaviour
 {
-    public static AudioManager1 Instance;
+    private static AudioManager _instance;
+    public static AudioManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                // 씬 안에 AudioManager 찾기
+                _instance = FindObjectOfType<AudioManager>();
+
+                // 없으면 새로 생성
+                if (_instance == null)
+                {
+                    GameObject go = new GameObject("AudioManager");
+                    _instance = go.AddComponent<AudioManager>();
+                }
+            }
+            return _instance;
+        }
+    }
 
     [Header("BGM Clips")]
     public AudioClip bgmStart;
@@ -30,40 +49,45 @@ public class AudioManager1 : MonoBehaviour
     private List<AudioSource> sfxSources = new List<AudioSource>();
     private int currentSfxIndex = 0;
 
-    [Range(0f, 1f)] public float bgmVolume = 0.5f;
+    [Range(0f, 1f)] public float bgmVolume = 0.25f;
     [Range(0f, 1f)] public float sfxVolume = 1f;
 
     void Awake()
     {
-        if (Instance == null)
+        if (_instance != null && _instance != this)
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-            AudioSource bgm = gameObject.AddComponent<AudioSource>();
-            bgm.loop = true;
-            bgm.playOnAwake = false;
-            bgmSource = bgm;
+            Destroy(gameObject); // 이미 다른 AudioManager 있으면 파괴
+            return;
+        }
 
-            for (int i = 0; i < sfxPoolSize; i++)
-            {
-                AudioSource sfx = gameObject.AddComponent<AudioSource>();
-                sfx.playOnAwake = false;
-                sfxSources.Add(sfx);
-            }
-            foreach (var sfx in sfxClips)
-            {
-                if (!sfxDict.ContainsKey(sfx.name))
-                    sfxDict.Add(sfx.name, sfx.clip);
-                else
-                    Debug.LogWarning($"[AudioManager] 중복된 SFX 이름: {sfx.name}");
-            }
+        _instance = this; // 여기서 등록
+        DontDestroyOnLoad(gameObject);
 
+        // BGM 오디오 소스 생성
+        bgmSource = gameObject.AddComponent<AudioSource>();
+        bgmSource.loop = true;
+        bgmSource.playOnAwake = false;
+
+        // SFX 풀 초기화
+        for (int i = 0; i < sfxPoolSize; i++)
+        {
+            AudioSource sfx = gameObject.AddComponent<AudioSource>();
+            sfx.playOnAwake = false;
+            sfxSources.Add(sfx);
+        }
+
+        // 사운드 이름-클립 매핑
+        foreach (var sfx in sfxClips)
+        {
+            if (!sfxDict.ContainsKey(sfx.name))
+                sfxDict.Add(sfx.name, sfx.clip);
+            else
+                Debug.LogWarning($"[AudioManager] 중복된 SFX 이름: {sfx.name}");
+        }
+
+        // 첫 BGM 실행
+        if (bgmStart != null)
             PlayBGM(bgmStart);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
     }
 
     void Update()
@@ -81,7 +105,7 @@ public class AudioManager1 : MonoBehaviour
 
             if (clicked != null && clicked.GetComponent<Button>() != null)
             {
-                AudioManager1.Instance.PlayClickSFX();
+                AudioManager.Instance.PlayClickSFX();
             }
         }
     }

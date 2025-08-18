@@ -1,0 +1,42 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public enum ItemType
+{
+    Equipable,
+    Consumable,
+    Resource,
+}
+public enum ConsumableType
+{
+    Health,
+    Hunger
+}
+[Serializable]
+public class ItemDataConsumable
+{
+    public ConsumableType type;
+    public float value;
+}
+[CreateAssetMenu(fileName = "Item", menuName = "New Item")]
+public class ItemData : ScriptableObject
+{
+    [Header("Info")]
+    public string Name;
+    public string description;
+    public ItemType type = new ItemType();
+    public Sprite icon;
+    public GameObject dropPrefab;
+
+    [Header("Stacking")]
+    public bool canStack;
+    public int maxStackAmount;
+
+    [Header("Consumable")]
+    public List<ItemDataConsumable> consumables = new List<ItemDataConsumable>();
+
+    [Header("Equip")]
+    public GameObject equipPrefab;
+}

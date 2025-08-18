@@ -6,25 +6,29 @@ using UniRx;
 
 public class PlayerView : MonoBehaviour
 {
-    public Slider healthSlider;
-    public Slider staminaSlider;
+    public Image healthImage;
+    public Image staminaImage;
     public Transform inventoryContent; // 아이템 UI를 자식으로 배치할 컨테이너
     public GameObject inventoryItemPrefab; // 아이템 UI 프리팹
 
     private PlayerViewModel viewModel;
 
+
+
     void Start()
     {
-        var model = new PlayerModel();
-        viewModel = new PlayerViewModel(model);
+        viewModel = GameManager.Instance.UIManager.ViewModel;
 
-        // Slider 최대값 설정
-        healthSlider.maxValue = model.MaxHealth;
-        staminaSlider.maxValue = model.MaxStamina;
+        // 체력 / 스태미나 구독 (FillAmount 업데이트)
+        viewModel.Health.Subscribe(value =>
+        {
+            healthImage.fillAmount = (float)value / viewModel.MaxHealth;
+        });
 
-        // 체력 / 스태미나 구독
-        viewModel.Health.Subscribe(value => healthSlider.value = value);
-        viewModel.Stamina.Subscribe(value => staminaSlider.value = value);
+        viewModel.Stamina.Subscribe(value =>
+        {
+            staminaImage.fillAmount = (float)value / viewModel.MaxStamina;
+        });
 
         // 인벤토리 UI 구독
         viewModel.Inventory.ObserveAdd().Subscribe(e => OnItemAdded(e.Key, e.Value));
@@ -69,4 +73,22 @@ public class PlayerView : MonoBehaviour
         var go = inventoryContent.Find(itemName);
         if (go != null) go.GetComponentInChildren<Text>().text = $"{itemName} x{amount}";
     }
+
+
+
+
+
+   //viewModel.CurrentEquipChanged.Subscribe(equip =>
+   //{
+   //if (equip != null)
+   //    animator.SetTrigger("Equip");
+   //else
+   //    animator.SetTrigger("Unequip");
+   //});
+
+
+
+
+
+
 }

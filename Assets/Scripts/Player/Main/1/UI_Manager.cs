@@ -5,22 +5,29 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UI_Manager : MonoBehaviour
+public interface IDamageble //공격받을수있는 물체면 상속
 {
-    public static UI_Manager Instance { get; private set; }
+    void TakePhysicalDamage(int damage);
+}
 
+public enum PlayerState //플레이어의 현재상태
+{
+    Idle,
+    Run,
+    Jump,
+    Attack,
+    Damaged,
+    Dead
+}
+
+public class UI_Manager : MonoBehaviour //데이터랑 구독 유지용
+{
     public PlayerModel Model { get; private set; }
     public PlayerViewModel ViewModel { get; private set; }
 
     void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
+        GameManager.Instance.UIManager = this;
         DontDestroyOnLoad(gameObject);
 
         Model = new PlayerModel();

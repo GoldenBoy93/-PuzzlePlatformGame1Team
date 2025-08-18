@@ -5,9 +5,9 @@ using UnityEngine;
 public class PlayerModel //단순데이터 저장
 {
     public int Health { get; set; } = 5;
-    public int MaxHealth { get; set; } = 10;
-    public int Stamina { get; set; } = 10;
-    public int MaxStamina { get; set; } = 10;
+    public int MaxHealth { get; set; } = 5;
+    public int Stamina { get; set; } = 1000;
+    public int MaxStamina { get; set; } = 1000;
 
 
     // 인벤토리 모델을 참조 (Composition)

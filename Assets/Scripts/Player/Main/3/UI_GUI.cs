@@ -26,8 +26,8 @@ public class UI_Start : MonoBehaviour
         settingsPanel.SetActive(true);
 
         // 슬라이더 값 세팅
-        bgmSlider.value = AudioManager1.Instance.bgmVolume;
-        sfxSlider.value = AudioManager1.Instance.sfxVolume;
+        bgmSlider.value = AudioManager.Instance.bgmVolume;
+        sfxSlider.value = AudioManager.Instance.sfxVolume;
 
         // 리스너 등록
         bgmSlider.onValueChanged.AddListener(OnBgmSliderChanged); //실시간반영용
@@ -58,16 +58,15 @@ public class UI_Start : MonoBehaviour
     }
     public void OnClick_HealingPlayer()
     {
-        GameManager1.Instance.IncreaseHP(1);
     }
 
     void OnBgmSliderChanged(float value)
     {
-        AudioManager1.Instance.SetBgmVolume(value);
+        AudioManager.Instance.SetBgmVolume(value);
     }
 
     void OnSfxSliderChanged(float value)
     {
-        AudioManager1.Instance.SetSfxVolume(value);
+        AudioManager.Instance.SetSfxVolume(value);
     }
 }
