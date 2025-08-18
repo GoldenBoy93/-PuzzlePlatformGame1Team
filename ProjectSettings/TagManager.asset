@@ -6,7 +6,12 @@ TagManager:
   tags:
   - CinemachineTarget
   - Door
-  - PortalSurface
+  - StairsKey
+  - ScienceClassKey
+  - Collection1
+  - Collection2
+  - HydrochloricAcid
+  - Chocolate
   layers:
   - Default
   - TransparentFX
