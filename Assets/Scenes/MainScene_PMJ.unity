@@ -14747,6 +14747,67 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4800902508760328, guid: 2d0d657c1182735489e24a5ce302b99c, type: 3}
   m_PrefabInstance: {fileID: 366072627}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &367916251
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3902346200399521117, guid: c0a1100036073834aabaa112ae7e0112, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 24.344
+      objectReference: {fileID: 0}
+    - target: {fileID: 3902346200399521117, guid: c0a1100036073834aabaa112ae7e0112, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4.817
+      objectReference: {fileID: 0}
+    - target: {fileID: 3902346200399521117, guid: c0a1100036073834aabaa112ae7e0112, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -30.201
+      objectReference: {fileID: 0}
+    - target: {fileID: 3902346200399521117, guid: c0a1100036073834aabaa112ae7e0112, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3902346200399521117, guid: c0a1100036073834aabaa112ae7e0112, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3902346200399521117, guid: c0a1100036073834aabaa112ae7e0112, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3902346200399521117, guid: c0a1100036073834aabaa112ae7e0112, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3902346200399521117, guid: c0a1100036073834aabaa112ae7e0112, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3902346200399521117, guid: c0a1100036073834aabaa112ae7e0112, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3902346200399521117, guid: c0a1100036073834aabaa112ae7e0112, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5442292008605231862, guid: c0a1100036073834aabaa112ae7e0112, type: 3}
+      propertyPath: m_Name
+      value: Key_Stairs
+      objectReference: {fileID: 0}
+    - target: {fileID: 5442292008605231862, guid: c0a1100036073834aabaa112ae7e0112, type: 3}
+      propertyPath: m_TagString
+      value: StairsKey
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c0a1100036073834aabaa112ae7e0112, type: 3}
 --- !u!1001 &381681702
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25121,6 +25182,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 904045273312814628, guid: 8a79d211470578a47944bb054834936a, type: 3}
       propertyPath: m_Name
+      value: Chocolate
+      objectReference: {fileID: 0}
+    - target: {fileID: 904045273312814628, guid: 8a79d211470578a47944bb054834936a, type: 3}
+      propertyPath: m_TagString
       value: Chocolate
       objectReference: {fileID: 0}
     - target: {fileID: 4476359910970975177, guid: 8a79d211470578a47944bb054834936a, type: 3}
@@ -58042,6 +58107,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5442292008605231862, guid: c0a1100036073834aabaa112ae7e0112, type: 3}
       propertyPath: m_Name
+      value: Key_ScienceClass
+      objectReference: {fileID: 0}
+    - target: {fileID: 5442292008605231862, guid: c0a1100036073834aabaa112ae7e0112, type: 3}
+      propertyPath: m_TagString
       value: ScienceClassKey
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -58059,6 +58128,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7700791217749200964, guid: 7fc6bb0b946303246bc5a9cb7731d0f3, type: 3}
       propertyPath: m_Name
+      value: HydrochloricAcid
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700791217749200964, guid: 7fc6bb0b946303246bc5a9cb7731d0f3, type: 3}
+      propertyPath: m_TagString
       value: HydrochloricAcid
       objectReference: {fileID: 0}
     - target: {fileID: 7923220093274373759, guid: 7fc6bb0b946303246bc5a9cb7731d0f3, type: 3}
@@ -59672,6 +59745,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Collection1
       objectReference: {fileID: 0}
+    - target: {fileID: 1957095657884141230, guid: 3ecf4104939586947bce3eec3aef486d, type: 3}
+      propertyPath: m_TagString
+      value: Collection1
+      objectReference: {fileID: 0}
     - target: {fileID: 8741328183050627077, guid: 3ecf4104939586947bce3eec3aef486d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.545
@@ -59726,8 +59803,9 @@ SceneRoots:
   - {fileID: 1394137286}
   - {fileID: 182671991}
   - {fileID: 1933613367}
-  - {fileID: 769418491720673280}
   - {fileID: 1019892164}
+  - {fileID: 769418491720673280}
+  - {fileID: 367916251}
   - {fileID: 3036289102461325148}
   - {fileID: 5582550138763346584}
   - {fileID: 8662324698113695441}
