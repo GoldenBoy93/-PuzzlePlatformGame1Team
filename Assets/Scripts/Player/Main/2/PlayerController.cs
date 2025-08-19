@@ -51,6 +51,9 @@ public partial class PlayerController : MonoBehaviour //Character Controller Àü¿
         input.Player.Action.canceled += OnAction;
         input.Player.Interaction.started += OnInteraction;
         input.Player.Menu.started += OnMenu;
+        input.Player.PotalGun.started += OnPotalGun;
+        input.Player.MouseL.started += OnMouseL;
+        input.Player.MouseR.started += OnMouseR;
         input.Player.Enable();
     }
     private void Start()
@@ -176,4 +179,17 @@ public partial class PlayerController : MonoBehaviour //Character Controller Àü¿
     {
 
     }
+    void OnPotalGun(InputAction.CallbackContext context)
+    {
+
+    }
+    void OnMouseL(InputAction.CallbackContext context)
+    {
+
+    }
+    void OnMouseR(InputAction.CallbackContext context)
+    {
+
+    }
+
 }
