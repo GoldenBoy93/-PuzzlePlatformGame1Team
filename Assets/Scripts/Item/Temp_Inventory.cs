@@ -22,7 +22,7 @@ public class InventoryTemp : MonoBehaviour
 
     public bool Add(string itemId, int qty)
     {
-        var data = ItemManager.Instance.GetById(itemId);
+        var data = ItemDatabase.Instance.GetById(itemId);
         if (data == null) return false;
 
         if (data.stackable)

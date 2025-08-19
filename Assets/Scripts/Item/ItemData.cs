@@ -25,3 +25,7 @@ public abstract class ItemData : ScriptableObject
             GenerateId();
     }
 }
+
+public class SimpleItemData : ItemData
+{
+}

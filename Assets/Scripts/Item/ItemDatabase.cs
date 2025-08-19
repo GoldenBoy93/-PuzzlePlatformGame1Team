@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemManager : MonoBehaviour
+public class ItemDatabase : MonoBehaviour
 {
-    public static ItemManager Instance { get; private set; }
+    public static ItemDatabase Instance { get; private set; }
 
     [Tooltip("게임에서 쓰는 모든 ItemData를 여기에 등록 (또는 Resources/Addressables 로딩)")]
     public List<ItemData> items = new();
