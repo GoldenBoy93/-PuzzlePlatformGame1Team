@@ -117,6 +117,7 @@ public class AudioManager : MonoBehaviour
         bgmSource.Play();
     }
 
+    
     public void PlaySFX(AudioClip clip)
     {
         if (clip == null) return;

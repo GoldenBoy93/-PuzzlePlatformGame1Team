@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class EventDropBook : MonoBehaviour
@@ -20,6 +21,9 @@ public class EventDropBook : MonoBehaviour
             animator.SetTrigger("EnterCollider");
 
             hasTriggered = true;
+
+            DirectionManager.Instance.Direction();
+
         }
     }
 }

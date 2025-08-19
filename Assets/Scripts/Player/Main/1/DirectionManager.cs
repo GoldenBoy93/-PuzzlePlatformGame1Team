@@ -47,16 +47,24 @@ public class DirectionManager : MonoBehaviour
     {
         _animator = GameManager.Instance.PlayerManager.GetComponent<Animator>();
         _playerController = GameManager.Instance.PlayerManager.GetComponent<PlayerController>();
-    
-        StartCoroutine(IntroSequence());
+
+
+        Direction();
+
+
     }
    
-    IEnumerator IntroSequence()
+    public IEnumerator IntroSequence()
     {
         _playerController.LockInputOn();
         // 연출 시간 대기
         yield return new WaitForSecondsRealtime(5.5f);
         // 연출 끝나면 입력 활성화
         _playerController.LockInputOff();
+    }
+
+    public void Direction()
+    {
+        StartCoroutine(IntroSequence());
     }
 }

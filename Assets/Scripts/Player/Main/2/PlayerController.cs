@@ -24,7 +24,8 @@ public partial class PlayerController : MonoBehaviour //Character Controller Àü¿
     Animator _animator;
     Camera _camera;
     CharacterController _controller;
-    PlayerInput input;
+    PlayerInput _input;
+    Inventory _inventory;
 
     Vector2 dir;
     Vector3 velocity;
@@ -36,25 +37,27 @@ public partial class PlayerController : MonoBehaviour //Character Controller Àü¿
         _animator = GetComponent<Animator>();
         _camera = Camera.main;
         _controller = GetComponent<CharacterController>();
-        input = new PlayerInput();
+        _input = new PlayerInput();
+        _inventory = GetComponent<Inventory>();
     }
     private void OnEnable()
     {
-        input.Player.Move.performed += OnMove;
-        input.Player.Move.canceled += OnMove;
-        input.Player.Run.started += ctx => isRun = true;
-        input.Player.Run.canceled += ctx => isRun = false;
-        input.Player.Jump.started += OnJump;
-        input.Player.Flash.started += OnFlash;
-        input.Player.CameraToggle.started += OnToggleCamera;
-        input.Player.Action.performed += OnAction;
-        input.Player.Action.canceled += OnAction;
-        input.Player.Interaction.started += OnInteraction;
-        input.Player.Menu.started += OnMenu;
-        input.Player.PotalGun.started += OnPotalGun;
-        input.Player.MouseL.started += OnMouseL;
-        input.Player.MouseR.started += OnMouseR;
-        input.Player.Enable();
+        _input.Player.Move.performed += OnMove;
+        _input.Player.Move.canceled += OnMove;
+        _input.Player.Run.started += ctx => isRun = true;
+        _input.Player.Run.canceled += ctx => isRun = false;
+        _input.Player.Jump.started += OnJump;
+        _input.Player.Flash.started += OnFlash;
+        _input.Player.CameraToggle.started += OnToggleCamera;
+        _input.Player.Action.performed += OnAction;
+        _input.Player.Action.canceled += OnAction;
+        _input.Player.Interaction.started += OnInteraction;
+        _input.Player.Menu.started += OnMenu;
+        _input.Player.Inventory.started += OnInventory;
+        _input.Player.PotalGun.started += OnPotalGun;
+        _input.Player.MouseL.started += OnMouseL;
+        _input.Player.MouseR.started += OnMouseR;
+        _input.Player.Enable();
     }
     private void Start()
     {
@@ -78,7 +81,7 @@ public partial class PlayerController : MonoBehaviour //Character Controller Àü¿
                 (transform.rotation, Quaternion.LookRotation(playerRotate), Time.deltaTime * smooth);
         }
     }
-    private void OnDisable() => input.Player.Disable();
+    private void OnDisable() => _input.Player.Disable();
 
     void Move()
     {
@@ -106,8 +109,8 @@ public partial class PlayerController : MonoBehaviour //Character Controller Àü¿
     }
 
     
-    public void LockInputOn() => input.Disable();
-    public void LockInputOff() => input.Enable();
+    public void LockInputOn() => _input.Disable();
+    public void LockInputOff() => _input.Enable();
 
     void OnMove(InputAction.CallbackContext context)
     {
@@ -175,21 +178,54 @@ public partial class PlayerController : MonoBehaviour //Character Controller Àü¿
         _animator.SetTrigger("IsInteraction");
     }
 
+    private bool Menu = false;
     void OnMenu(InputAction.CallbackContext context)
     {
+        if (!context.started) return; // ´©¸¦ ¶§¸¸ ½ÇÇà (¶¿ ¶§ ¹«½Ã)
+        Menu = !Menu; // Åä±Û
 
+        Time.timeScale = Menu ? 0.1f : 1f;
+
+        Debug.Log(Menu ? "Menu Opened!" : "Menu Closed!");
+
+        // ¸Þ´º UI È°¼ºÈ­/ºñÈ°¼ºÈ­
+        // menuUI.SetActive(Menu);
+    }
+    void OnInventory(InputAction.CallbackContext context)
+    {
+        if (!context.started) return; // ´©¸¦ ¶§¸¸ ½ÇÇà (¶¿ ¶§ ¹«½Ã)
+        Menu = !Menu; // Åä±Û
+
+        Time.timeScale = Menu ? 0.1f : 1f;
+
+        Debug.Log(Menu ? "Inventory Opened!" : "Inventory Closed!");
+
+        if (_inventory.window.activeInHierarchy) //È°¼ºÈ­µÇÀÖ´ÂÁö ¾Ë·ÁÁÜ
+            _inventory.window.SetActive(false);
+        else
+            _inventory.window.SetActive(true);
     }
     void OnPotalGun(InputAction.CallbackContext context)
     {
+        if (!context.started) return; // ´©¸¦ ¶§¸¸ ½ÇÇà (¶¿ ¶§ ¹«½Ã)
+        Menu = !Menu; // Åä±Û
 
+        _animator.SetLayerWeight(2, Menu ? 1f : 0f);
+        _animator.SetBool("IsGun", Menu);
+        // ¸Þ´º UI È°¼ºÈ­/ºñÈ°¼ºÈ­
+        // menuUI.SetActive(Menu);
     }
     void OnMouseL(InputAction.CallbackContext context)
     {
+        _animator.SetTrigger("IsShoot");
 
+        //Æ÷Å»Å° 1¹ø
     }
     void OnMouseR(InputAction.CallbackContext context)
     {
+        _animator.SetTrigger("IsShoot");
+
+        //Æ÷Å»Å° 2¹ø
 
     }
-
 }

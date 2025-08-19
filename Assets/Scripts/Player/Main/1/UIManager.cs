@@ -20,7 +20,7 @@ public enum PlayerState //플레이어의 현재상태
     Dead
 }
 
-public class UI_Manager : MonoBehaviour //데이터랑 구독 유지용
+public class UIManager : MonoBehaviour //데이터랑 구독 유지용
 {
     public PlayerModel Model { get; private set; }
     public PlayerViewModel ViewModel { get; private set; }

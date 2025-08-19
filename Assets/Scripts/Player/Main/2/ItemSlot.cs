@@ -4,8 +4,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_ItemSlot : MonoBehaviour
+public class ItemSlot : MonoBehaviour
 {
+    public ItemData item;
+    public Inventory inventory;
     public Button button;
     public Image icon;
     public TextMeshProUGUI quantityText;
@@ -18,7 +20,12 @@ public class UI_ItemSlot : MonoBehaviour
     public int quantity;
     public bool equipped;
 
-    private void Awake() { outline = GetComponent<Outline>(); }
+
+
+    private void Awake() => outline = GetComponent<Outline>();
+
+    private void OnEnable() => outline.enabled = equipped;
+
 
     public void Set(string itemName, int quantity, bool equipped = false)
     {
@@ -45,7 +52,7 @@ public class UI_ItemSlot : MonoBehaviour
         if (outline != null) outline.enabled = false;
     }
 
-    //public void OnClickButton() => inventoryView.SelectItem(index);
+    public void OnClickButton() => inventory.SelectItem(index);
 
 
     //public ItemData GetItemData(string name)
