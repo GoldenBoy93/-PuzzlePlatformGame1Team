@@ -9,37 +9,38 @@ using UnityEngine.InputSystem.Controls;
 public partial class PlayerController : MonoBehaviour //Character Controller Àü¿ë
 { 
     [Header("Movement")]
-    float speed = 2f;
-    float runSpeed = 4f;
-    float smooth = 20f;
-    float gravity = -9.81f;
-
-    [Header("Camera")]
+    public float speed = 2f;
+    public float runSpeed = 4f;
+    public float smooth = 20f;
+    public float gravity = -9.81f;
 
     [Header("Object")]
     public bool toggleCameraRotation;
-    public GameObject uiAction;
     public List<GameObject> flashLights;
 
-    Animator _animator;
-    Camera _camera;
     CharacterController _controller;
     PlayerInput _input;
+    Animator _animator;
+    Camera _camera;
     Inventory _inventory;
+    UI_ActionKey _uiAction;
+    UI_SettingPanel _settingPanel;
 
     Vector2 dir;
     Vector3 velocity;
     bool isRun;
     bool isGrounded;
+    bool toggle = false;
+
 
     private void Awake()
     {
-        _animator = GetComponent<Animator>();
-        _camera = Camera.main;
-        _controller = GetComponent<CharacterController>();
+        _controller = SafeFetchHelper.GetOrError<CharacterController>(gameObject);
+        _animator = SafeFetchHelper.GetOrError<Animator>(gameObject);
+        _camera = SafeFetchHelper.GetOrCreateByName<Camera>("Main Camera");
         _input = new PlayerInput();
-        _inventory = GetComponent<Inventory>();
     }
+
     private void OnEnable()
     {
         _input.Player.Move.performed += OnMove;
@@ -61,7 +62,9 @@ public partial class PlayerController : MonoBehaviour //Character Controller Àü¿
     }
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        _inventory = SafeFetchHelper.GetOrError<Inventory>(UI_Manager.Instance.gameObject);
+        _uiAction = SafeFetchHelper.GetOrError<UI_ActionKey>(UI_Manager.Instance.gameObject);
+        _settingPanel = SafeFetchHelper.GetOrError<UI_SettingPanel>(UI_Manager.Instance.gameObject);
     }
     private void Update()
     {
@@ -124,13 +127,13 @@ public partial class PlayerController : MonoBehaviour //Character Controller Àü¿
             velocity.y = Mathf.Sqrt(-gravity);
         }
     }
-    void OnToggleCamera(InputAction.CallbackContext context)
+    void OnToggleCamera(InputAction.CallbackContext context) //Alt
     {
         if (context.started) // ¹öÆ° ´­·¶À» ¶§¸¸
             toggleCameraRotation = !toggleCameraRotation; // true ¡ê false Åä±Û
     }
 
-    void OnFlash(InputAction.CallbackContext context)
+    void OnFlash(InputAction.CallbackContext context) // Q
     {
         int state = _animator.GetInteger("IsFlash");
 
@@ -157,17 +160,17 @@ public partial class PlayerController : MonoBehaviour //Character Controller Àü¿
                 light.SetActive(false);
         }
     }
-    void OnAction(InputAction.CallbackContext context)
+    void OnAction(InputAction.CallbackContext context) // Z
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            uiAction.SetActive(true);   // ´©¸£´Â µ¿¾È ÄÑ±â
+            _uiAction.gameObject.SetActive(true);   // ´©¸£´Â µ¿¾È ÄÑ±â
             Time.timeScale = 0.2f;
             Cursor.lockState = CursorLockMode.None;
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
-            uiAction.SetActive(false);  // ¶¼¸é ²ô±â
+            _uiAction.gameObject.SetActive(false);  // ¶¼¸é ²ô±â
             Time.timeScale = 1f;
             Cursor.lockState = CursorLockMode.Locked;
         }
@@ -178,40 +181,36 @@ public partial class PlayerController : MonoBehaviour //Character Controller Àü¿
         _animator.SetTrigger("IsInteraction");
     }
 
-    private bool Menu = false;
-    void OnMenu(InputAction.CallbackContext context)
+    void OnMenu(InputAction.CallbackContext context) // ESC
     {
         if (!context.started) return; // ´©¸¦ ¶§¸¸ ½ÇÇà (¶¿ ¶§ ¹«½Ã)
-        Menu = !Menu; // Åä±Û
+        toggle = !toggle; // Åä±Û
 
-        Time.timeScale = Menu ? 0.1f : 1f;
+        _settingPanel.OnToggleSettings();
+        Time.timeScale = toggle ? 0.1f : 1f;
 
-        Debug.Log(Menu ? "Menu Opened!" : "Menu Closed!");
-
-        // ¸Þ´º UI È°¼ºÈ­/ºñÈ°¼ºÈ­
-        // menuUI.SetActive(Menu);
     }
-    void OnInventory(InputAction.CallbackContext context)
+    void OnInventory(InputAction.CallbackContext context) // Tap
     {
         if (!context.started) return; // ´©¸¦ ¶§¸¸ ½ÇÇà (¶¿ ¶§ ¹«½Ã)
-        Menu = !Menu; // Åä±Û
+        toggle = !toggle; // Åä±Û
 
-        Time.timeScale = Menu ? 0.1f : 1f;
+        Time.timeScale = toggle ? 0.1f : 1f;
 
-        Debug.Log(Menu ? "Inventory Opened!" : "Inventory Closed!");
+        Debug.Log(toggle ? "Inventory Opened!" : "Inventory Closed!");
 
-        if (_inventory.window.activeInHierarchy) //È°¼ºÈ­µÇÀÖ´ÂÁö ¾Ë·ÁÁÜ
-            _inventory.window.SetActive(false);
+        if (_inventory.inventory.activeInHierarchy) //È°¼ºÈ­µÇÀÖ´ÂÁö ¾Ë·ÁÁÜ
+            _inventory.inventory.SetActive(false);
         else
-            _inventory.window.SetActive(true);
+            _inventory.inventory.SetActive(true);
     }
-    void OnPotalGun(InputAction.CallbackContext context)
+    void OnPotalGun(InputAction.CallbackContext context) //Ctrl
     {
         if (!context.started) return; // ´©¸¦ ¶§¸¸ ½ÇÇà (¶¿ ¶§ ¹«½Ã)
-        Menu = !Menu; // Åä±Û
+        toggle = !toggle; // Åä±Û
 
-        _animator.SetLayerWeight(2, Menu ? 1f : 0f);
-        _animator.SetBool("IsGun", Menu);
+        _animator.SetLayerWeight(2, toggle ? 1f : 0f);
+        _animator.SetBool("IsGun", toggle);
         // ¸Þ´º UI È°¼ºÈ­/ºñÈ°¼ºÈ­
         // menuUI.SetActive(Menu);
     }

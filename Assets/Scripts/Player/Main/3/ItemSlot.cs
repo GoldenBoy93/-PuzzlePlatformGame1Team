@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ItemSlot : MonoBehaviour
 {
-    public ItemData item;
+    public ItemData data;
     public Inventory inventory;
     public Button button;
     public Image icon;
@@ -34,12 +34,12 @@ public class ItemSlot : MonoBehaviour
         this.equipped = equipped;
 
         //var data = GetItemData(itemName);
-        //if (data == null) return;
-        //
-        //icon.gameObject.SetActive(true);
-        //icon.sprite = data.icon;
-        //quantityText.text = quantity > 1 ? quantity.ToString() : "";
-        //if (outline != null) outline.enabled = equipped;
+        if (data == null) return;
+        
+        icon.gameObject.SetActive(true);
+        icon.sprite = data.icon;
+        quantityText.text = quantity > 1 ? quantity.ToString() : "";
+        if (outline != null) outline.enabled = equipped;
     }
 
     public void Clear()
@@ -58,6 +58,6 @@ public class ItemSlot : MonoBehaviour
     //public ItemData GetItemData(string name)
     //{
     //    if (string.IsNullOrEmpty(name)) return null;
-    //    return GameManager.Instance.ItemDatabase.GetItemData(name);
+    //    return data.displayName(name);
     //}
 }

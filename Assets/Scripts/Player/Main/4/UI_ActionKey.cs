@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UI_Action : MonoBehaviour
+public class UI_ActionKey : MonoBehaviour
 {
     public RectTransform parent; // 원형 배치할 부모
     public float radius = 100f;  // 원 반지름

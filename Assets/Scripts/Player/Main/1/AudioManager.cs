@@ -20,10 +20,8 @@ public class AudioManager : MonoBehaviour
         {
             if (_instance == null)
             {
-                // 씬 안에 AudioManager 찾기
                 _instance = FindObjectOfType<AudioManager>();
 
-                // 없으면 새로 생성
                 if (_instance == null)
                 {
                     GameObject go = new GameObject("AudioManager");
