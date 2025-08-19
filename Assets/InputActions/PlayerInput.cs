@@ -57,15 +57,6 @@ namespace UnityEngine.InputSystem
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Fire"",
-                    ""type"": ""Button"",
-                    ""id"": ""6c2ab1b8-8984-453a-af3d-a3c78ae1679a"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""7eae478f-d95d-49fe-a55b-fa3efcf9a752"",
@@ -114,6 +105,33 @@ namespace UnityEngine.InputSystem
                     ""name"": ""Menu"",
                     ""type"": ""Button"",
                     ""id"": ""13088985-771f-4df9-b9ae-c0b474e1846e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PotalGun"",
+                    ""type"": ""Button"",
+                    ""id"": ""80ee5400-ca5e-410d-9b15-0facd82a3488"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseL"",
+                    ""type"": ""Button"",
+                    ""id"": ""6c2ab1b8-8984-453a-af3d-a3c78ae1679a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseR"",
+                    ""type"": ""Button"",
+                    ""id"": ""3780d18c-b108-4608-8478-a7f38791e1ff"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -288,61 +306,6 @@ namespace UnityEngine.InputSystem
                 },
                 {
                     ""name"": """",
-                    ""id"": ""143bb1cd-cc10-4eca-a2f0-a3664166fe91"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""05f6913d-c316-48b2-a6bb-e225f14c7960"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""886e731e-7071-4ae4-95c0-e61739dad6fd"",
-                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Touch"",
-                    ""action"": ""Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ee3d0cd2-254e-47a7-a8cb-bc94d9658c54"",
-                    ""path"": ""<Joystick>/trigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Joystick"",
-                    ""action"": ""Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""8255d333-5683-4943-a58a-ccb207ff1dce"",
-                    ""path"": ""<XRController>/{PrimaryAction}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""XR"",
-                    ""action"": ""Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""53c84b10-7a7d-47a1-ba46-ff03031a77db"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
@@ -415,6 +378,83 @@ namespace UnityEngine.InputSystem
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""617ca304-64e7-4bea-8cbf-95f427590061"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PotalGun"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""143bb1cd-cc10-4eca-a2f0-a3664166fe91"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""MouseL"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""886e731e-7071-4ae4-95c0-e61739dad6fd"",
+                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Touch"",
+                    ""action"": ""MouseL"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ee3d0cd2-254e-47a7-a8cb-bc94d9658c54"",
+                    ""path"": ""<Joystick>/trigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Joystick"",
+                    ""action"": ""MouseL"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8255d333-5683-4943-a58a-ccb207ff1dce"",
+                    ""path"": ""<XRController>/{PrimaryAction}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XR"",
+                    ""action"": ""MouseL"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""05f6913d-c316-48b2-a6bb-e225f14c7960"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""MouseL"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8d4b7f94-17ff-47d4-8a57-2689090373db"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseR"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1005,13 +1045,15 @@ namespace UnityEngine.InputSystem
             m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
             m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
             m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
-            m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
             m_Player_Flash = m_Player.FindAction("Flash", throwIfNotFound: true);
             m_Player_CameraToggle = m_Player.FindAction("CameraToggle", throwIfNotFound: true);
             m_Player_Action = m_Player.FindAction("Action", throwIfNotFound: true);
             m_Player_Interaction = m_Player.FindAction("Interaction", throwIfNotFound: true);
             m_Player_Menu = m_Player.FindAction("Menu", throwIfNotFound: true);
+            m_Player_PotalGun = m_Player.FindAction("PotalGun", throwIfNotFound: true);
+            m_Player_MouseL = m_Player.FindAction("MouseL", throwIfNotFound: true);
+            m_Player_MouseR = m_Player.FindAction("MouseR", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1088,13 +1130,15 @@ namespace UnityEngine.InputSystem
         private readonly InputAction m_Player_Move;
         private readonly InputAction m_Player_Run;
         private readonly InputAction m_Player_Look;
-        private readonly InputAction m_Player_Fire;
         private readonly InputAction m_Player_Jump;
         private readonly InputAction m_Player_Flash;
         private readonly InputAction m_Player_CameraToggle;
         private readonly InputAction m_Player_Action;
         private readonly InputAction m_Player_Interaction;
         private readonly InputAction m_Player_Menu;
+        private readonly InputAction m_Player_PotalGun;
+        private readonly InputAction m_Player_MouseL;
+        private readonly InputAction m_Player_MouseR;
         public struct PlayerActions
         {
             private @PlayerInput m_Wrapper;
@@ -1102,13 +1146,15 @@ namespace UnityEngine.InputSystem
             public InputAction @Move => m_Wrapper.m_Player_Move;
             public InputAction @Run => m_Wrapper.m_Player_Run;
             public InputAction @Look => m_Wrapper.m_Player_Look;
-            public InputAction @Fire => m_Wrapper.m_Player_Fire;
             public InputAction @Jump => m_Wrapper.m_Player_Jump;
             public InputAction @Flash => m_Wrapper.m_Player_Flash;
             public InputAction @CameraToggle => m_Wrapper.m_Player_CameraToggle;
             public InputAction @Action => m_Wrapper.m_Player_Action;
             public InputAction @Interaction => m_Wrapper.m_Player_Interaction;
             public InputAction @Menu => m_Wrapper.m_Player_Menu;
+            public InputAction @PotalGun => m_Wrapper.m_Player_PotalGun;
+            public InputAction @MouseL => m_Wrapper.m_Player_MouseL;
+            public InputAction @MouseR => m_Wrapper.m_Player_MouseR;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1127,9 +1173,6 @@ namespace UnityEngine.InputSystem
                 @Look.started += instance.OnLook;
                 @Look.performed += instance.OnLook;
                 @Look.canceled += instance.OnLook;
-                @Fire.started += instance.OnFire;
-                @Fire.performed += instance.OnFire;
-                @Fire.canceled += instance.OnFire;
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
@@ -1148,6 +1191,15 @@ namespace UnityEngine.InputSystem
                 @Menu.started += instance.OnMenu;
                 @Menu.performed += instance.OnMenu;
                 @Menu.canceled += instance.OnMenu;
+                @PotalGun.started += instance.OnPotalGun;
+                @PotalGun.performed += instance.OnPotalGun;
+                @PotalGun.canceled += instance.OnPotalGun;
+                @MouseL.started += instance.OnMouseL;
+                @MouseL.performed += instance.OnMouseL;
+                @MouseL.canceled += instance.OnMouseL;
+                @MouseR.started += instance.OnMouseR;
+                @MouseR.performed += instance.OnMouseR;
+                @MouseR.canceled += instance.OnMouseR;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -1161,9 +1213,6 @@ namespace UnityEngine.InputSystem
                 @Look.started -= instance.OnLook;
                 @Look.performed -= instance.OnLook;
                 @Look.canceled -= instance.OnLook;
-                @Fire.started -= instance.OnFire;
-                @Fire.performed -= instance.OnFire;
-                @Fire.canceled -= instance.OnFire;
                 @Jump.started -= instance.OnJump;
                 @Jump.performed -= instance.OnJump;
                 @Jump.canceled -= instance.OnJump;
@@ -1182,6 +1231,15 @@ namespace UnityEngine.InputSystem
                 @Menu.started -= instance.OnMenu;
                 @Menu.performed -= instance.OnMenu;
                 @Menu.canceled -= instance.OnMenu;
+                @PotalGun.started -= instance.OnPotalGun;
+                @PotalGun.performed -= instance.OnPotalGun;
+                @PotalGun.canceled -= instance.OnPotalGun;
+                @MouseL.started -= instance.OnMouseL;
+                @MouseL.performed -= instance.OnMouseL;
+                @MouseL.canceled -= instance.OnMouseL;
+                @MouseR.started -= instance.OnMouseR;
+                @MouseR.performed -= instance.OnMouseR;
+                @MouseR.canceled -= instance.OnMouseR;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -1367,13 +1425,15 @@ namespace UnityEngine.InputSystem
             void OnMove(InputAction.CallbackContext context);
             void OnRun(InputAction.CallbackContext context);
             void OnLook(InputAction.CallbackContext context);
-            void OnFire(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
             void OnFlash(InputAction.CallbackContext context);
             void OnCameraToggle(InputAction.CallbackContext context);
             void OnAction(InputAction.CallbackContext context);
             void OnInteraction(InputAction.CallbackContext context);
             void OnMenu(InputAction.CallbackContext context);
+            void OnPotalGun(InputAction.CallbackContext context);
+            void OnMouseL(InputAction.CallbackContext context);
+            void OnMouseR(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {

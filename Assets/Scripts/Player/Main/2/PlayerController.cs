@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 
-public class PlayerController : MonoBehaviour //Character Controller 전용
+public partial class PlayerController : MonoBehaviour //Character Controller 전용
 { 
     [Header("Movement")]
     float speed = 2f;
@@ -51,6 +51,9 @@ public class PlayerController : MonoBehaviour //Character Controller 전용
         input.Player.Action.canceled += OnAction;
         input.Player.Interaction.started += OnInteraction;
         input.Player.Menu.started += OnMenu;
+        input.Player.PotalGun.started += OnPotalGun;
+        input.Player.MouseL.started += OnMouseL;
+        input.Player.MouseR.started += OnMouseR;
         input.Player.Enable();
     }
     private void Start()
@@ -176,4 +179,17 @@ public class PlayerController : MonoBehaviour //Character Controller 전용
     {
 
     }
+    void OnPotalGun(InputAction.CallbackContext context)
+    {
+
+    }
+    void OnMouseL(InputAction.CallbackContext context)
+    {
+
+    }
+    void OnMouseR(InputAction.CallbackContext context)
+    {
+
+    }
+
 }
