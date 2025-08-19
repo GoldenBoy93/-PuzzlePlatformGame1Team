@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PuzzleManager : MonoBehaviour
 {
     private static PuzzleManager _instance;
+    public TextMeshProUGUI promptText;
 
     public static PuzzleManager Instance
     {
@@ -44,6 +46,9 @@ public class PuzzleManager : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            promptText.gameObject.SetActive(false);
+            promptText.text = null;
+
             //Inventory playerInventory = other.GetComponent<Inventory>();
 
             ////인벤토리에 열쇠가 있는지 확인
