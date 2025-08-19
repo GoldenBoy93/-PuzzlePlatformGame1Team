@@ -40,7 +40,7 @@ public class PuzzleManager : MonoBehaviour
     }
 
     // Key 있어야 열리는 퍼즐
-    public void KeyCheck(Collider other)
+    public bool KeyCheck(Collider other, GameObject wall)
     {
         if (other.CompareTag("Player"))
         {
@@ -52,7 +52,13 @@ public class PuzzleManager : MonoBehaviour
             //    Destroy(wallCollider);
             //    Debug.Log("문을 열었습니다.");
             //    audioSource.PlayOneShot(soundEffect);
+            //return true;
             //}
+
+            Destroy(wall);
+            Debug.Log("문을 열었습니다.");
+            return true;
         }
+        return false;
     }
 }
