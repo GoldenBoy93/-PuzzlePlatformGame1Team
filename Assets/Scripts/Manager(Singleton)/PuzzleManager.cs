@@ -47,7 +47,7 @@ public class PuzzleManager : MonoBehaviour
             //Inventory playerInventory = other.GetComponent<Inventory>();
 
             ////인벤토리에 열쇠가 있는지 확인
-            //if (playerInventory != null && playerInventory.HasItem(KeyName))
+            //if (playerInventory != null && playerInventory.HasItem(keyName))
             //{
             //    Destroy(wallCollider);
             //    Debug.Log("문을 열었습니다.");

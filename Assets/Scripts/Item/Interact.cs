@@ -19,7 +19,6 @@ public class Interact : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("콜라이더 확인");
             ActivePromptText();
         }
     }
@@ -28,7 +27,6 @@ public class Interact : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("콜라이더 나감2");
             NotActivePromptText();
         }
     }
