@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 
-public class PlayerController : MonoBehaviour //Character Controller 전용
+public partial class PlayerController : MonoBehaviour //Character Controller 전용
 { 
     [Header("Movement")]
     float speed = 2f;
