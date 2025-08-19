@@ -6,7 +6,7 @@ using UnityEngine;
 // (ex.GameManager.Instance.PlayerInstance.playerController)
 public class PlayerManager : MonoBehaviour
 {
-    public PlayerController playerController;
+    public PlayerController controller;
     public Animator animator;
 
 
@@ -14,6 +14,11 @@ public class PlayerManager : MonoBehaviour
     private void Awake()
     {
         GameManager.Instance.PlayerManager = this;
+
+        controller = GetComponent<PlayerController>();
+        animator = GetComponent<Animator>();
+
+
         DontDestroyOnLoad(gameObject);
     }
 }
