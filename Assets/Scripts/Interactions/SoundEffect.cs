@@ -16,17 +16,24 @@ public class SoundEffect : MonoBehaviour
 
     public void PlaySoundEffect()
     {
-        // 게임 시작 시에는 사운드 재생을 건너뜁니다.
-        if (isInitialState)
+        Debug.Log("PlaySoundEffect 함수가 호출되었습니다.");
+
+        if (isInitialState == true)
         {
-            isInitialState = false; // 다음부터는 사운드 재생 허용
+            Debug.Log("isInitialState가 true여서 사운드 재생을 건너뜁니다.");
+            isInitialState = false;
+            Debug.Log(isInitialState);
             return;
         }
 
-        // 그 외의 경우에는 사운드 재생
         if (soundEffect != null && audioSource != null)
         {
             audioSource.PlayOneShot(soundEffect);
+            Debug.Log("사운드 이펙트가 재생되었습니다.");
+        }
+        else
+        {
+            Debug.Log("사운드 이펙트 또는 오디오 소스가 할당되지 않았습니다.");
         }
     }
 }
