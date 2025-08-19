@@ -6,12 +6,14 @@ using UnityEngine;
 public class EventDropBook : MonoBehaviour
 {
     private Animator animator;
+    private AudioSource audioSource;
 
     private bool hasTriggered = false;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -19,6 +21,7 @@ public class EventDropBook : MonoBehaviour
         if (other.CompareTag("Player") && !hasTriggered)
         {
             animator.SetTrigger("EnterCollider");
+            audioSource.PlayOneShot(audioSource.clip);
 
             hasTriggered = true;
 
