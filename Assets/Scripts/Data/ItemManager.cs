@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemDatabase : MonoBehaviour
+public class ItemManager : MonoBehaviour
 {
-    public static ItemDatabase Instance { get; private set; }
+    public static ItemManager Instance { get; private set; }
 
     [Tooltip("게임에서 쓰는 모든 ItemData를 여기에 등록 (또는 Resources/Addressables 로딩)")]
     public List<ItemData> items = new();
@@ -12,8 +12,13 @@ public class ItemDatabase : MonoBehaviour
 
     void Awake()
     {
-        if (Instance && Instance != this) { Destroy(gameObject); return; }
+        if (Instance && Instance != this)
+        {
+            Destroy(gameObject); return; 
+        }
+        
         Instance = this;
+        
         DontDestroyOnLoad(gameObject);
 
         map = new Dictionary<string, ItemData>(items.Count);

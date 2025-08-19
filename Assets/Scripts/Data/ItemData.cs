@@ -5,7 +5,7 @@ public enum ItemType { Misc, Consumable, Tool }
 public abstract class ItemData : ScriptableObject
 {
     [Header("Identity")]
-    public string id;                 // for save
+    [SerializeField, HideInInspector] public string id;                 // for save
     public string displayName;
     public ItemType type = ItemType.Misc;
     public Sprite icon;
@@ -14,7 +14,14 @@ public abstract class ItemData : ScriptableObject
 
     [ContextMenu("Generate New ID")]
     void GenerateId()
-    { 
+    {
         id = System.Guid.NewGuid().ToString("N");
+    }
+
+    // If value is empty, automatically generate ID
+    protected virtual void OnValidate()
+    {
+        if (string.IsNullOrEmpty(id))
+            GenerateId();
     }
 }
