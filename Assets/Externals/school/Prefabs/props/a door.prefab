@@ -222,7 +222,6 @@ GameObject:
   - component: {fileID: 4173873760860446}
   - component: {fileID: 5078982329545259419}
   - component: {fileID: 2841655461646228228}
-  - component: {fileID: 4498379355967484615}
   - component: {fileID: 4187765776689160021}
   m_Layer: 7
   m_Name: a door
@@ -281,20 +280,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2fa66daea46aea4d9218887ccabb30e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openable: 0
---- !u!114 &4498379355967484615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1965528337302418}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08e9f74b7eb2f834ab2bac2021ad8160, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundEffect: {fileID: 8300000, guid: bf7f625a55e6b4d4fa236f91543dfd00, type: 3}
 --- !u!82 &4187765776689160021
 AudioSource:
   m_ObjectHideFlags: 0
@@ -305,7 +290,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: bf7f625a55e6b4d4fa236f91543dfd00, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

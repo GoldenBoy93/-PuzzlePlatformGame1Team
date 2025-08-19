@@ -13,10 +13,12 @@ public class Door : MonoBehaviour
 {
     private DoorState state;
     private Animator animator;
+    private AudioSource audioSource;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -34,12 +36,14 @@ public class Door : MonoBehaviour
             // 현재 Oen 상태라면 Closed로 변경
             case DoorState.Open:
                 state = DoorState.Closed;
+                audioSource.PlayOneShot(audioSource.clip);
                 Debug.Log("Door is now Closed");
                 return;
 
             // 현재 Closed 상태라면 Open으로 변경
             case DoorState.Closed:
                 state = DoorState.Open;
+                audioSource.PlayOneShot(audioSource.clip);
                 Debug.Log("Door is now Open");
                 return;
         }
