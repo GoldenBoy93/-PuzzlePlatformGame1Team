@@ -57,24 +57,7 @@ public class UIManager : MonoBehaviour
                 DestroyCurrentUI(); // 이전 UI는 파괴
 
                 currentUI = ResourceManager.Instance.InstantiateUI<GameUI>("GameUI", uiRootPosition);
-
-                // 씬에서 플레이어를 찾아
-                PlayerCondition playerCondition = FindObjectOfType<PlayerCondition>();
-
-                if (playerCondition != null)
-                {
-                    // gameUI의 자식인 UICondition 스크립트를 찾음
-                    UICondition uiConditions = currentUI.GetComponentInChildren<UICondition>();
-
-                    if (uiConditions != null)
-                    {
-                        // 플레이어에게 체력바 스크립트를 연결해줌
-                        playerCondition.SetUICondition(uiConditions);
-                    }
-                }
-
                 break;
-
             case GameState.Paused:
                 currentUI = ResourceManager.Instance.InstantiateUI<PausedUI>("PausedUI", uiRootPosition);
                 break;
