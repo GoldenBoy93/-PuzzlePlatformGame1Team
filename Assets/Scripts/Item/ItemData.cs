@@ -1,14 +1,16 @@
 using UnityEngine;
 
-public enum ItemType { Misc, Consumable, Tool }
+public enum ItemType { Simple, Consumable, Tool }
 
 public abstract class ItemData : ScriptableObject
 {
     [Header("Identity")]
     [SerializeField, HideInInspector] public string id;                 // for save
     public string displayName;
-    public ItemType type = ItemType.Misc;
+    public string description;
+    public ItemType type = ItemType.Simple;
     public Sprite icon;
+    public GameObject itemPrefab;
     public bool stackable = true;
     public int maxStack = 99;
 
@@ -24,8 +26,4 @@ public abstract class ItemData : ScriptableObject
         if (string.IsNullOrEmpty(id))
             GenerateId();
     }
-}
-
-public class SimpleItemData : ItemData
-{
 }
