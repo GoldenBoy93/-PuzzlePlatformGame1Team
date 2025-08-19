@@ -12,7 +12,7 @@ public class UI_ItemSlot : MonoBehaviour
     private Outline outline;
 
     [HideInInspector] public int index;
-    [HideInInspector] public InventoryView inventoryView;
+    //[HideInInspector] public InventoryView inventoryView;
 
     public string itemName;
     public int quantity;
@@ -45,7 +45,7 @@ public class UI_ItemSlot : MonoBehaviour
         if (outline != null) outline.enabled = false;
     }
 
-    public void OnClickButton() => inventoryView.SelectItem(index);
+    //public void OnClickButton() => inventoryView.SelectItem(index);
 
 
     //public ItemData GetItemData(string name)
