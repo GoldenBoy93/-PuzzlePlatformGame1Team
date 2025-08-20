@@ -7175,6 +7175,14 @@ PrefabInstance:
       propertyPath: bgmStart
       value: 
       objectReference: {fileID: 8300000, guid: 7573cd7544d6c554ebb1f8485af77451, type: 3}
+    - target: {fileID: 5921948162512277794, guid: 08b69466ef28d274bbd7ac2820bc8f18, type: 3}
+      propertyPath: bgmVolume
+      value: 0.072
+      objectReference: {fileID: 0}
+    - target: {fileID: 5921948162512277794, guid: 08b69466ef28d274bbd7ac2820bc8f18, type: 3}
+      propertyPath: sfxVolume
+      value: 0.484
+      objectReference: {fileID: 0}
     - target: {fileID: 6875127973720166560, guid: 08b69466ef28d274bbd7ac2820bc8f18, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.1060019
