@@ -51,6 +51,21 @@ public class EndingPlayer2 : MonoBehaviour
         animator.Play("Player2_Walk");
     }
 
+    public void WalkEnd()
+    {
+        player1Script.RightTurn();
+    }
+
+    public void Walk2()
+    {
+        animator.Play("Player2_Walk2");
+    }
+
+    public void Walk3()
+    {
+        animator.Play("Player2_Walk3");
+    }
+
     void OnAnimatorMove()
     {
         // 애니메이션 위치 변화량을 가져옴

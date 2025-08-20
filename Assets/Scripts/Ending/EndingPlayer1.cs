@@ -14,6 +14,8 @@ public class EndingPlayer1 : MonoBehaviour
 
     public GameObject chocolate;
 
+    public GameObject UI;
+
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -44,7 +46,7 @@ public class EndingPlayer1 : MonoBehaviour
 
     public void Hug()
     {
-        SetTargetTransform(new Vector3(-3,-7,6));
+        SetTargetTransform(new Vector3(-10,-7,6));
         animator.Play("Player1_Hug");
     }
 
@@ -72,25 +74,52 @@ public class EndingPlayer1 : MonoBehaviour
         player2Script.Walk();
     }
 
-    public void Turn()
+    public void RightTurn()
     {
-        animator.Play("Player1_Turn");
+        animator.Play("Player1_RightTurn");
     }
 
-    public void Victory()
+    public void RightTurn2()
     {
-        animator.Play("Player1_Victory");
+        animator.Play("Player1_RightTurn2");
+    }
+
+    public void Shame2()
+    {
+        animator.Play("Player1_Shame2");
+    }
+
+    public void Walk2()
+    {
+        animator.Play("Player1_Walk2");
+    }
+
+    public void Walk3()
+    {
+        animator.Play("Player1_Walk3");
+    }
+
+    public void Nice()
+    {
+        animator.Play("Player1_Nice");
+    }
+
+    public void SetPanel()
+    {
+        UI.SetActive(true);
     }
 
     void OnAnimatorMove()
     {
         // 애니메이션 위치 변화량을 가져옴
         Vector3 deltaPosition = animator.deltaPosition;
+        Quaternion deltaRotation = animator.deltaRotation;
 
         // 위치 변화량을 캐릭터의 실제 위치에 적용
         if (rb != null)
         {
             rb.MovePosition(rb.position + deltaPosition);
+            rb.MoveRotation(rb.rotation * deltaRotation);
         }
     }
 
