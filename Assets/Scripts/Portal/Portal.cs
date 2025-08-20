@@ -43,23 +43,8 @@ public class Portal : MonoBehaviour
         outPos = exitPoint.position;
         outRot = exitPoint.rotation;
 
-        //if (exitPoint)
-        //{
-        //    outPos = exitPoint.position;
-        //    outRot = exitPoint.rotation;
-        //}
-        //else
-        //{
-        //    //Vector3 localPos = transform.InverseTransformPoint(t.position);
-        //    //Quaternion localRot = Quaternion.Inverse(transform.rotation) * t.rotation;
-        //    //outPos = exitPortal.transform.TransformPoint(localPos);
-        //    //outRot = exitPortal.transform.rotation * localRot;
-
-        //    Debug.LogWarning("There is no exit point of portal");
-        //}
-
         // push forward
-        Vector3 pushDir = exitPoint ? exitPoint.right : target.transform.right;
+        Vector3 pushDir = exitPoint ? exitPoint.forward : target.transform.forward;
         outPos += pushDir * exitOffset;
 
         // apply to player
@@ -71,7 +56,7 @@ public class Portal : MonoBehaviour
             rb.rotation = outRot;
             rb.velocity = outVel;
         }
-        else if (travelerTransform.TryGetComponent<CharacterController>(out var cc)) // CC 이동형
+        if (travelerTransform.TryGetComponent<CharacterController>(out var cc)) // CC 이동형
         {
             cc.enabled = false;
             travelerTransform.SetPositionAndRotation(outPos, outRot);
@@ -91,8 +76,8 @@ public class Portal : MonoBehaviour
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireCube(transform.position, new Vector3(1f, 2f, 0.05f));
-        var dir = exitPoint ? exitPoint.right : transform.right;
+        var dir = exitPoint ? exitPoint.forward : transform.forward;
         var origin = exitPoint ? exitPoint.position : transform.position;
-        Gizmos.DrawRay(origin, dir * 0.6f);
+        Gizmos.DrawRay(origin, - dir * 0.3f);
     }
 }

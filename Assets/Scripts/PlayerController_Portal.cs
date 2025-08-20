@@ -4,5 +4,7 @@ using UnityEngine;
 
 public partial class PlayerController : MonoBehaviour
 {
-
+    partial void OnEnablePortal();
+    partial void OnDisablePortal();
+    partial void UpdatePortal();
 }
