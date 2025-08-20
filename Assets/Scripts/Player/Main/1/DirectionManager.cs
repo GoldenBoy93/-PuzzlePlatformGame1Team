@@ -25,12 +25,6 @@ public class DirectionManager : MonoBehaviour
             return _instance;
         }
     }
-
-    public Animator _animator;
-    public PlayerController _controller;
-    [SerializeField] private CinemachineBlendListCamera _cinematicCam;
-    [SerializeField] private CinemachineFreeLook freeLookCam;
-
     void Awake()
     {
         if (_instance != null && _instance != this)
@@ -41,6 +35,17 @@ public class DirectionManager : MonoBehaviour
         _instance = this; // 여기서 등록
         DontDestroyOnLoad(gameObject);
     }
+
+
+    Animator _animator;
+    PlayerController _controller;
+    [Header("IntroCamera")]
+    [SerializeField] private CinemachineBlendListCamera _cinematicCam;
+    [SerializeField] private CinemachineFreeLook _freeLookCam;
+
+    [Header("InGameCamera")]
+    private int eq;
+
     void Start()
     {
         _animator = SafeFetchHelper.GetOrError<Animator>(Player.Instance.gameObject);
@@ -69,19 +74,19 @@ public class DirectionManager : MonoBehaviour
         }
     }
 
-    public void CameraMove(bool canmove)
+    public void LockCamOn(bool canmove)
     {
-        if (!canmove)
+        if (canmove)
         {
             // 인벤토리 열렸을 때 → 카메라 멈춤
-            freeLookCam.m_XAxis.m_InputAxisName = "";
-            freeLookCam.m_YAxis.m_InputAxisName = "";
+            _freeLookCam.m_XAxis.m_InputAxisName = "";
+            _freeLookCam.m_YAxis.m_InputAxisName = "";
         }
         else
         {
             // 인벤토리 닫혔을 때 → 다시 움직임
-            freeLookCam.m_XAxis.m_InputAxisName = "Mouse X";
-            freeLookCam.m_YAxis.m_InputAxisName = "Mouse Y";
+            _freeLookCam.m_XAxis.m_InputAxisName = "Mouse X";
+            _freeLookCam.m_YAxis.m_InputAxisName = "Mouse Y";
         }
     }
 }

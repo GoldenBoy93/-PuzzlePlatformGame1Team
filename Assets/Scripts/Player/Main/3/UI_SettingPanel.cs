@@ -16,9 +16,6 @@ public class UI_SettingPanel : MonoBehaviour
 
     PlayerInput input;
 
-    void Start()
-    {
-    }
 
     public void InitPanel()
     {
@@ -59,14 +56,14 @@ public class UI_SettingPanel : MonoBehaviour
         Time.timeScale = 0.1f;
         input.Player.Disable();
         input.UI.Enable();
-        DirectionManager.Instance.CameraMove(false);
+        DirectionManager.Instance.LockCamOn(true);
     }
     public void CloseUI()
     {
         Time.timeScale = 1f;
         input.UI.Disable();
         input.Player.Enable();
-        DirectionManager.Instance.CameraMove(true);
+        DirectionManager.Instance.LockCamOn(false);
     }
     public void OnCloseTheScene()
     {

@@ -7,11 +7,10 @@ using Random = UnityEngine.Random;
 
 public class Inventory : MonoBehaviour
 {
-    public ItemSlot[] slots;
-    public GameObject inventory;
-    public Transform slotPanel;
+    public List<ItemData> itemDatabase;
 
-    public Transform dropPosition;
+    public ItemSlot[] slots;
+    public Transform slotPanel;
 
     [Header("Select Item")]
     public TextMeshProUGUI name;
@@ -30,17 +29,10 @@ public class Inventory : MonoBehaviour
     int selectedItemIndex = 0;
     int curEquipIndex;
 
-    public Action inventory1;
 
 
     private void Start()
     {
-        viewModel = GameManager.Instance.UIManager._viewModel;
-
-        viewModel.addItem += AddItem;
-
-        inventory.SetActive(false);
-
         slots = new ItemSlot[slotPanel.childCount];
 
         for (int i = 0; i < slots.Length; i++)
@@ -52,6 +44,13 @@ public class Inventory : MonoBehaviour
         }
         Clear();
     }
+
+    public void InitPanel()
+    {
+        viewModel = UI_Manager.Instance._viewModel;
+        viewModel.addItem += AddItem;
+    }
+
     void Clear()
     {
         selectedItem = null;
@@ -64,7 +63,7 @@ public class Inventory : MonoBehaviour
         unequipButton.SetActive(false);
         dropButton.SetActive(false);
     }
-    void AddItem()
+    public void AddItem()
     {
         if (data.stackable) //중복가능한지
         {
@@ -86,7 +85,6 @@ public class Inventory : MonoBehaviour
             data = null;
             return;
         }
-        ThrowItem(data);
         data = null;
     }
     void UpdateUI()
@@ -95,7 +93,7 @@ public class Inventory : MonoBehaviour
         {
             if (slots[i].data != null) //슬롯에 데이터가 있다면 세팅해줘라
             {
-                //slots[i].Set();
+                slots[i].Set(slots[i].data, slots[i].quantity, slots[i].equipped);
             }
             else
             {
@@ -125,10 +123,6 @@ public class Inventory : MonoBehaviour
         }
         return null;
     }
-    public void ThrowItem(ItemData data)
-    {
-        Instantiate(data.itemPrefab, dropPosition.position, Quaternion.Euler(Vector3.one * Random.value * 360));
-    }
 
 
     public void SelectItem(int index)
@@ -138,12 +132,13 @@ public class Inventory : MonoBehaviour
         selectedItem = slots[index].data;
         selectedItemIndex = index;
         
-        name.text = selectedItem.name;
+        name.text = selectedItem.displayName;
         description.text = selectedItem.description;
-        
-        name.text = string.Empty;
+
+
+        statName.text = string.Empty;
         statValue.text = string.Empty;
-        
+
         //for (int i = 0; i < selectedItem.consumables.Count; i++)
         //{
         //    statName.text += selectedItem.consumables[i].type.ToString() + "\n";
@@ -174,12 +169,9 @@ public class Inventory : MonoBehaviour
     //        RemoveSelectedItem();
     //    }
     //}
-    public void OnDropButton()
-    {
-        ThrowItem(selectedItem);
-        RemoveSelectedItem();
-    }
-    void RemoveSelectedItem()
+
+
+    void OnDropButton()
     {
         slots[selectedItemIndex].quantity--;
     
@@ -221,8 +213,4 @@ public class Inventory : MonoBehaviour
     {
         UnEquip(selectedItemIndex);
     }
-
-
-
-
 }

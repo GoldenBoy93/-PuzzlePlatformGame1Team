@@ -101,5 +101,6 @@ public class UI_Manager : MonoBehaviour //데이터랑 구독 유지용
         _pauseButton.SetActive(true);
 
         _settingPanel.InitPanel();
+        _inventory.InitPanel();
     }
 }
