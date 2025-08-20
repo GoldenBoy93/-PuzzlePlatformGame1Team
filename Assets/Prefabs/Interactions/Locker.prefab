@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1112496875184581989}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: (Prb)Drawer2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 8939404052607508468}
   - component: {fileID: 2919927085944521832}
   - component: {fileID: 5939449474037758037}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: drawer2_rightDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 9041013206596346837}
   - component: {fileID: 6675161654497852144}
   - component: {fileID: 4498990445665486634}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: drawer2_leftDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -258,7 +258,7 @@ GameObject:
   - component: {fileID: 6703947326736631397}
   - component: {fileID: 3228636389434149200}
   - component: {fileID: 5747452317491908979}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Locker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -470,7 +470,7 @@ GameObject:
   - component: {fileID: 7218229067233627724}
   - component: {fileID: 6851956737029937143}
   - component: {fileID: 6467501074370328303}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: drawer2_body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -572,7 +572,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3160920976375507002}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: drawer2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3854530772962505142}
   - component: {fileID: 7778877052656231348}
   - component: {fileID: 6224693831731213620}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tag7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 6982735651581017833}
   - component: {fileID: 1074116751400791433}
   - component: {fileID: 5438335442486276277}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Eyelets
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 8993129740667932397}
   - component: {fileID: 6605209773901260091}
   - component: {fileID: 3174679448123047273}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ring3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 313337381520460266}
   - component: {fileID: 6194263689880159335}
   - component: {fileID: 5502349706367142077}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TriggerCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -328,7 +328,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6057801428525101990}
   - component: {fileID: 2809547473558353170}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Key_ScienceClass
   m_TagString: ScienceClassKey
   m_Icon: {fileID: 0}
@@ -376,7 +376,7 @@ GameObject:
   - component: {fileID: 6070877957219161339}
   - component: {fileID: 1631926164616345818}
   - component: {fileID: 1815281156881942665}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Simple_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}

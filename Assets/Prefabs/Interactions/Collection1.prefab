@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8741328183050627077}
   - component: {fileID: 7641124731944756203}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Collection1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 8685529249695379597}
   - component: {fileID: 1364475714508484080}
   - component: {fileID: 6754146374906864328}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TriggerCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,6 +177,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b5837efe56c1b7a478c39c873034a712, type: 3}
       propertyPath: m_Name
       value: black
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b5837efe56c1b7a478c39c873034a712, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5115423754688311525}
   - component: {fileID: 2241112352916177202}
   - component: {fileID: 724855359932129312}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: container3_swab8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,7 +114,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 93697032591730325}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: container3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,7 +161,7 @@ GameObject:
   - component: {fileID: 3247753399532120056}
   - component: {fileID: 8431090559013882491}
   - component: {fileID: 5667586897987878755}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TriggerCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 6791128364012936026}
   - component: {fileID: 3464079913322219607}
   - component: {fileID: 5390421420854973808}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: container3_swab4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -334,7 +334,7 @@ GameObject:
   - component: {fileID: 4775627263418122699}
   - component: {fileID: 6330695141101422915}
   - component: {fileID: 859794183750695406}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: container3_swab1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -439,7 +439,7 @@ GameObject:
   - component: {fileID: 9207026177116705450}
   - component: {fileID: 1951278056562756513}
   - component: {fileID: 795277399846023581}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: container3_swab10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -544,7 +544,7 @@ GameObject:
   - component: {fileID: 5156729278078290028}
   - component: {fileID: 8649831210376805577}
   - component: {fileID: 8197646777708767219}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: container3_lid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -649,7 +649,7 @@ GameObject:
   - component: {fileID: 6052762404485218939}
   - component: {fileID: 3587396660296436505}
   - component: {fileID: 6588603426939455332}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: container3_swab2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -751,7 +751,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3951126077614903384}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: (Prb)Container3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -786,7 +786,7 @@ GameObject:
   - component: {fileID: 8269489936406952539}
   - component: {fileID: 7117141481905935454}
   - component: {fileID: 6778474693663122858}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: container3_swab9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -891,7 +891,7 @@ GameObject:
   - component: {fileID: 6107284209532702080}
   - component: {fileID: 4002382950201761553}
   - component: {fileID: 3364404347295218486}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: container3_swab6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -996,7 +996,7 @@ GameObject:
   - component: {fileID: 4433622664301055832}
   - component: {fileID: 2154029293122195720}
   - component: {fileID: 4789252905824201981}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: container3_swab3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1101,7 +1101,7 @@ GameObject:
   - component: {fileID: 6112485447072305060}
   - component: {fileID: 8924554001835023907}
   - component: {fileID: 6483986850173602651}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: container3_swab11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1206,7 +1206,7 @@ GameObject:
   - component: {fileID: 569396714052530422}
   - component: {fileID: 1668197052432420715}
   - component: {fileID: 5042591418538892772}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: container3_swab7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1311,7 +1311,7 @@ GameObject:
   - component: {fileID: 366703025478760551}
   - component: {fileID: 5768779065522575222}
   - component: {fileID: 6906531596025159096}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: container3_swab5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1414,7 +1414,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7923220093274373759}
   - component: {fileID: 3029412890631399616}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: HydrochloricAcid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1463,7 +1463,7 @@ GameObject:
   - component: {fileID: 3766418144633264219}
   - component: {fileID: 2771585592304888546}
   - component: {fileID: 8772986536366970602}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: container3_swab12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1568,7 +1568,7 @@ GameObject:
   - component: {fileID: 2288583494667582780}
   - component: {fileID: 1290084705260923256}
   - component: {fileID: 4684157720365936608}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: container3_body
   m_TagString: Untagged
   m_Icon: {fileID: 0}

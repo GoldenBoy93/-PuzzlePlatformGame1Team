@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1253310669759499872}
   - component: {fileID: 5555755933812478210}
   - component: {fileID: 4126106712086114999}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ring3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 1687743846278861823}
   - component: {fileID: 473987626243799744}
   - component: {fileID: 7906745560450323217}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tag7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 4090221656529747902}
   - component: {fileID: 4149176936715468306}
   - component: {fileID: 7808380943962365539}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Eyelets
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3902346200399521117}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Key
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -294,7 +294,7 @@ GameObject:
   - component: {fileID: 6478015513128111333}
   - component: {fileID: 1791367262581395021}
   - component: {fileID: 2999668698886592700}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Simple_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
