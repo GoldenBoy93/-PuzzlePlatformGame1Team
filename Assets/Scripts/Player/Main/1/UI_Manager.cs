@@ -47,7 +47,6 @@ public class UI_Manager : MonoBehaviour //데이터랑 구독 유지용
     public PlayerView _view;
 
     public Inventory _Inventory;
-    public ItemSlot _ItemSlot;
 
     public UI_StartPanel _startPanel;
     public UI_SettingPanel _settingPanel;
@@ -75,8 +74,7 @@ public class UI_Manager : MonoBehaviour //데이터랑 구독 유지용
         _viewModel = new PlayerViewModel(_model);
 
         _view = SafeFetchHelper.GetOrError<PlayerView>(gameObject);
-        _Inventory = SafeFetchHelper.GetOrError<Inventory>(gameObject);
-        _ItemSlot = SafeFetchHelper.GetOrError<ItemSlot>(gameObject);
+        _Inventory = SafeFetchHelper.GetChildOrError<Inventory>(gameObject);
     }
 
     private void Start()
@@ -86,9 +84,8 @@ public class UI_Manager : MonoBehaviour //데이터랑 구독 유지용
         _damageIndigator.SetActive(false);
         _uiaction.gameObject.SetActive(false);
         _settingPanel.gameObject.SetActive(false);
-        _conditions.SetActive(true);
-        _startPanel.gameObject.SetActive(false);
         _Inventory.gameObject.SetActive(false);
-        _ItemSlot.gameObject.SetActive(false);
+        _conditions.SetActive(true);
+        _startPanel.gameObject.SetActive(true);
     }
 }
