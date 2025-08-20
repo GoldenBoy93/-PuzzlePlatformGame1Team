@@ -211,8 +211,8 @@ public partial class PlayerController : MonoBehaviour //Character Controller 전�
 
         _animator.SetLayerWeight(2, toggle ? 1f : 0f);
         _animator.SetBool("IsGun", toggle);
-        // 메뉴 UI 활성화/비활성화
-        // menuUI.SetActive(Menu);
+
+
     }
     void OnMouseL(InputAction.CallbackContext context)
     {
