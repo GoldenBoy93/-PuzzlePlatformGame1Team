@@ -43,8 +43,8 @@ public partial class GameManager : MonoBehaviour
         set { _UIManager = value; }
     }
 
-    private PlayerManager _PlayerManager;
-    public PlayerManager PlayerManager
+    private Player _PlayerManager;
+    public Player PlayerManager
     {
         get { return _PlayerManager; }
         set { _PlayerManager = value; }

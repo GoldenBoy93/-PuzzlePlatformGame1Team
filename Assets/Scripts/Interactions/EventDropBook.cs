@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class EventDropBook : MonoBehaviour
@@ -23,6 +24,9 @@ public class EventDropBook : MonoBehaviour
             audioSource.PlayOneShot(audioSource.clip);
 
             hasTriggered = true;
+
+            DirectionManager.Instance.Direction();
+
         }
     }
 }

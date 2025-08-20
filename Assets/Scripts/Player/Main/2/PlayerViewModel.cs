@@ -9,6 +9,9 @@ public class PlayerViewModel //값이 바뀌면 자동으로 구독자에게 알림
 {
     public PlayerModel model;
 
+    public Action addItem;
+
+
 
     public ReactiveDictionary<string, int> Inventory { get; private set; }
     public ReactiveProperty<int> Health { get; private set; }
