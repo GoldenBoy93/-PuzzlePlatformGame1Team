@@ -21,6 +21,9 @@ public partial class PlayerController : MonoBehaviour
     // 조준 모드 (Ctrl로 토글)
     bool _portalMode;
 
+    [SerializeField] float minExitUpSpeed = 3f;         // 바닥 포탈에서 최소 상승 속도
+    [SerializeField, Range(0f, 1f)] float floorDot = 0.5f; // 출구가 '위쪽'을 향한다고 볼 임계값(코사인)
+
     // hooks
     private void OnEnablePortal() 
     { 
@@ -45,10 +48,23 @@ public partial class PlayerController : MonoBehaviour
             float newYaw = (delta * transform.rotation).eulerAngles.y;
             transform.rotation = Quaternion.Euler(0f, newYaw, 0f);
         }
-        // 전체 회전 보존이 필요하면 위 블록을 끄고(=false), Portal.cs가 세팅한 outRot을 그대로 사용하면 됨.
+        // 전체 회전 보존이 필요하면 위 블록을 끄고, Portal.cs가 세팅한 outRot을 그대로 사용하면 됨.
 
         // 중력 1프레임 스킵 (툭 떨어지는 느낌 방지)
         if (skipGravityOneFrame) _skipGravityThisFrame = true;
+
+        // 출구 방향 킥 (CharacterController용)
+        float d = Vector3.Dot(to.forward, Vector3.up);
+        if (d >= floorDot)
+        {
+            // 바닥 포탈: 위로 최소 속도 확보
+            if (velocity.y < minExitUpSpeed) velocity.y = minExitUpSpeed;
+        }
+        else if (d <= -floorDot)
+        {
+            // 천장 포탈: 아래로 최소 속도 확보 (원하면 사용)
+            if (velocity.y > -minExitUpSpeed) velocity.y = -minExitUpSpeed;
+        }
 
         // 만약 이후에 수평 속도를 직접 관리한다면, 아래처럼 회전시켜 주세요:
         // velocity = to.TransformDirection(from.InverseTransformDirection(velocity));

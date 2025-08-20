@@ -13,7 +13,7 @@ public class Portal : MonoBehaviour
     public float exitOffset = 0.5f;
 
     [Tooltip("재진입 방지 시간(초)")]
-    public float reenterBlockTime = 0.15f;
+    public float reenterBlockTime = 1f;
 
     [Tooltip("포탈 앞면에서만 진입 허용")]
     public bool requireEntryFromFront = true; // 선택 기능 
