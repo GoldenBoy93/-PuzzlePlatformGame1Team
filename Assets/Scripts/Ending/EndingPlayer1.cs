@@ -53,6 +53,21 @@ public class EndingPlayer1 : MonoBehaviour
         player2Script.Surprise();
     }
 
+    public void Backwalk()
+    {
+        animator.Play("Player1_Backwalk");
+    }
+
+    public void BackwalkEnd()
+    {
+        player2Script.Idle3();
+    }
+
+    public void Okay()
+    {
+        animator.Play("Player1_Okay");
+    }
+
     public void Turn()
     {
         animator.Play("Player1_Turn");

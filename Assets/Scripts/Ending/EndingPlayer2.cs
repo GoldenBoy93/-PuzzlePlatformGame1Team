@@ -23,4 +23,24 @@ public class EndingPlayer2 : MonoBehaviour
     {
         animator.Play("Player2_Surprise");
     }
+
+    public void Idle3()
+    {
+        animator.Play("Player2_Idle3");
+    }
+
+    public void Idle2()
+    {
+        animator.Play("Player2_Idle2");
+    }
+
+    public void FollowHand()
+    {
+        animator.Play("Player2_FollowHand");
+    }
+
+    public void FollowHandEnd()
+    {
+        player1Script.Okay();
+    }
 }
