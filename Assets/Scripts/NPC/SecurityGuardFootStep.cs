@@ -27,8 +27,11 @@ public class SecurityGuardFootStep : MonoBehaviour
             {
                 if (Time.time - footStepTime > footstepRate)
                 {
-                    footStepTime = Time.time;
-                    audioSource.PlayOneShot(footstepClip);
+                    if (!audioSource.isPlaying)
+                    {
+                        footStepTime = Time.time;
+                        audioSource.PlayOneShot(footstepClip);
+                    }
                 }
             }
         }
