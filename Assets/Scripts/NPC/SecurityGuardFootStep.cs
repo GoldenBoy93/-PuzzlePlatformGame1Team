@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class SecurityGuardFootStep : MonoBehaviour
 {
-    public AudioClip[] footstepClips;
+    public AudioClip footstepClip;
     private AudioSource audioSource;
     private NavMeshAgent navMeshAgent; // Rigidbody 대신 NavMeshAgent 사용
 
@@ -28,7 +28,7 @@ public class SecurityGuardFootStep : MonoBehaviour
                 if (Time.time - footStepTime > footstepRate)
                 {
                     footStepTime = Time.time;
-                    audioSource.PlayOneShot(footstepClips[Random.Range(0, footstepClips.Length)]);
+                    audioSource.PlayOneShot(footstepClip);
                 }
             }
         }
