@@ -197,8 +197,8 @@ public partial class PlayerController : MonoBehaviour //Character Controller 전�
         if (!context.started) return; // 누를 때만 실행 (뗄 때 무시)
         toggle = !toggle; // 토글
 
+        _settingPanel.OnToggleSettings();
         Time.timeScale = toggle ? 0.1f : 1f;
-
 
         _inventory.gameObject.SetActive(!_inventory.gameObject.activeSelf);
     }

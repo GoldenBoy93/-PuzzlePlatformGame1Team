@@ -18,7 +18,6 @@ public class UI_SettingPanel : MonoBehaviour
 
     void Start()
     {
-        input = new PlayerInput();
     }
 
     public void InitPanel()
@@ -26,42 +25,48 @@ public class UI_SettingPanel : MonoBehaviour
         settings = SafeFetchHelper.GetChildOrError<UI_SettingPanel>(UI_Manager.Instance.gameObject);
         start = UI_Manager.Instance._start;
         save = UI_Manager.Instance._save;
+        input = new PlayerInput();
     }
 
     public void OnToggleSettings()
     {
         if (settings.gameObject.activeSelf) //true라면
-            CloseSettings();
+        {
+            CloseUI();
+            settings.gameObject.SetActive(false);
+
+            // 리스너 해제 (안 해도 되지만 깔끔하게 하려면 유지)
+            bgmSlider.onValueChanged.RemoveListener(OnBgmSlider);
+            sfxSlider.onValueChanged.RemoveListener(OnSfxSlider);
+        }
         else
-            OpenSettings();
+        {
+            OpenUI();
+            settings.gameObject.SetActive(true);
+
+            // 슬라이더 값 세팅
+            bgmSlider.value = AudioManager.Instance.bgmVolume;
+            sfxSlider.value = AudioManager.Instance.sfxVolume;
+            // 리스너 등록, 실시간반영용
+            bgmSlider.onValueChanged.AddListener(OnBgmSlider);
+            sfxSlider.onValueChanged.AddListener(OnSfxSlider);
+
+        }
     }
 
-    public void OpenSettings()
+    public void OpenUI()
     {
-        settings.gameObject.SetActive(true);
-
         Time.timeScale = 0.1f;
         input.Player.Disable();
         input.UI.Enable();
-
-        // 슬라이더 값 세팅
-        bgmSlider.value = AudioManager.Instance.bgmVolume;
-        sfxSlider.value = AudioManager.Instance.sfxVolume;
-        // 리스너 등록, 실시간반영용
-        bgmSlider.onValueChanged.AddListener(OnBgmSlider);
-        sfxSlider.onValueChanged.AddListener(OnSfxSlider);
+        DirectionManager.Instance.CameraMove(false);
     }
-    public void CloseSettings()
+    public void CloseUI()
     {
-        settings.gameObject.SetActive(false);
-
         Time.timeScale = 1f;
         input.UI.Disable();
         input.Player.Enable();
-
-        // 리스너 해제 (안 해도 되지만 깔끔하게 하려면 유지)
-        bgmSlider.onValueChanged.RemoveListener(OnBgmSlider);
-        sfxSlider.onValueChanged.RemoveListener(OnSfxSlider);
+        DirectionManager.Instance.CameraMove(true);
     }
     public void OnCloseTheScene()
     {
