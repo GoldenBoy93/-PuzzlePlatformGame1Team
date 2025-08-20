@@ -13,24 +13,38 @@ public interface IInteractable
 public class Interaction : MonoBehaviour //,IInteractable
 {
 
+    private HashSet<GameObject> collisions = new HashSet<GameObject>();
+
+
     private void Update()
     {
-        //collider 검사
+        collisions.RemoveWhere(go =>
+        {
+            if (go == null) return true; // 파괴된 경우
+            if (!GetComponent<CharacterController>().bounds.Intersects(go.GetComponent<Collider>().bounds))
+            {
+                Debug.Log("Exit : " + go.name);
+                return true;
+            }
+            return false;
+        });
     }
-    //public ItemData data;
-    //
-    //public string GetInteractPrompt()
-    //{
-    //    string str = $"{data.Name}\n{data.description}";
-    //    return str;
-    //}
-    //
-    //public void Oninteract()
-    //{
-    //    CharacterManager.Instance.Player.itemData = data;
-    //    CharacterManager.Instance.Player.addItem?.Invoke();
-    //    Destroy(gameObject);
-    //}
+
+
+    public ItemData data;
+    
+    public string GetInteractPrompt()
+    {
+        string str = $"{data.displayName}\n{data.description}";
+        return str;
+    }
+    
+    public void Oninteract()
+    {
+        //CharacterManager.Instance.Player.itemData = data;
+        //CharacterManager.Instance.Player.addItem?.Invoke();
+        Destroy(gameObject);
+    }
 
 
 
@@ -50,5 +64,15 @@ public class Interaction : MonoBehaviour //,IInteractable
     //        promptText.gameObject.SetActive(false);
     //    }
     //}
+
+
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (!collisions.Contains(hit.gameObject))
+        {
+            Debug.Log("Enter : " + hit.gameObject.name);
+            collisions.Add(hit.gameObject);
+        }
+    }
 
 }

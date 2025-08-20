@@ -28,7 +28,7 @@ public class UI_SettingPanel : MonoBehaviour
     {
         settingsPanel.SetActive(true);
 
-        Time.timeScale = 0f;
+        Time.timeScale = 0.1f;
 
         // 슬라이더 값 세팅
         bgmSlider.value = AudioManager.Instance.bgmVolume;
