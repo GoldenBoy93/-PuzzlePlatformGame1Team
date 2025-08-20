@@ -2,23 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UI_SettingPanel : MonoBehaviour
 {
-    public GameObject settingsPanel;
+    public UI_SettingPanel settings;
     public Slider bgmSlider;
     public Slider sfxSlider;
+    GameObject start;
+    GameObject save;
+
+    PlayerInput input;
 
     void Start()
     {
-        settingsPanel.SetActive(false);
+        input = new PlayerInput();
+    }
+
+    public void InitPanel()
+    {
+        settings = SafeFetchHelper.GetChildOrError<UI_SettingPanel>(UI_Manager.Instance.gameObject);
+        start = UI_Manager.Instance._start;
+        save = UI_Manager.Instance._save;
     }
 
     public void OnToggleSettings()
     {
-        if (settingsPanel.activeSelf) //true라면
+        if (settings.gameObject.activeSelf) //true라면
             CloseSettings();
         else
             OpenSettings();
@@ -26,21 +38,26 @@ public class UI_SettingPanel : MonoBehaviour
 
     public void OpenSettings()
     {
-        settingsPanel.SetActive(true);
+        settings.gameObject.SetActive(true);
 
         Time.timeScale = 0.1f;
+        input.Player.Disable();
+        input.UI.Enable();
 
         // 슬라이더 값 세팅
         bgmSlider.value = AudioManager.Instance.bgmVolume;
         sfxSlider.value = AudioManager.Instance.sfxVolume;
-
         // 리스너 등록, 실시간반영용
         bgmSlider.onValueChanged.AddListener(OnBgmSlider);
         sfxSlider.onValueChanged.AddListener(OnSfxSlider);
     }
     public void CloseSettings()
     {
-        settingsPanel.SetActive(false);
+        settings.gameObject.SetActive(false);
+
+        Time.timeScale = 1f;
+        input.UI.Disable();
+        input.Player.Enable();
 
         // 리스너 해제 (안 해도 되지만 깔끔하게 하려면 유지)
         bgmSlider.onValueChanged.RemoveListener(OnBgmSlider);
@@ -53,7 +70,7 @@ public class UI_SettingPanel : MonoBehaviour
 
     public void OnSave()
     {
-
+        save.SetActive(!save.activeSelf);
     }
     public void OnLoadNextScene()
     {
@@ -73,5 +90,20 @@ public class UI_SettingPanel : MonoBehaviour
     public void OnSfxSlider(float value)
     {
         AudioManager.Instance.SetSfxVolume(value);
+    }
+
+    public void OnStart()
+    {
+        start.SetActive(!start.activeSelf);
+        DirectionManager.Instance.Direction();
+    }
+
+    public void OnGameOver()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false; // 에디터 플레이 모드 종료
+#else
+              Application.Quit(); // 빌드된 게임 종료
+#endif
     }
 }
