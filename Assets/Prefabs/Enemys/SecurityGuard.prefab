@@ -77,6 +77,7 @@ GameObject:
   - component: {fileID: 7033338651715553117}
   - component: {fileID: 7702832740442004539}
   - component: {fileID: 5830969471790504888}
+  - component: {fileID: 7386019260583264605}
   m_Layer: 0
   m_Name: Scavenger Variant
   m_TagString: Untagged
@@ -110,7 +111,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1244531937485659502}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 2c22d296d434cf54380cc9acfb2c7305, type: 3}
+  m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 25911ef9b84b47b46812508bc36eaa79, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
@@ -190,6 +191,22 @@ MonoBehaviour:
   attackDistance: 1
   aggro: 1
   fieldOfView: 120
+--- !u!114 &7386019260583264605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1244531937485659502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f578f3f7f6993646b6ab32ee91a4f71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footstepClips:
+  - {fileID: 8300000, guid: bef747ba25799424eacbaae2e115f250, type: 3}
+  footstepThreshold: 1
+  footstepRate: 2
 --- !u!1 &1409069099689518884
 GameObject:
   m_ObjectHideFlags: 0
