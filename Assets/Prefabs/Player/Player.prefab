@@ -6307,7 +6307,7 @@ GameObject:
   - component: {fileID: 3488466868723388372}
   - component: {fileID: 2686847719976446570}
   - component: {fileID: 8531899646591324209}
-  - component: {fileID: 2351548965151690928}
+  - component: {fileID: 1510676085257052967}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -6392,12 +6392,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 220d0c89b63ee0848ae80a9dc97b5ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 2
+  runSpeed: 4
+  smooth: 20
+  gravity: -9.81
   toggleCameraRotation: 0
-  uiAction: {fileID: 0}
   flashLights:
   - {fileID: 8717584827672684955}
   - {fileID: 1098796564624224596}
---- !u!114 &2351548965151690928
+--- !u!114 &1510676085257052967
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6406,10 +6409,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6727672985692056623}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52ea6cc7a48966b4eb00ec68c7eff9a4, type: 3}
+  m_Script: {fileID: 11500000, guid: 517c57792aa137b4bbd5f4b29e81e7da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 8531899646591324209}
+  _controller: {fileID: 8531899646591324209}
+  _animator: {fileID: 3488466868723388372}
 --- !u!1 &6776956790164662975
 GameObject:
   m_ObjectHideFlags: 0
