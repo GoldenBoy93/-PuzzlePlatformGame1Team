@@ -48,14 +48,14 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
---- !u!1102 &1449784422818992201
+--- !u!1102 &6795018968829314079
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Surprise
+  m_Name: Player2_Surprise
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -68,7 +68,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 5a8b280872da88d489205ef2e650ab6d, type: 3}
+  m_Motion: {fileID: 7400000, guid: 96acdcabdf9d4fa49b50a264e62e0980, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -84,11 +84,11 @@ AnimatorStateMachine:
   m_Name: Base Layer
   m_ChildStates:
   - serializedVersion: 1
-    m_State: {fileID: 1449784422818992201}
-    m_Position: {x: 380, y: 10, z: 0}
-  - serializedVersion: 1
     m_State: {fileID: -7457899933409112452}
     m_Position: {x: 380, y: 110, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 6795018968829314079}
+    m_Position: {x: 415, y: 175, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

@@ -8,7 +8,7 @@ public class EndingPlayer2 : MonoBehaviour
     private EndingPlayer1 player1Script;
     Animator animator;
 
-    private void Awake()
+    private void Start()
     {
         animator = GetComponent<Animator>();
         player1Script = player1.GetComponent<EndingPlayer1>();
@@ -16,6 +16,11 @@ public class EndingPlayer2 : MonoBehaviour
 
     public void IdleEnd()
     {
-        player1Script.PresentChocolate1();
+        player1Script.Present();
+    }
+
+    public void Surprise()
+    {
+        animator.Play("Player2_Surprise");
     }
 }
