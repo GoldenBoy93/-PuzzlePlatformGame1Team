@@ -25,6 +25,7 @@ public partial class PlayerController : MonoBehaviour //Character Controller Àü¿
     Inventory _inventory;
     UI_ActionKey _uiAction;
     UI_SettingPanel _settingPanel;
+    GameObject _crosshair;
 
     Vector2 dir;
     Vector3 velocity;
@@ -65,6 +66,7 @@ public partial class PlayerController : MonoBehaviour //Character Controller Àü¿
         _inventory = SafeFetchHelper.GetChildOrError<Inventory>(UI_Manager.Instance.gameObject);
         _uiAction = SafeFetchHelper.GetChildOrError<UI_ActionKey>(UI_Manager.Instance.gameObject);
         _settingPanel = SafeFetchHelper.GetChildOrError<UI_SettingPanel>(UI_Manager.Instance.gameObject);
+        _crosshair = UI_Manager.Instance._crosshair;
     }
     private void Update()
     {
@@ -195,14 +197,10 @@ public partial class PlayerController : MonoBehaviour //Character Controller Àü¿
         if (!context.started) return; // ´©¸¦ ¶§¸¸ ½ÇÇà (¶¿ ¶§ ¹«½Ã)
         toggle = !toggle; // Åä±Û
 
+        _settingPanel.OnToggleSettings();
         Time.timeScale = toggle ? 0.1f : 1f;
 
-        Debug.Log(toggle ? "Inventory Opened!" : "Inventory Closed!");
-
-        if (_inventory.inventory.activeInHierarchy) //È°¼ºÈ­µÇÀÖ´ÂÁö ¾Ë·ÁÁÜ
-            _inventory.inventory.SetActive(false);
-        else
-            _inventory.inventory.SetActive(true);
+        _inventory.gameObject.SetActive(!_inventory.gameObject.activeSelf);
     }
     void OnPotalGun(InputAction.CallbackContext context) //Ctrl
     {
@@ -211,6 +209,8 @@ public partial class PlayerController : MonoBehaviour //Character Controller Àü¿
 
         _animator.SetLayerWeight(2, toggle ? 1f : 0f);
         _animator.SetBool("IsGun", toggle);
+
+        _crosshair.SetActive(!_crosshair.activeSelf);
 
 
     }

@@ -74,5 +74,4 @@ public class Interaction : MonoBehaviour //,IInteractable
             collisions.Add(hit.gameObject);
         }
     }
-
 }
