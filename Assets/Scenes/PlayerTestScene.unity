@@ -11352,7 +11352,7 @@ Transform:
   m_GameObject: {fileID: 8072078620907554957}
   serializedVersion: 2
   m_LocalRotation: {x: -0.050836235, y: -0.81110984, z: 0.4269229, w: 0.39655185}
-  m_LocalPosition: {x: 3.1448753, y: 3.1019907, z: 4.057923}
+  m_LocalPosition: {x: 3.1448767, y: 3.1019907, z: 4.0579233}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11522,8 +11522,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4517072246082301556}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.010140763, y: -0.09562111, z: 0.036779746, w: 0.99468637}
-  m_LocalPosition: {x: 0.0000002093384, y: -0.0000012926562, z: -0.0000011140357}
+  m_LocalRotation: {x: 0.010140771, y: -0.0956209, z: 0.036779653, w: 0.9946864}
+  m_LocalPosition: {x: 0.0000005957761, y: -0.0000014918448, z: -0.000001422592}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12423,8 +12423,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 688306681750946090}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.005504777, y: -0.09618774, z: 0.03527128, w: 0.99472284}
-  m_LocalPosition: {x: 0.0000002093384, y: -0.0000012926562, z: -0.0000011140357}
+  m_LocalRotation: {x: -0.005504748, y: -0.09618756, z: 0.035271216, w: 0.9947229}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -15807,8 +15807,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4428822867328793480}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.025814828, y: -0.09502965, z: 0.03828208, w: 0.9944031}
-  m_LocalPosition: {x: 0.0000002093384, y: -0.0000012926562, z: -0.0000011140357}
+  m_LocalRotation: {x: 0.025814831, y: -0.09502943, z: 0.03828198, w: 0.9944031}
+  m_LocalPosition: {x: 0.0000005957761, y: -0.0000014918448, z: -0.000001422592}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -18330,7 +18330,10 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_ShowDebugText: 0
   m_Loop: 0
-  m_ChildCameras: []
+  m_ChildCameras:
+  - {fileID: 1215990711075677647}
+  - {fileID: 5989926046471627395}
+  - {fileID: 3107698406554721724}
   m_Instructions:
   - m_VirtualCamera: {fileID: 1215990711075677647}
     m_Hold: 1
@@ -18373,6 +18376,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3737015320912353782, guid: aa6cf3868e57d2f43bf16c92270b8eba, type: 3}
+      propertyPath: footstepRate
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3737015320912353782, guid: aa6cf3868e57d2f43bf16c92270b8eba, type: 3}
+      propertyPath: footstepThreshold
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 4670714305295231493, guid: aa6cf3868e57d2f43bf16c92270b8eba, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
