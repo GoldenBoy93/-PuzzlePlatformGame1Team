@@ -22,15 +22,73 @@ public enum PlayerState //플레이어의 현재상태
 
 public class UI_Manager : MonoBehaviour //데이터랑 구독 유지용
 {
-    public PlayerModel Model { get; private set; }
-    public PlayerViewModel ViewModel { get; private set; }
+    private static UI_Manager _instance;
+    public static UI_Manager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<UI_Manager>();
+
+                if (_instance == null)
+                {
+                    GameObject go = new GameObject("UIManager");
+                    _instance = go.AddComponent<UI_Manager>();
+                }
+            }
+            return _instance;
+        }
+    }
+
+    public PlayerModel _model { get; private set; }
+    public PlayerViewModel _viewModel { get; private set; }
+
+    public PlayerView _view;
+
+    public Inventory _Inventory;
+    public ItemSlot _ItemSlot;
+
+    public UI_StartPanel _startPanel;
+    public UI_SettingPanel _settingPanel;
+    public UI_ActionKey _uiaction;
+    public GameObject _crosshair;
+    public GameObject _conditions;
+    public GameObject _prompttext;
+    public GameObject _damageIndigator;
+
+
+    ItemData _data => ScriptableObject.CreateInstance<ItemData>();
 
     void Awake()
     {
-        GameManager.Instance.UIManager = this;
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        _instance = this;
         DontDestroyOnLoad(gameObject);
 
-        Model = new PlayerModel();
-        ViewModel = new PlayerViewModel(Model);
+        _model = new PlayerModel();
+        _viewModel = new PlayerViewModel(_model);
+
+        _view = SafeFetchHelper.GetOrError<PlayerView>(gameObject);
+        _Inventory = SafeFetchHelper.GetOrError<Inventory>(gameObject);
+        _ItemSlot = SafeFetchHelper.GetOrError<ItemSlot>(gameObject);
+    }
+
+    private void Start()
+    {
+        _crosshair.SetActive(false);
+        _prompttext.SetActive(false);
+        _damageIndigator.SetActive(false);
+        _uiaction.gameObject.SetActive(false);
+        _settingPanel.gameObject.SetActive(false);
+        _conditions.SetActive(true);
+        _startPanel.gameObject.SetActive(false);
+        _Inventory.gameObject.SetActive(false);
+        _ItemSlot.gameObject.SetActive(false);
     }
 }
