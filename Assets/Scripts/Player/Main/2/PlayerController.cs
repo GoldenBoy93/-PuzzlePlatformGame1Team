@@ -59,6 +59,7 @@ public partial class PlayerController : MonoBehaviour //Character Controller Àü¿
         _input.Player.MouseL.started += OnMouseL;
         _input.Player.MouseR.started += OnMouseR;
         _input.Player.Enable();
+        OnEnablePortal();
     }
     private void Start()
     {
@@ -71,8 +72,14 @@ public partial class PlayerController : MonoBehaviour //Character Controller Àü¿
         isGrounded = _controller.isGrounded; //¹Ù´ÛÃ¼Å©
         if (isGrounded && velocity.y < 0)
             velocity.y = -2f;
-        velocity.y += gravity * Time.deltaTime; //Áß·Â Àû¿ë
-        _controller.Move(velocity * Time.deltaTime);
+
+        // ÅÚ·¹Æ÷Æ® Á÷ÈÄ ÇÁ·¹ÀÓ Áß·Â ½ºÅµ
+        if (_skipGravityThisFrame)
+            _skipGravityThisFrame = false;
+        else
+            velocity.y += gravity * Time.deltaTime; //Áß·Â Àû¿ë
+
+        _controller.Move( (new Vector3(0f, velocity.y, 0f)) * Time.deltaTime);
         Move();
     }
     private void LateUpdate()
@@ -84,7 +91,11 @@ public partial class PlayerController : MonoBehaviour //Character Controller Àü¿
                 (transform.rotation, Quaternion.LookRotation(playerRotate), Time.deltaTime * smooth);
         }
     }
-    private void OnDisable() => _input.Player.Disable();
+    private void OnDisable()
+    {
+        OnDisablePortal(); 
+        _input.Player.Disable();
+    }
 
     void Move()
     {
@@ -212,19 +223,23 @@ public partial class PlayerController : MonoBehaviour //Character Controller Àü¿
         _animator.SetLayerWeight(2, toggle ? 1f : 0f);
         _animator.SetBool("IsGun", toggle);
 
-
+        _portalMode = toggle;
+        if (crosshair) crosshair.SetActive(_portalMode);    // Å©·Î½º Çìµå Ç¥½Ã
     }
     void OnMouseL(InputAction.CallbackContext context)
     {
         _animator.SetTrigger("IsShoot");
 
-        //Æ÷Å»Å° 1¹ø
+        // Æ÷Å»Å° 1¹ø
+        if (!context.started) return;
+        PlacePortal(true);
     }
     void OnMouseR(InputAction.CallbackContext context)
     {
         _animator.SetTrigger("IsShoot");
 
-        //Æ÷Å»Å° 2¹ø
-
+        // Æ÷Å»Å° 2¹ø
+        if (!context.started) return;
+        PlacePortal(false);
     }
 }

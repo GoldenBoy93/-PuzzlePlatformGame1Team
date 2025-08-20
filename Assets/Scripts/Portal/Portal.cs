@@ -10,7 +10,7 @@ public class Portal : MonoBehaviour
 
     [Header("Options")]
     [Tooltip("출구에서 살짝 앞으로 밀어낼 거리")]
-    public float exitOffset = 0.25f;
+    public float exitOffset = 0.5f;
 
     [Tooltip("재진입 방지 시간(초)")]
     public float reenterBlockTime = 0.15f;
@@ -60,7 +60,7 @@ public class Portal : MonoBehaviour
 
         // 기준 프레임 정의
         Transform fromFrame = transform;
-        Transform toFrame = exitPoint ? exitPoint : target.transform;
+        Transform toFrame = (target.exitPoint != null) ? target.exitPoint : target.transform;
 
         // 상대좌표 기반 위치/회전 변환
         Vector3 localPos = fromFrame.InverseTransformPoint(travelerTransform.position);
@@ -92,6 +92,10 @@ public class Portal : MonoBehaviour
         {
             travelerTransform.SetPositionAndRotation(outPos, outRot);
         }
+
+        // 플레이어 모멘텀 유지용
+        if (travelerTransform.TryGetComponent<PlayerController>(out var pc))
+            pc.OnTeleported(fromFrame, toFrame);
 
         // 재진입 쿨다운(양쪽 모두 스탬프: 안전망 강화)
         traveler.SetCooldown(target, reenterBlockTime);
