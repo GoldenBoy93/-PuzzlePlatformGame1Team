@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 
-public partial class PlayerController : MonoBehaviour //Character Controller Àü¿ë
+public partial class PlayerController : MonoBehaviour //Character Controller ï¿½ï¿½ï¿½ï¿½
 { 
     [Header("Movement")]
     public float speed = 2f;
@@ -60,6 +60,7 @@ public partial class PlayerController : MonoBehaviour //Character Controller Àü¿
         _input.Player.MouseL.started += OnMouseL;
         _input.Player.MouseR.started += OnMouseR;
         _input.Player.Enable();
+        OnEnablePortal();
     }
     private void Start()
     {
@@ -70,11 +71,17 @@ public partial class PlayerController : MonoBehaviour //Character Controller Àü¿
     }
     private void Update()
     {
-        isGrounded = _controller.isGrounded; //¹Ù´ÛÃ¼Å©
+        isGrounded = _controller.isGrounded; //ï¿½Ù´ï¿½Ã¼Å©
         if (isGrounded && velocity.y < 0)
             velocity.y = -2f;
-        velocity.y += gravity * Time.deltaTime; //Áß·Â Àû¿ë
-        _controller.Move(velocity * Time.deltaTime);
+
+        // ï¿½Ú·ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß·ï¿½ ï¿½ï¿½Åµ
+        if (_skipGravityThisFrame)
+            _skipGravityThisFrame = false;
+        else
+            velocity.y += gravity * Time.deltaTime; //ï¿½ß·ï¿½ ï¿½ï¿½ï¿½ï¿½
+
+        _controller.Move( (new Vector3(0f, velocity.y, 0f)) * Time.deltaTime);
         Move();
     }
     private void LateUpdate()
@@ -86,22 +93,26 @@ public partial class PlayerController : MonoBehaviour //Character Controller Àü¿
                 (transform.rotation, Quaternion.LookRotation(playerRotate), Time.deltaTime * smooth);
         }
     }
-    private void OnDisable() => _input.Player.Disable();
+    private void OnDisable()
+    {
+        OnDisablePortal(); 
+        _input.Player.Disable();
+    }
 
     void Move()
     {
         float finalSpeed = isRun ? runSpeed : speed;
 
-        // Ä«¸Þ¶ó ±âÁØ forward/right
+        // Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½ forward/right
         Vector3 camForward = Vector3.Scale(_camera.transform.forward, new Vector3(1, 0, 1)).normalized;
         Vector3 camRight = Vector3.Scale(_camera.transform.right, new Vector3(1, 0, 1)).normalized;
-        // ÀÔ·Â ±â¹Ý ÀÌµ¿ ¹æÇâ
+        // ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
         Vector3 moveDir = camForward * dir.y + camRight * dir.x;
         moveDir.Normalize();
 
         Vector3 move = moveDir * finalSpeed + new Vector3(0, velocity.y, 0);
         _controller.Move(move * Time.deltaTime);
-        // Ä³¸¯ÅÍ È¸Àü (ÀÌµ¿ ¹æÇâÀ¸·Î)
+        // Ä³ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ (ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 
         if (moveDir.magnitude > 0.1f)
         {
@@ -131,22 +142,22 @@ public partial class PlayerController : MonoBehaviour //Character Controller Àü¿
     }
     void OnToggleCamera(InputAction.CallbackContext context) //Alt
     {
-        if (context.started) // ¹öÆ° ´­·¶À» ¶§¸¸
-            toggleCameraRotation = !toggleCameraRotation; // true ¡ê false Åä±Û
+        if (context.started) // ï¿½ï¿½Æ° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            toggleCameraRotation = !toggleCameraRotation; // true ï¿½ï¿½ false ï¿½ï¿½ï¿½
     }
 
     void OnFlash(InputAction.CallbackContext context) // Q
     {
         int state = _animator.GetInteger("IsFlash");
 
-        if (state == 0) // ¸Ç¸ö »óÅÂ ¡æ ²¨³»±â
+        if (state == 0) // ï¿½Ç¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             _animator.SetInteger("IsFlash", 1);
-        else if (state == 2) // ¹«±â ÀåÂø Idle »óÅÂ ¡æ Áý¾î³Ö±â
+        else if (state == 2) // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Idle ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ö±ï¿½
             _animator.SetInteger("IsFlash", 3);
     }
     void EquipFlash(int state)
     {
-        if (state == 1) // ¹«±â ÀåÂø Idle ÀüÈ¯
+        if (state == 1) // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Idle ï¿½ï¿½È¯
         {
             _animator.SetInteger("IsFlash", 2);
             _animator.SetLayerWeight(1, 1f);
@@ -154,7 +165,7 @@ public partial class PlayerController : MonoBehaviour //Character Controller Àü¿
             foreach (var light in flashLights)
                 light.SetActive(true);
         }
-        else if (state == 0) // ±âº» Idle ÀüÈ¯
+        else if (state == 0) // ï¿½âº» Idle ï¿½ï¿½È¯
         {
             _animator.SetInteger("IsFlash", 0);
             _animator.SetLayerWeight(1, 0f);
@@ -166,27 +177,27 @@ public partial class PlayerController : MonoBehaviour //Character Controller Àü¿
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            _uiAction.gameObject.SetActive(true);   // ´©¸£´Â µ¿¾È ÄÑ±â
+            _uiAction.gameObject.SetActive(true);   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ±ï¿½
             Time.timeScale = 0.2f;
             Cursor.lockState = CursorLockMode.None;
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
-            _uiAction.gameObject.SetActive(false);  // ¶¼¸é ²ô±â
+            _uiAction.gameObject.SetActive(false);  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             Time.timeScale = 1f;
             Cursor.lockState = CursorLockMode.Locked;
         }
     }
 
-    void OnInteraction(InputAction.CallbackContext context) //»óÈ£ÀÛ¿ëÅ° E
+    void OnInteraction(InputAction.CallbackContext context) //ï¿½ï¿½È£ï¿½Û¿ï¿½Å° E
     {
         _animator.SetTrigger("IsInteraction");
     }
 
     void OnMenu(InputAction.CallbackContext context) // ESC
     {
-        if (!context.started) return; // ´©¸¦ ¶§¸¸ ½ÇÇà (¶¿ ¶§ ¹«½Ã)
-        toggle = !toggle; // Åä±Û
+        if (!context.started) return; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
+        toggle = !toggle; // ï¿½ï¿½ï¿½
 
         _settingPanel.OnToggleSettings();
         Time.timeScale = toggle ? 0.1f : 1f;
@@ -194,8 +205,8 @@ public partial class PlayerController : MonoBehaviour //Character Controller Àü¿
     }
     void OnInventory(InputAction.CallbackContext context) // Tap
     {
-        if (!context.started) return; // ´©¸¦ ¶§¸¸ ½ÇÇà (¶¿ ¶§ ¹«½Ã)
-        toggle = !toggle; // Åä±Û
+        if (!context.started) return; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
+        toggle = !toggle; // ï¿½ï¿½ï¿½
 
         _settingPanel.OnToggleSettings();
         Time.timeScale = toggle ? 0.1f : 1f;
@@ -204,27 +215,29 @@ public partial class PlayerController : MonoBehaviour //Character Controller Àü¿
     }
     void OnPotalGun(InputAction.CallbackContext context) //Ctrl
     {
-        if (!context.started) return; // ´©¸¦ ¶§¸¸ ½ÇÇà (¶¿ ¶§ ¹«½Ã)
-        toggle = !toggle; // Åä±Û
+        if (!context.started) return; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
+        toggle = !toggle; // ï¿½ï¿½ï¿½
 
         _animator.SetLayerWeight(2, toggle ? 1f : 0f);
         _animator.SetBool("IsGun", toggle);
 
-        _crosshair.SetActive(!_crosshair.activeSelf);
-
-
+        _portalMode = toggle;
+        if (crosshair) crosshair.SetActive(_portalMode);    // Å©ï¿½Î½ï¿½ ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½
     }
     void OnMouseL(InputAction.CallbackContext context)
     {
         _animator.SetTrigger("IsShoot");
 
-        //Æ÷Å»Å° 1¹ø
+        // ï¿½ï¿½Å»Å° 1ï¿½ï¿½
+        if (!context.started) return;
+        PlacePortal(true);
     }
     void OnMouseR(InputAction.CallbackContext context)
     {
         _animator.SetTrigger("IsShoot");
 
-        //Æ÷Å»Å° 2¹ø
-
+        // ï¿½ï¿½Å»Å° 2ï¿½ï¿½
+        if (!context.started) return;
+        PlacePortal(false);
     }
 }
