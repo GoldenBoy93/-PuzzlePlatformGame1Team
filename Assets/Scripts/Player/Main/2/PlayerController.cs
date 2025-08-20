@@ -62,9 +62,9 @@ public partial class PlayerController : MonoBehaviour //Character Controller Àü¿
     }
     private void Start()
     {
-        _inventory = SafeFetchHelper.GetOrError<Inventory>(UI_Manager.Instance.gameObject);
-        _uiAction = SafeFetchHelper.GetOrError<UI_ActionKey>(UI_Manager.Instance.gameObject);
-        _settingPanel = SafeFetchHelper.GetOrError<UI_SettingPanel>(UI_Manager.Instance.gameObject);
+        _inventory = SafeFetchHelper.GetChildOrError<Inventory>(UI_Manager.Instance.gameObject);
+        _uiAction = SafeFetchHelper.GetChildOrError<UI_ActionKey>(UI_Manager.Instance.gameObject);
+        _settingPanel = SafeFetchHelper.GetChildOrError<UI_SettingPanel>(UI_Manager.Instance.gameObject);
     }
     private void Update()
     {
