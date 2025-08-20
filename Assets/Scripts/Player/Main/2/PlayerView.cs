@@ -17,7 +17,7 @@ public class PlayerView : MonoBehaviour
 
     void Start()
     {
-        viewModel = GameManager.Instance.UIManager._viewModel;
+        viewModel = UI_Manager.Instance._viewModel;
 
         // 체력 / 스태미나 구독 (FillAmount 업데이트)
         viewModel.Health.Subscribe(value =>

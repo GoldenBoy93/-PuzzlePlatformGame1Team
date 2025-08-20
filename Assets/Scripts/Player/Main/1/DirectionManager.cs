@@ -28,7 +28,7 @@ public class DirectionManager : MonoBehaviour
 
     public Animator _animator;
     public PlayerController _controller;
-    public CinemachineVirtualCamera _cinematicCam;
+    public CinemachineBlendListCamera _cinematicCam;
 
     void Awake()
     {
@@ -44,35 +44,27 @@ public class DirectionManager : MonoBehaviour
     {
         _animator = SafeFetchHelper.GetOrError<Animator>(Player.Instance.gameObject);
         _controller = SafeFetchHelper.GetOrError<PlayerController>(Player.Instance.gameObject);
-        //StartCoroutine(SetCineCam());
+
+        _controller.LockInputOn();
     }
 
-    IEnumerator SetCineCam()
+
+    public void Direction()
     {
-        yield return null; // 한 프레임 기다림
-        _cinematicCam = GameObject.Find("Blend List Camera")?.GetComponent<CinemachineVirtualCamera>();
+        StartCoroutine(IntroSequence());
     }
 
     public IEnumerator IntroSequence()
     {
         if (_cinematicCam != null)
         {
-            _controller.LockInputOn();
-            _cinematicCam.Priority = 0;
-
+            Cursor.lockState = CursorLockMode.Locked;
+            _cinematicCam.Priority = 10;
             // 연출 시간 대기
             yield return new WaitForSecondsRealtime(5.5f);
             // 연출 끝나면 입력 활성화
 
             _controller.LockInputOff();
-            _cinematicCam.Priority = 10;
         }
-    }
-
-    public void Direction()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-
-        StartCoroutine(IntroSequence());
     }
 }
