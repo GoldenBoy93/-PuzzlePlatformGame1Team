@@ -24,6 +24,16 @@ public static class SafeFetchHelper
         return null;
     }
 
+    public static T GetChildOrError<T>(GameObject go) where T : Component
+    {
+        T comp = go.GetComponentInChildren<T>(true);
+        if (comp != null)
+            return comp;
+
+        Debug.LogError($"[{go.name}] (자식 포함)에서 {typeof(T).Name} UI 컴포넌트를 찾을 수 없습니다!", go);
+        return null;
+    }
+
 
     /// <summary>
     /// 씬에서 T 타입 싱글톤 객체 가져오기, 없으면 새로 생성
