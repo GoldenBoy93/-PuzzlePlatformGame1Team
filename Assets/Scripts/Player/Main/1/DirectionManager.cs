@@ -28,7 +28,8 @@ public class DirectionManager : MonoBehaviour
 
     public Animator _animator;
     public PlayerController _controller;
-    public CinemachineBlendListCamera _cinematicCam;
+    [SerializeField] private CinemachineBlendListCamera _cinematicCam;
+    [SerializeField] private CinemachineFreeLook freeLookCam;
 
     void Awake()
     {
@@ -65,6 +66,22 @@ public class DirectionManager : MonoBehaviour
             // 연출 끝나면 입력 활성화
 
             _controller.LockInputOff();
+        }
+    }
+
+    public void CameraMove(bool canmove)
+    {
+        if (!canmove)
+        {
+            // 인벤토리 열렸을 때 → 카메라 멈춤
+            freeLookCam.m_XAxis.m_InputAxisName = "";
+            freeLookCam.m_YAxis.m_InputAxisName = "";
+        }
+        else
+        {
+            // 인벤토리 닫혔을 때 → 다시 움직임
+            freeLookCam.m_XAxis.m_InputAxisName = "Mouse X";
+            freeLookCam.m_YAxis.m_InputAxisName = "Mouse Y";
         }
     }
 }

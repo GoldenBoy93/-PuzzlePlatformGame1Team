@@ -46,15 +46,21 @@ public class UI_Manager : MonoBehaviour //데이터랑 구독 유지용
 
     public PlayerView _view;
 
-    public Inventory _Inventory;
-
-    public UI_StartPanel _startPanel;
-    public UI_SettingPanel _settingPanel;
+    public GameObject _damageIndigator;
+    public GameObject _promptText;
     public UI_ActionKey _uiaction;
     public GameObject _crosshair;
     public GameObject _conditions;
-    public GameObject _prompttext;
-    public GameObject _damageIndigator;
+    public GameObject _quickslot;
+    public GameObject _pauseButton;
+    public GameObject _equipment;
+
+    public Inventory _inventory;
+    public UI_SettingPanel _settingPanel;
+    public GameObject _pausePanel;
+    public GameObject _gameOver;
+    public GameObject _save;
+    public GameObject _start;
 
 
     ItemData _data => ScriptableObject.CreateInstance<ItemData>();
@@ -73,19 +79,27 @@ public class UI_Manager : MonoBehaviour //데이터랑 구독 유지용
         _model = new PlayerModel();
         _viewModel = new PlayerViewModel(_model);
 
-        _view = SafeFetchHelper.GetOrError<PlayerView>(gameObject);
-        _Inventory = SafeFetchHelper.GetChildOrError<Inventory>(gameObject);
+        //_view = SafeFetchHelper.GetOrError<PlayerView>(gameObject);
+        //_inventory = SafeFetchHelper.GetChildOrError<Inventory>(gameObject);
     }
 
     private void Start()
     {
         _crosshair.SetActive(false);
-        _prompttext.SetActive(false);
+        _promptText.SetActive(false);
         _damageIndigator.SetActive(false);
         _uiaction.gameObject.SetActive(false);
         _settingPanel.gameObject.SetActive(false);
-        _Inventory.gameObject.SetActive(false);
+        _inventory.gameObject.SetActive(false);
+        _quickslot.SetActive(false);
+        _pausePanel.SetActive(false);
+        _gameOver.SetActive(false);
+        _save.SetActive(false);
+        _equipment.SetActive(true);
         _conditions.SetActive(true);
-        _startPanel.gameObject.SetActive(true);
+        _start.SetActive(true);
+        _pauseButton.SetActive(true);
+
+        _settingPanel.InitPanel();
     }
 }
