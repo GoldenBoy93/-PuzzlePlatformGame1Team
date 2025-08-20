@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PuzzleManager : MonoBehaviour
 {
     private static PuzzleManager _instance;
+    public TextMeshProUGUI promptText;
 
     public static PuzzleManager Instance
     {
@@ -40,19 +42,28 @@ public class PuzzleManager : MonoBehaviour
     }
 
     // Key 있어야 열리는 퍼즐
-    public void KeyCheck(Collider other)
+    public bool KeyCheck(Collider other, GameObject wall)
     {
         if (other.CompareTag("Player"))
         {
+            promptText.gameObject.SetActive(false);
+            promptText.text = null;
+
             //Inventory playerInventory = other.GetComponent<Inventory>();
 
             ////인벤토리에 열쇠가 있는지 확인
-            //if (playerInventory != null && playerInventory.HasItem(KeyName))
+            //if (playerInventory != null && playerInventory.HasItem(keyName))
             //{
             //    Destroy(wallCollider);
             //    Debug.Log("문을 열었습니다.");
             //    audioSource.PlayOneShot(soundEffect);
+            //return true;
             //}
+
+            Destroy(wall);
+            Debug.Log("문을 열었습니다.");
+            return true;
         }
+        return false;
     }
 }
