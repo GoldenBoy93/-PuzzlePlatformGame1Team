@@ -55,6 +55,7 @@ public class NPC : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         player = UI_Manager.Instance._viewModel;
+        var audio = AudioManager.Instance;
     }
 
     private void Start()
@@ -184,6 +185,7 @@ public class NPC : MonoBehaviour
             // 공격범위 안에는 없지만 감지범위 안에는 있을 때
             if (playerDistance < detectDistance)
             {
+                AudioManager.Instance.PlayBGM("Game3");
                 agent.isStopped = false;
                 NavMeshPath path = new NavMeshPath();
                 if (agent.CalculatePath(Player.Instance.transform.position, path))
@@ -200,6 +202,7 @@ public class NPC : MonoBehaviour
             // 감지범위 밖으로 나갔을 때
             else
             {
+                AudioManager.Instance.PlayBGM("bgmGame3");
                 agent.SetDestination(transform.position);
                 agent.isStopped = true;
                 SetState(AIState.Wandering);

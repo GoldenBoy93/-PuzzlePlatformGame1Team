@@ -140,30 +140,26 @@ public partial class GameManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // 로드된 씬의 buildIndex에 따라 UI 상태를 다르게 설정
-        switch (scene.buildIndex)
-        {
-            case 0:
-                ChangeGameState(GameState.Intro);
-                break;
-            case 1:
-                ChangeGameState(GameState.Playing);
-                break;
-        }
+        //switch (scene.buildIndex)
+        //{
+        //    case 0:
+        //        ChangeGameState(GameState.Intro);
+        //        break;
+        //    case 1:
+        //        ChangeGameState(GameState.Playing);
+        //        break;
+        //}
 
         // 새 씬의 이름이 "00"일 경우
-        if (scene.name == "Floor1")
+        if (scene.name == "MainScene_Floor1")
         {
             Debug.Log("좌표변경");
             // 플레이어의 위치를 특정 좌표로 변경
-            Player.Instance.transform.position = new Vector3(7, -6, 10);
-
-            int scenebuildIndex = currentScene.buildIndex;
-
-            if (scenebuildIndex == 2)
-            {
-                Debug.Log("11111111111");
-                AudioManager.Instance.PlayBGM("Game2");
-            }
+            Player.Instance.transform.position = new Vector3(7, -6, -18);
+        }
+        else if (scene.name == "EndingScene")
+        {
+            AudioManager.Instance.PlayBGM("Game2");
         }
     }
 
