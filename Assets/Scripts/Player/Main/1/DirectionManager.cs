@@ -67,7 +67,7 @@ public class DirectionManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             _cinematicCam.Priority = 10;
             // 연출 시간 대기
-            yield return new WaitForSecondsRealtime(5.5f);
+            yield return new WaitForSecondsRealtime(4f);
             // 연출 끝나면 입력 활성화
 
             _controller.LockInputOff();

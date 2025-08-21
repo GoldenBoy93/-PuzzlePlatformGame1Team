@@ -37,19 +37,6 @@ public partial class GameManager : MonoBehaviour
     }
 
 
-    private UI_Manager _UIManager;
-    public UI_Manager UIManager
-    {
-        get { return _UIManager; }
-        set { _UIManager = value; }
-    }
-
-    private Player _PlayerManager;
-    public Player PlayerManager
-    {
-        get { return _PlayerManager; }
-        set { _PlayerManager = value; }
-    }
 
 
 

@@ -33,7 +33,7 @@ public class UI_Manager : MonoBehaviour //데이터랑 구독 유지용
 
                 if (_instance == null)
                 {
-                    GameObject go = new GameObject("UIManager");
+                    GameObject go = new GameObject("UI_Manager");
                     _instance = go.AddComponent<UI_Manager>();
                 }
             }
@@ -46,6 +46,15 @@ public class UI_Manager : MonoBehaviour //데이터랑 구독 유지용
 
     public PlayerView _view;
 
+
+    [Header("Panel")]
+    public Inventory _inventory;
+    public UI_SettingPanel _settingPanel;
+    public GameObject _pausePanel;
+    public GameObject _gameOver;
+    public GameObject _save;
+    public GameObject _start;
+    [Header("GUI")]
     public GameObject _damageIndigator;
     public GameObject _promptText;
     public UI_ActionKey _uiaction;
@@ -55,21 +64,18 @@ public class UI_Manager : MonoBehaviour //데이터랑 구독 유지용
     public GameObject _pauseButton;
     public GameObject _equipment;
 
-    public Inventory _inventory;
-    public UI_SettingPanel _settingPanel;
-    public GameObject _pausePanel;
-    public GameObject _gameOver;
-    public GameObject _save;
-    public GameObject _start;
 
 
     ItemData _data => ScriptableObject.CreateInstance<ItemData>();
 
     void Awake()
     {
+        Debug.Log("UI_Manager Awake in scene: " + gameObject.scene.name);
         if (_instance != null && _instance != this)
         {
-            Destroy(gameObject);
+            Debug.Log("Duplicate UIManager found, destroying this one: " + gameObject.name);
+            transform.SetParent(null); // 부모(Canvas)에서 분리
+            //Destroy(gameObject);
             return;
         }
 

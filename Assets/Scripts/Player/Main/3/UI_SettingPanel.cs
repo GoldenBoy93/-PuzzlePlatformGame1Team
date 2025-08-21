@@ -14,15 +14,14 @@ public class UI_SettingPanel : MonoBehaviour
     GameObject start;
     GameObject save;
 
-    PlayerInput input;
-
+    PlayerController _controller;
 
     public void InitPanel()
     {
         settings = SafeFetchHelper.GetChildOrError<UI_SettingPanel>(UI_Manager.Instance.gameObject);
         start = UI_Manager.Instance._start;
         save = UI_Manager.Instance._save;
-        input = new PlayerInput();
+        _controller = SafeFetchHelper.GetChildOrError<PlayerController>(Player.Instance.gameObject);
     }
 
     public void OnToggleSettings()
@@ -54,15 +53,13 @@ public class UI_SettingPanel : MonoBehaviour
     public void OpenUI()
     {
         Time.timeScale = 0.1f;
-        input.Player.Disable();
-        input.UI.Enable();
+        _controller.LockInputOn();
         DirectionManager.Instance.LockCamOn(true);
     }
     public void CloseUI()
     {
         Time.timeScale = 1f;
-        input.UI.Disable();
-        input.Player.Enable();
+        _controller.LockInputOff();
         DirectionManager.Instance.LockCamOn(false);
     }
     public void OnCloseTheScene()
