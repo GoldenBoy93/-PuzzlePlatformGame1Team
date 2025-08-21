@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4511080171680840034}
   - component: {fileID: 4546607823510190849}
   - component: {fileID: 8288680826089426381}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TriggerCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 852637578022605463}
   - component: {fileID: 2139101957428434412}
   - component: {fileID: 3765068279096144595}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DoorLockSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}

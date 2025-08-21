@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
+using UnityEngine.SceneManagement;
 
 public partial class PlayerController : MonoBehaviour //Character Controller ����
 { 
@@ -63,6 +64,8 @@ public partial class PlayerController : MonoBehaviour //Character Controller �
     {
         _uiAction = SafeFetchHelper.GetChildOrError<UI_ActionKey>(UI_Manager.Instance.gameObject);
         _settingPanel = SafeFetchHelper.GetChildOrError<UI_SettingPanel>(UI_Manager.Instance.gameObject);
+
+        TryRebindPortalManager(); // 포탈 매니저 바인딩 시도
     }
     private void Update()
     {

@@ -8,24 +8,21 @@ public sealed class PlayerModel
 {
     public int MaxHealth { get; }
     public int MaxStamina { get; }
-
     private int health;
     public int Health { get => health; set => health = Mathf.Clamp(value, 0, MaxHealth); }
-
     private int stamina;
     public int Stamina { get => stamina; set => stamina = Mathf.Clamp(value, 0, MaxStamina); }
-
     public InventoryModel Inventory { get; }
-
     public PlayerModel(int maxHealth = 5, int maxStamina = 1000)
     {
         MaxHealth = maxHealth;
         MaxStamina = maxStamina;
         health = MaxHealth;
         stamina = MaxStamina;
-        Inventory = new InventoryModel(20);
+        Inventory = new InventoryModel(24);
     }
 }
+
 [Serializable]
 public class InventorySlot
 {
@@ -44,11 +41,11 @@ public class InventorySlot
         IsEmpty = ItemId.Select(id => string.IsNullOrEmpty(id)).ToReadOnlyReactiveProperty();
     }
 }
+
 public sealed class InventoryModel
 {
     public int MaxSlots { get; }
     public List<InventorySlot> Slots { get; }
-
     public InventoryModel(int maxSlots)
     {
         MaxSlots = maxSlots;
@@ -56,7 +53,6 @@ public sealed class InventoryModel
         for (int i = 0; i < maxSlots; i++)
             Slots.Add(new InventorySlot());
     }
-
     public void AddItem(string itemId, int amount)
     {
         foreach (var slot in Slots)
@@ -69,7 +65,6 @@ public sealed class InventoryModel
             }
         }
     }
-
     public void RemoveItem(int index, int amount)
     {
         var slot = Slots[index];
@@ -81,7 +76,6 @@ public sealed class InventoryModel
             slot.Equipped.Value = false;
         }
     }
-
     public void Equip(int index)
     {
         for (int i = 0; i < Slots.Count; i++)
@@ -89,7 +83,6 @@ public sealed class InventoryModel
 
         Slots[index].Equipped.Value = true;
     }
-
     public void UnEquip(int index)
     {
         Slots[index].Equipped.Value = false;
