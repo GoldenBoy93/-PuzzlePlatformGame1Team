@@ -1,41 +1,97 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 
-public class PlayerModel //단순데이터 저장
+public sealed class PlayerModel
 {
-    public int Health { get; set; } = 5;
-    public int MaxHealth { get; set; } = 5;
-    public int Stamina { get; set; } = 1000;
-    public int MaxStamina { get; set; } = 1000;
+    public int MaxHealth { get; }
+    public int MaxStamina { get; }
 
+    private int health;
+    public int Health { get => health; set => health = Mathf.Clamp(value, 0, MaxHealth); }
 
-    // 인벤토리 모델을 참조 (Composition)
-    public InventoryModel Inventory { get; private set; }
+    private int stamina;
+    public int Stamina { get => stamina; set => stamina = Mathf.Clamp(value, 0, MaxStamina); }
 
-    public PlayerModel()
+    public InventoryModel Inventory { get; }
+
+    public PlayerModel(int maxHealth = 5, int maxStamina = 1000)
     {
-        Inventory = new InventoryModel(); // 생성 시 같이 초기화
+        MaxHealth = maxHealth;
+        MaxStamina = maxStamina;
+        health = MaxHealth;
+        stamina = MaxStamina;
+        Inventory = new InventoryModel(20);
     }
 }
-
-public class InventoryModel
+[Serializable]
+public class InventorySlot
 {
-    // 단순 아이템 저장 (이름 + 수량)
-    public Dictionary<string, int> Items { get; private set; } = new Dictionary<string, int>();
+    public ReactiveProperty<string> ItemId { get; }
+    public ReactiveProperty<int> Quantity { get; }
+    public ReactiveProperty<bool> Equipped { get; }
 
-    public void AddItem(string itemName, int amount = 1)
+    public ReadOnlyReactiveProperty<bool> IsEmpty { get; }
+
+    public InventorySlot(string itemId = null, int quantity = 0, bool equipped = false)
     {
-        if (Items.ContainsKey(itemName)) Items[itemName] += amount;
-        else Items[itemName] = amount;
+        ItemId = new ReactiveProperty<string>(itemId);
+        Quantity = new ReactiveProperty<int>(quantity);
+        Equipped = new ReactiveProperty<bool>(equipped);
+
+        IsEmpty = ItemId.Select(id => string.IsNullOrEmpty(id)).ToReadOnlyReactiveProperty();
+    }
+}
+public sealed class InventoryModel
+{
+    public int MaxSlots { get; }
+    public List<InventorySlot> Slots { get; }
+
+    public InventoryModel(int maxSlots)
+    {
+        MaxSlots = maxSlots;
+        Slots = new List<InventorySlot>();
+        for (int i = 0; i < maxSlots; i++)
+            Slots.Add(new InventorySlot());
     }
 
-    public void RemoveItem(string itemName, int amount = 1)
+    public void AddItem(string itemId, int amount)
     {
-        if (Items.ContainsKey(itemName))
+        foreach (var slot in Slots)
         {
-            Items[itemName] -= amount;
-            if (Items[itemName] <= 0) Items.Remove(itemName);
+            if (slot.IsEmpty.Value)
+            {
+                slot.ItemId.Value = itemId;
+                slot.Quantity.Value = amount;
+                break;
+            }
         }
+    }
+
+    public void RemoveItem(int index, int amount)
+    {
+        var slot = Slots[index];
+        slot.Quantity.Value -= amount;
+        if (slot.Quantity.Value <= 0)
+        {
+            slot.ItemId.Value = null;
+            slot.Quantity.Value = 0;
+            slot.Equipped.Value = false;
+        }
+    }
+
+    public void Equip(int index)
+    {
+        for (int i = 0; i < Slots.Count; i++)
+            Slots[i].Equipped.Value = false;
+
+        Slots[index].Equipped.Value = true;
+    }
+
+    public void UnEquip(int index)
+    {
+        Slots[index].Equipped.Value = false;
     }
 }

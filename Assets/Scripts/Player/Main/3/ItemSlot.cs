@@ -1,60 +1,31 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ItemSlot : MonoBehaviour
 {
-    public Inventory inventory;
-    public Button button;
-    public Image icon;
-    public TextMeshProUGUI quantityText;
-    private Outline outline;
+    public TextMeshProUGUI label;
+    public int index;
 
-    [HideInInspector] public int index;
-    //[HideInInspector] public InventoryView inventoryView;
+    private CompositeDisposable disposables = new CompositeDisposable();
 
-    public ItemData data;
-    public string itemName;
-    public int quantity;
-    public bool equipped;
-
-
-
-    private void Awake() => outline = GetComponent<Outline>();
-
-    private void OnEnable()
+    public void Init(ItemSlotViewModel vm, Action<int> onClick)
     {
-        if (data == null) outline.enabled = false;
-        else outline.enabled = equipped;
+        // LabelText 자동 갱신
+        vm.LabelText
+            .Subscribe(text => label.text = text)
+            .AddTo(disposables);
+
+        // 버튼 클릭 이벤트
+        var button = GetComponent<Button>();
+        if (button != null)
+            button.onClick.AddListener(() => onClick?.Invoke(index));
     }
 
-    public void Set(ItemData data, int quantity, bool choice = false)
-    {
-        this.data = data;
-        this.itemName = data.displayName;
-        this.quantity = quantity;
-        this.equipped = choice;
-
-        icon.gameObject.SetActive(true);
-        icon.sprite = data.icon;
-        quantityText.text = quantity > 1 ? quantity.ToString() : "";
-        if (outline != null) outline.enabled = choice;
-    }
-
-    public void Clear()
-    {
-        itemName = null;
-        quantity = 0;
-        equipped = false;
-        icon.gameObject.SetActive(false);
-        quantityText.text = "";
-        if (outline != null) outline.enabled = false;
-    }
-
-    public void OnClickButton() => inventory.SelectItem(index);
-
-
+    private void OnDestroy() => disposables.Dispose();
 }

@@ -12,6 +12,8 @@ public class Keypad : MonoBehaviour
     public UnityEvent onCorrect;
     public UnityEvent onIncorrect;
 
+    public GameObject Obstacle;
+
     AudioSource audioSource;
     string userInput = "";
 
@@ -40,7 +42,8 @@ public class Keypad : MonoBehaviour
                 Debug.Log("Entry Allowed");
                 if (audioSource && openSound) audioSource.PlayOneShot(openSound);
                 onCorrect?.Invoke();
-                OnEntryAllowed.Invoke();
+                ClearPassword();
+
             }
             else
             {
@@ -53,5 +56,9 @@ public class Keypad : MonoBehaviour
         }
     }
 
+    void ClearPassword()
+    {
+        Destroy(Obstacle);
+    }
    
 }

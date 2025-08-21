@@ -44,11 +44,14 @@ public class UI_Manager : MonoBehaviour //데이터랑 구독 유지용
     public PlayerModel _model { get; private set; }
     public PlayerViewModel _viewModel { get; private set; }
 
+    public InventoryModel _model2 { get; private set; }
+    public InventoryViewModel _viewModel2 { get; private set; }
+
     public PlayerView _view;
+    public InventoryView _inventory;
 
 
     [Header("Panel")]
-    public Inventory _inventory;
     public UI_SettingPanel _settingPanel;
     public GameObject _pausePanel;
     public GameObject _gameOver;
@@ -85,8 +88,8 @@ public class UI_Manager : MonoBehaviour //데이터랑 구독 유지용
         _model = new PlayerModel();
         _viewModel = new PlayerViewModel(_model);
 
-        //_view = SafeFetchHelper.GetOrError<PlayerView>(gameObject);
-        //_inventory = SafeFetchHelper.GetChildOrError<Inventory>(gameObject);
+        _model2 = new InventoryModel(20); // 슬롯 20개 예시
+        _viewModel2 = new InventoryViewModel(_model2);
     }
 
     private void Start()
@@ -107,6 +110,9 @@ public class UI_Manager : MonoBehaviour //데이터랑 구독 유지용
         _pauseButton.SetActive(true);
 
         _settingPanel.InitPanel();
-        _inventory.InitPanel();
+
+        _inventory.gameObject.SetActive(true);       // 일단 활성화
+        _inventory.Init(_viewModel2);               // 슬롯 생성 + 바인딩
+        _inventory.gameObject.SetActive(false);     // 다시 끄기
     }
 }

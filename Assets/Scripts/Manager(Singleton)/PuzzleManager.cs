@@ -46,9 +46,6 @@ public class PuzzleManager : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            promptText.gameObject.SetActive(false);
-            promptText.text = null;
-
             //Inventory playerInventory = other.GetComponent<Inventory>();
 
             ////인벤토리에 열쇠가 있는지 확인

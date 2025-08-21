@@ -14,25 +14,27 @@ public class UI_SettingPanel : MonoBehaviour
     GameObject save;
 
     PlayerController _controller;
-    Inventory _inventory;
+    InventoryView _inventory;
 
     public void InitPanel()
     {
         start = UI_Manager.Instance._start;
         save = UI_Manager.Instance._save;
         _controller = SafeFetchHelper.GetChildOrError<PlayerController>(Player.Instance.gameObject);
-        _inventory = SafeFetchHelper.GetChildOrError<Inventory>(UI_Manager.Instance.gameObject);
+        _inventory = SafeFetchHelper.GetChildOrError<InventoryView>(UI_Manager.Instance.gameObject);
     }
 
     public void OpenUI()
     {
         Time.timeScale = 0.1f;
         DirectionManager.Instance.LockOnCam(true);
+        Cursor.lockState = CursorLockMode.None;
     }
     public void CloseUI()
     {
         Time.timeScale = 1f;
         DirectionManager.Instance.LockOnCam(false);
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void OnToggleSettings()
@@ -108,7 +110,8 @@ public class UI_SettingPanel : MonoBehaviour
     public void OnStart()
     {
         start.SetActive(false);
-        DirectionManager.Instance.Direction();
+        DirectionManager.Instance.Direction_Intro();
+        AudioManager.Instance.PlayBGM("Game");
     }
 
     public void OnGameOver()

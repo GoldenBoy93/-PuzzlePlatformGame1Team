@@ -1,29 +1,31 @@
-using System;
+ï»¿using System;
 using UnityEngine;
 
 public partial class PlayerController : MonoBehaviour
 {
     [Header("Portal")]
-    [SerializeField] bool yawOnlyOnTeleport = true;    // »óÇÏ°¢ °íÁ¤, ÁÂ¿ì(Yaw)¸¸ ¸ÂÃã
-    [SerializeField] bool skipGravityOneFrame = true;  // ÅÚ·¹Æ÷Æ® ÇÁ·¹ÀÓ Áß·Â ½ºÅµ
+    [SerializeField] bool yawOnlyOnTeleport = true;    // ìƒí•˜ê° ê³ ì •, ì¢Œìš°(Yaw)ë§Œ ë§ì¶¤
+    [SerializeField] bool skipGravityOneFrame = true;  // í…”ë ˆí¬íŠ¸ í”„ë ˆì„ ì¤‘ë ¥ ìŠ¤í‚µ
 
-    // ³»ºÎ ÇÃ·¡±× (Áß·Â 1ÇÁ·¹ÀÓ ½ºÅµ¿ë)
+    // ë‚´ë¶€ í”Œë˜ê·¸ (ì¤‘ë ¥ 1í”„ë ˆì„ ìŠ¤í‚µìš©)
     bool _skipGravityThisFrame;
 
     [Header("Portal (Placement)")]
-    [SerializeField] PortalManager portalManager;             // ÀÎ½ºÆåÅÍ ÇÒ´ç
-    [SerializeField] GameObject crosshair;                    // Ctrl·Î Ç¥½Ã/ºñÇ¥½Ã
-    //[SerializeField] LayerMask portalSurfaceMask;             // ¼³Ä¡ °¡´É Ç¥¸é
-    //[SerializeField] LayerMask portalObstructMask;            // ¼³Ä¡ °ø°£ ¹æÇØ ·¹ÀÌ¾î
-    [SerializeField] float maxPlaceDistance = 40f;            // ·¹ÀÌ °Å¸®
-    [SerializeField] float portalDepthOffset = 0.01f;         // Ç¥¸é ¾È ÆÄ°íµéÁö ¾Ê°Ô
-    //[SerializeField] Vector3 portalHalfExtents = new(0.5f, 1.0f, 0.05f); // Æ÷Å» ´ë·« Å©±â
+    [SerializeField] PortalManager portalManager;             // ì¸ìŠ¤í™í„° í• ë‹¹
+    [SerializeField] GameObject crosshair;                    // Ctrlë¡œ í‘œì‹œ/ë¹„í‘œì‹œ
+    //[SerializeField] LayerMask portalSurfaceMask;             // ì„¤ì¹˜ ê°€ëŠ¥ í‘œë©´
+    //[SerializeField] LayerMask portalObstructMask;            // ì„¤ì¹˜ ê³µê°„ ë°©í•´ ë ˆì´ì–´
+    [SerializeField] float maxPlaceDistance = 40f;            // ë ˆì´ ê±°ë¦¬
+    [SerializeField] float portalDepthOffset = 0.01f;         // í‘œë©´ ì•ˆ íŒŒê³ ë“¤ì§€ ì•Šê²Œ
 
-    // Á¶ÁØ ¸ğµå (Ctrl·Î Åä±Û)
+    // í¬íƒˆ ì „ë°© ì˜¤ë¸Œì íŠ¸ ì²´í¬ (ì„¤ì¹˜ ëŒ€ìƒ ì˜¤ë¸Œì íŠ¸ì™€ì˜ ê±°ë¦¬) ì‚´ì§ ì•ì—ì„œ ê²€ì‚¬í•  ì˜ˆì •
+    [SerializeField] Vector3 portalHalfExtents = new Vector3 (0.5f, 1.0f, 0.05f); // í¬íƒˆ ëŒ€ëµ í¬ê¸°    
+    [SerializeField] float forwardClearance = 0.02f;
+    // ì¡°ì¤€ ëª¨ë“œ (Ctrlë¡œ í† ê¸€)
     bool _portalMode;
 
-    [SerializeField] float minExitUpSpeed = 3f;         // ¹Ù´Ú Æ÷Å»¿¡¼­ ÃÖ¼Ò »ó½Â ¼Óµµ
-    [SerializeField, Range(0f, 1f)] float floorDot = 0.5f; // Ãâ±¸°¡ 'À§ÂÊ'À» ÇâÇÑ´Ù°í º¼ ÀÓ°è°ª(ÄÚ»çÀÎ)
+    [SerializeField] float minExitUpSpeed = 3f;         // ë°”ë‹¥ í¬íƒˆì—ì„œ ìµœì†Œ ìƒìŠ¹ ì†ë„
+    [SerializeField, Range(0f, 1f)] float floorDot = 0.5f; // ì¶œêµ¬ê°€ 'ìœ„ìª½'ì„ í–¥í•œë‹¤ê³  ë³¼ ì„ê³„ê°’(ì½”ì‚¬ì¸)
 
     // hooks
     private void OnEnablePortal()
@@ -37,74 +39,84 @@ public partial class PlayerController : MonoBehaviour
         if (crosshair) crosshair.SetActive(false);
         _skipGravityThisFrame = false;
     }
-    private void UpdatePortal() { /* ÇÊ¿ä ½Ã »ç¿ë*/ }
+    private void UpdatePortal() { /* í•„ìš” ì‹œ ì‚¬ìš©*/ }
 
-    // Portal.cs°¡ È£Ãâ
+    // Portal.csê°€ í˜¸ì¶œ
     public void OnTeleported(Transform from, Transform to)
     {
-        // È¸Àü º¸Á¤
+        // íšŒì „ ë³´ì •
         if (yawOnlyOnTeleport)
         {
             Quaternion delta = to.rotation * Quaternion.Inverse(from.rotation);
             float newYaw = (delta * transform.rotation).eulerAngles.y;
             transform.rotation = Quaternion.Euler(0f, newYaw, 0f);
         }
-        // ÀüÃ¼ È¸Àü º¸Á¸ÀÌ ÇÊ¿äÇÏ¸é À§ ºí·ÏÀ» ²ô°í, Portal.cs°¡ ¼¼ÆÃÇÑ outRotÀ» ±×´ë·Î »ç¿ëÇÏ¸é µÊ.
+        // ì „ì²´ íšŒì „ ë³´ì¡´ì´ í•„ìš”í•˜ë©´ ìœ„ ë¸”ë¡ì„ ë„ê³ , Portal.csê°€ ì„¸íŒ…í•œ outRotì„ ê·¸ëŒ€ë¡œ ì‚¬ìš©í•˜ë©´ ë¨.
 
-        // Áß·Â 1ÇÁ·¹ÀÓ ½ºÅµ (Åö ¶³¾îÁö´Â ´À³¦ ¹æÁö)
+        // ì¤‘ë ¥ 1í”„ë ˆì„ ìŠ¤í‚µ (íˆ­ ë–¨ì–´ì§€ëŠ” ëŠë‚Œ ë°©ì§€)
         if (skipGravityOneFrame) _skipGravityThisFrame = true;
 
-        // Ãâ±¸ ¹æÇâ Å± (CharacterController¿ë)
+        // ì¶œêµ¬ ë°©í–¥ í‚¥ (CharacterControllerìš©)
         float d = Vector3.Dot(to.forward, Vector3.up);
         if (d >= floorDot)
         {
-            // ¹Ù´Ú Æ÷Å»: À§·Î ÃÖ¼Ò ¼Óµµ È®º¸
+            // ë°”ë‹¥ í¬íƒˆ: ìœ„ë¡œ ìµœì†Œ ì†ë„ í™•ë³´
             if (velocity.y < minExitUpSpeed) velocity.y = minExitUpSpeed;
         }
         else if (d <= -floorDot)
         {
-            // ÃµÀå Æ÷Å»: ¾Æ·¡·Î ÃÖ¼Ò ¼Óµµ È®º¸ (¿øÇÏ¸é »ç¿ë)
+            // ì²œì¥ í¬íƒˆ: ì•„ë˜ë¡œ ìµœì†Œ ì†ë„ í™•ë³´ (ì›í•˜ë©´ ì‚¬ìš©)
             if (velocity.y > -minExitUpSpeed) velocity.y = -minExitUpSpeed;
         }
 
-        // ¸¸¾à ÀÌÈÄ¿¡ ¼öÆò ¼Óµµ¸¦ Á÷Á¢ °ü¸®ÇÑ´Ù¸é, ¾Æ·¡Ã³·³ È¸Àü½ÃÄÑ ÁÖ¼¼¿ä:
+        // ë§Œì•½ ì´í›„ì— ìˆ˜í‰ ì†ë„ë¥¼ ì§ì ‘ ê´€ë¦¬í•œë‹¤ë©´, ì•„ë˜ì²˜ëŸ¼ íšŒì „ì‹œì¼œ ì£¼ì„¸ìš”:
         // velocity = to.TransformDirection(from.InverseTransformDirection(velocity));
     }
 
-    // ¿ìÅ¬¸¯ = A(ÆÄ¶û), ÁÂÅ¬¸¯ = B(»¡°­)
+    // ìš°í´ë¦­ = A(íŒŒë‘), ì¢Œí´ë¦­ = B(ë¹¨ê°•)
     void PlacePortal(bool isA)
     {
-        // Debug.Log("Æ÷Å» ¼³Ä¡ ¸Ş¼­µå ÁøÀÔ");
+        // Debug.Log("í¬íƒˆ ì„¤ì¹˜ ë©”ì„œë“œ ì§„ì…");
 
         if (!_portalMode || portalManager == null || _camera == null)
         {
 
-            Debug.Log("Æ÷Å» ¸ğµå°¡ ¾Æ´Ï°Å³ª ÇÒ´çÀÌ ¾ÈµÇ¾î ÀÖÀ½");
+            Debug.Log("í¬íƒˆ ëª¨ë“œê°€ ì•„ë‹ˆê±°ë‚˜ í• ë‹¹ì´ ì•ˆë˜ì–´ ìˆìŒ");
             return;
         }
 
-        // È­¸é Áß¾Ó(Á¶ÁØ¼±) ·¹ÀÌ
+        // í™”ë©´ ì¤‘ì•™(ì¡°ì¤€ì„ ) ë ˆì´
         Ray ray = GetRayFromCrosshair(_camera, crosshair);
 
-        // Portal ·¹ÀÌ¾î Á¦¿Ü ÀüºÎ Çã¿ë, Ãæµ¹Ã¼ Á¤º¸ ÀúÀå
+        // Portal, Blind ë ˆì´ì–´ ì œì™¸ ì „ë¶€ í—ˆìš©, ì¶©ëŒì²´ ì •ë³´ ì €ì¥
         int portalLayer = LayerMask.NameToLayer("Portal");
-        int mask = (portalLayer >= 0) ? ~(1 << portalLayer) : Physics.DefaultRaycastLayers;
+        int blindLayer = LayerMask.NameToLayer("Blind");
+        int mask = Physics.DefaultRaycastLayers;
+        if (portalLayer >= 0) mask &= ~(1 << portalLayer);
+        if (blindLayer >= 0) mask &= ~(1 << blindLayer);
 
-        // RaycastAll·Î ÀüºÎ ¸ÂÃá µÚ, °¡Àå °¡±î¿î À¯È¿ È÷Æ®¸¦ ¼±ÅÃ
-        var hits = Physics.RaycastAll(ray, maxPlaceDistance, mask, QueryTriggerInteraction.Collide);
-        if (hits.Length == 0) return;       // Ãæµ¹ ¾øÀ» ½Ã ¸®ÅÏ
+        // RaycastAllë¡œ ì „ë¶€ ë§ì¶˜ ë’¤, ê°€ì¥ ê°€ê¹Œìš´ ìœ íš¨ íˆíŠ¸ë¥¼ ì„ íƒ
+        var hits = Physics.RaycastAll(ray, maxPlaceDistance, mask, QueryTriggerInteraction.Ignore);
+        if (hits.Length == 0) return;       // ì¶©ëŒ ì—†ì„ ì‹œ ë¦¬í„´
         Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
 
-        // À¯È¿ ÅÂ±× Ã£±â - ¾øÀ¸¸é ¸Ş¼­µå Á¾·á
+        // ìœ íš¨ íƒœê·¸ ì°¾ê¸° - ì—†ìœ¼ë©´ ë©”ì„œë“œ ì¢…ë£Œ
         RaycastHit hit = default;
         bool found = false;
         foreach (var h in hits)
         {
-            // ³» ÇÃ·¹ÀÌ¾î Äİ¶óÀÌ´õ¸é °Ç³Ê¶Ù±â
+            // ë‚´ í”Œë ˆì´ì–´ ì½œë¼ì´ë”ë©´ ê±´ë„ˆë›°ê¸°
             if (h.collider.GetComponentInParent<PlayerController>() == this) continue;
 
-            // ºÎ¸ğ±îÁö ¿Ã¶ó°¡¸ç PortalSurface ÅÂ±× È®ÀÎ
+            // ë¸”ë¼ì¸ë“œ(ì°½ë¬¸)ì´ë©´ ê±´ë„ˆë›°ê¸°
+            if (HasTagInParents(h.collider.transform, "Blind")) continue;
+
+            // ë¶€ëª¨ê¹Œì§€ ì˜¬ë¼ê°€ë©° PortalSurface íƒœê·¸ í™•ì¸, ì—†ìœ¼ë©´ ê±´ë„ˆë›°ê¸°
             if (!HasTagInParents(h.collider.transform, "PortalSurface")) continue;
+
+            // ë³¸ì¸ë§Œ PortalSurface íƒœê·¸ í™•ì¸
+            //if (!h.collider.transform.CompareTag("PortalSurface")) continue;
+
 
             hit = h;
             found = true;
@@ -118,32 +130,35 @@ public partial class PlayerController : MonoBehaviour
         }
 
         /*
-        // ¸ÂÀº Äİ¶óÀÌ´õ Á¤º¸ µğ¹ö±ë
+        // ë§ì€ ì½œë¼ì´ë” ì •ë³´ ë””ë²„ê¹…
         var col = hit.collider;
         Debug.Log($"[Portal] Hit='{col.name}', tag='{col.tag}', layer='{LayerMask.LayerToName(col.gameObject.layer)}', path='{GetTransformPath(col.transform)}'");
+        */
 
-        // ¼³Ä¡ °¡´É Ç¥¸é È®ÀÎ(ÅÂ±×)
-        Transform taggedRoot = FindTagInParents(col.transform, "PortalSurface");
-        if (taggedRoot == null)
+        // í‘œë©´ ë²•ì„ ì— ìˆ˜ì§ ì •ë ¬
+        Vector3 pos = hit.point + hit.normal * portalDepthOffset;
+        Quaternion baseRot = Quaternion.LookRotation(-hit.normal, Vector3.up);
+        Quaternion rot = baseRot * Quaternion.Euler(0f, 180f, 0f);  // í”„ë¦¬íŒ¹ì— ë§ê²Œ yì¶• ê¸°ì¤€ìœ¼ë¡œ ë’¤ì§‘ê¸°
+
+        // ê³µê°„ ì—¬ìœ  ì²´í¬
+        Vector3 checkCenter = pos + rot * Vector3.forward * (portalHalfExtents.z + forwardClearance);
+        if (Physics.CheckBox(checkCenter, portalHalfExtents, rot, mask, QueryTriggerInteraction.Ignore))
         {
-            Debug.Log("[Portal] ºÎ¸ğ±îÁö 'PortalSurface]' Å×±×°¡ ¾øÀ½");
+            var cols = Physics.OverlapBox(checkCenter, portalHalfExtents, rot, mask, QueryTriggerInteraction.Ignore);
+            foreach (var c in cols)
+            {
+                // ê¸°ì¡´ í¬íƒˆ/ë‚´ í”Œë ˆì´ì–´/ë¸”ë¼ì¸ë“œëŠ” ë¬´ì‹œ
+                if (c.GetComponentInParent<Portal>() != null) continue;
+                if (c.GetComponentInParent<PlayerController>() == this) continue;
+                if (HasTagInParents(c.transform, "Blind")) continue;
+                
+                Debug.Log($"[Portal] obstructed by {c.name} (layer={LayerMask.LayerToName(c.gameObject.layer)})");
+            }
             return;
         }
-        */
 
-        // Ç¥¸é ¹ı¼±¿¡ ¼öÁ÷ Á¤·Ä
-        Vector3 pos = hit.point + hit.normal * portalDepthOffset;
-        Quaternion rot = Quaternion.LookRotation(-hit.normal, Vector3.up);
-        rot *= Quaternion.Euler(0f, 180f, 0f);  // ÇÁ¸®ÆÕ¿¡ ¸Â°Ô yÃà ±âÁØÀ¸·Î µÚÁı±â
-
-        /*
-        // °ø°£ ¿©À¯ Ã¼Å©(°ãÄ¡¸é Ãë¼Ò)
-        if (Physics.CheckBox(pos, portalHalfExtents, rot, portalObstructMask, QueryTriggerInteraction.Ignore))
-            return;
-        */
-
-        if (isA) portalManager.PlaceA(pos, rot);  // ÆÄ¶û
-        else portalManager.PlaceB(pos, rot);  // »¡°­
+        if (isA) portalManager.PlaceA(pos, rot);  // íŒŒë‘
+        else portalManager.PlaceB(pos, rot);  // ë¹¨ê°•
     }
 
     Ray GetRayFromCrosshair(Camera cam, GameObject crosshair)
@@ -158,7 +173,7 @@ public partial class PlayerController : MonoBehaviour
         var canvas = rt.GetComponentInParent<Canvas>();
         Vector3 screenPos;
 
-        // Screen Space - Overlay ´Â ¿ùµå¡æ½ºÅ©¸° º¯È¯ ºÒÇÊ¿ä
+        // Screen Space - Overlay ëŠ” ì›”ë“œâ†’ìŠ¤í¬ë¦° ë³€í™˜ ë¶ˆí•„ìš”
         if (canvas && canvas.renderMode == RenderMode.ScreenSpaceOverlay)
             screenPos = rt.position;
         else
