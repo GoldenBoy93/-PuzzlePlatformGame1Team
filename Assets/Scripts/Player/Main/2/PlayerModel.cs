@@ -77,6 +77,10 @@ public sealed class InventoryModel
             emptySlot.Quantity.Value = Mathf.Min(amount, item.maxStack);
         }
     }
+
+
+
+
     public void RemoveItem(int index, int amount)
     {
         var slot = Slots[index];
