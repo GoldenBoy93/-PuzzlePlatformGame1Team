@@ -6,6 +6,8 @@ using UnityEngine;
 public class PuzzleManager : MonoBehaviour
 {
     private static PuzzleManager _instance;
+    public InventoryViewModel inventoryViewModel;
+    private string keyName;
 
     public static PuzzleManager Instance
     {
@@ -38,27 +40,26 @@ public class PuzzleManager : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+
+        inventoryViewModel = UI_Manager.Instance._viewModel2;
     }
 
     // Key 있어야 열리는 퍼즐
-    public bool KeyCheck(Collider other, GameObject wall)
+    public bool KeyCheck(Collider other, GameObject wall, string keyName)
     {
         if (other.CompareTag("Player"))
         {
-            //Inventory playerInventory = other.GetComponent<Inventory>();
+            // 이제 inventoryViewModel 변수를 통해 HasItem 함수를 호출할 수 있습니다.
+            if (inventoryViewModel.HasItem(keyName))
+            {
+                Destroy(wall);
+                Debug.Log("문을 열었습니다.");
+                return true;
+            }
 
-            ////인벤토리에 열쇠가 있는지 확인
-            //if (playerInventory != null && playerInventory.HasItem(keyName))
-            //{
-            //    Destroy(wall);
-            //    Debug.Log("문을 열었습니다.");
-            //    audioSource.PlayOneShot(soundEffect);
-            //    return true;
-            //}
-
-            Destroy(wall);
-            Debug.Log("문을 열었습니다.");
-            return true;
+            //Destroy(wall);
+            //Debug.Log("문을 열었습니다.");
+            //return true;
         }
         return false;
     }
