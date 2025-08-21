@@ -48,7 +48,7 @@ public class UI_Manager : MonoBehaviour //데이터랑 구독 유지용
 
 
     [Header("Panel")]
-    public Inventory _inventory;
+    public InventoryView _inventory;
     public UI_SettingPanel _settingPanel;
     public GameObject _pausePanel;
     public GameObject _gameOver;
@@ -96,7 +96,7 @@ public class UI_Manager : MonoBehaviour //데이터랑 구독 유지용
         _damageIndigator.SetActive(false);
         _uiaction.gameObject.SetActive(false);
         _settingPanel.gameObject.SetActive(false);
-        _inventory.gameObject.SetActive(false);
+        //_inventory.gameObject.SetActive(false);
         _quickslot.SetActive(false);
         _pausePanel.SetActive(false);
         _gameOver.SetActive(false);
@@ -107,6 +107,5 @@ public class UI_Manager : MonoBehaviour //데이터랑 구독 유지용
         _pauseButton.SetActive(true);
 
         _settingPanel.InitPanel();
-        _inventory.InitPanel();
     }
 }

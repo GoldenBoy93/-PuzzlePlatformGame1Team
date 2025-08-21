@@ -1,41 +1,112 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerModel //단순데이터 저장
+public sealed class PlayerModel
 {
-    public int Health { get; set; } = 5;
-    public int MaxHealth { get; set; } = 5;
-    public int Stamina { get; set; } = 1000;
-    public int MaxStamina { get; set; } = 1000;
+    public int MaxHealth { get; }
+    public int MaxStamina { get; }
 
+    private int health;
+    public int Health { get => health; set => health = Mathf.Clamp(value, 0, MaxHealth); }
 
-    // 인벤토리 모델을 참조 (Composition)
-    public InventoryModel Inventory { get; private set; }
+    private int stamina;
+    public int Stamina { get => stamina; set => stamina = Mathf.Clamp(value, 0, MaxStamina); }
 
-    public PlayerModel()
+    public InventoryModel Inventory { get; }
+
+    public PlayerModel(int maxHealth = 5, int maxStamina = 1000)
     {
-        Inventory = new InventoryModel(); // 생성 시 같이 초기화
+        MaxHealth = maxHealth;
+        MaxStamina = maxStamina;
+        health = MaxHealth;
+        stamina = MaxStamina;
+        Inventory = new InventoryModel(100);
     }
 }
-
-public class InventoryModel
+[Serializable]
+public class InventorySlot
 {
-    // 단순 아이템 저장 (이름 + 수량)
-    public Dictionary<ItemData, int> Items { get; private set; } = new Dictionary<ItemData, int>();
+    public string ItemId;     // 비어있으면 null/empty
+    public int Quantity;
+    public bool Equipped;
+    public bool IsEmpty => string.IsNullOrEmpty(ItemId);
+}
 
-    public void AddItem(ItemData data, int amount = 1)
+public sealed class InventoryModel
+{
+    public int MaxSlots { get; }
+    public List<InventorySlot> Slots { get; }  // index가 곧 '슬롯 인덱스'
+
+    public InventoryModel(int maxSlots)
     {
-        if (Items.ContainsKey(data)) Items[data] += amount;
-        else Items[data] = amount;
+        MaxSlots = maxSlots;
+        Slots = new List<InventorySlot>(maxSlots);
+        for (int i = 0; i < maxSlots; i++) Slots.Add(new InventorySlot());
     }
 
-    public void RemoveItem(ItemData data, int amount = 1)
+    // stackable 아이템 추가: 기존 스택 채우고 → 빈 슬롯 생성
+    // 반환값: 다 못 넣고 남은 개수(0이면 전부 성공)
+    public int AddStackable(string itemId, int amount, int maxStack)
     {
-        if (Items.ContainsKey(data))
+        if (amount <= 0) return 0;
+
+        // 1) 기존 스택 채우기
+        for (int i = 0; i < Slots.Count && amount > 0; i++)
         {
-            Items[data] -= amount;
-            if (Items[data] <= 0) Items.Remove(data);
+            var s = Slots[i];
+            if (s.ItemId == itemId && s.Quantity < maxStack)
+            {
+                int add = Math.Min(maxStack - s.Quantity, amount);
+                s.Quantity += add;
+                amount -= add;
+            }
         }
+        // 2) 빈 슬롯에 새 스택 생성
+        for (int i = 0; i < Slots.Count && amount > 0; i++)
+        {
+            var s = Slots[i];
+            if (s.IsEmpty)
+            {
+                int add = Math.Min(maxStack, amount);
+                s.ItemId = itemId;
+                s.Quantity = add;
+                amount -= add;
+            }
+        }
+        return amount;
+    }
+
+    public bool RemoveAt(int slotIndex, int amount = 1)
+    {
+        if (slotIndex < 0 || slotIndex >= Slots.Count) return false;
+        var s = Slots[slotIndex];
+        if (s.IsEmpty || amount <= 0) return false;
+
+        s.Quantity -= amount;
+        if (s.Quantity <= 0)
+        {
+            s.ItemId = null;
+            s.Quantity = 0;
+            s.Equipped = false;
+        }
+        return true;
+    }
+
+    public void Equip(int slotIndex)
+    {
+        if (slotIndex < 0 || slotIndex >= Slots.Count) return;
+        if (Slots[slotIndex].IsEmpty) return;
+
+        // 단일 장착형 예시: 전부 해제 후 해당 슬롯만 장착
+        for (int i = 0; i < Slots.Count; i++) Slots[i].Equipped = false;
+        Slots[slotIndex].Equipped = true;
+    }
+
+    public void UnEquip(int slotIndex)
+    {
+        if (slotIndex < 0 || slotIndex >= Slots.Count) return;
+        Slots[slotIndex].Equipped = false;
     }
 }
