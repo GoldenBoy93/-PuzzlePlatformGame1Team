@@ -35,8 +35,8 @@ public class InventoryViewModel : IDisposable
         Slots = model.Slots.Select(s => new ItemSlotViewModel(s)).ToList();
         EquippedIndex = new ReactiveProperty<int?>(null).AddTo(disposables);
     }
-    public void AddItem(string itemId, int amount) 
-        => model.AddItem(itemId, amount);
+    public void AddItem(string itemId, int amount, int maxStack)
+    => model.AddItem(itemId, amount, maxStack);
     public void RemoveAt(int index, int amount = 1) 
         => model.RemoveItem(index, amount);
     public void Equip(int index)

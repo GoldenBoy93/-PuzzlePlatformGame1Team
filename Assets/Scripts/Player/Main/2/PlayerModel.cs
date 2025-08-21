@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UniRx;
 using UnityEngine;
 
@@ -53,16 +54,22 @@ public sealed class InventoryModel
         for (int i = 0; i < maxSlots; i++)
             Slots.Add(new InventorySlot());
     }
-    public void AddItem(string itemId, int amount)
+    public void AddItem(string itemId, int amount, int maxStack)
     {
-        foreach (var slot in Slots)
+        // 스택 가능하면 기존 슬롯에 합치기
+        var slot = Slots.FirstOrDefault(s => s.ItemId.Value == itemId && s.Quantity.Value < maxStack);
+        if (slot != null)
         {
-            if (slot.IsEmpty.Value)
-            {
-                slot.ItemId.Value = itemId;
-                slot.Quantity.Value = amount;
-                break;
-            }
+            slot.Quantity.Value = Mathf.Min(slot.Quantity.Value + amount, maxStack);
+            return;
+        }
+
+        // 빈 슬롯 찾아서 새 아이템 넣기
+        slot = Slots.FirstOrDefault(s => string.IsNullOrEmpty(s.ItemId.Value));
+        if (slot != null)
+        {
+            slot.ItemId.Value = itemId;
+            slot.Quantity.Value = Mathf.Min(amount, maxStack);
         }
     }
     public void RemoveItem(int index, int amount)

@@ -6,12 +6,12 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UniRx;
 
-public interface IDamageble //°ø°Ý¹ÞÀ»¼öÀÖ´Â ¹°Ã¼¸é »ó¼Ó
+public interface IDamageble //ï¿½ï¿½ï¿½Ý¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½
 {
     void TakePhysicalDamage(int damage);
 }
 
-public enum PlayerState //ÇÃ·¹ÀÌ¾îÀÇ ÇöÀç»óÅÂ
+public enum PlayerState //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 {
     Idle,
     Run,
@@ -21,7 +21,7 @@ public enum PlayerState //ÇÃ·¹ÀÌ¾îÀÇ ÇöÀç»óÅÂ
     Dead
 }
 
-public class UI_Manager : MonoBehaviour //µ¥ÀÌÅÍ¶û ±¸µ¶ À¯Áö¿ë
+public class UI_Manager : MonoBehaviour //ï¿½ï¿½ï¿½ï¿½ï¿½Í¶ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 {
     private static UI_Manager _instance;
     public static UI_Manager Instance
@@ -78,7 +78,7 @@ public class UI_Manager : MonoBehaviour //µ¥ÀÌÅÍ¶û ±¸µ¶ À¯Áö¿ë
         if (_instance != null && _instance != this)
         {
             Debug.Log("Duplicate UIManager found, destroying this one: " + gameObject.name);
-            transform.SetParent(null); // ºÎ¸ð(Canvas)¿¡¼­ ºÐ¸®
+            transform.SetParent(null); // ï¿½Î¸ï¿½(Canvas)ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¸ï¿½
             Destroy(gameObject);
             return;
         }
@@ -89,7 +89,7 @@ public class UI_Manager : MonoBehaviour //µ¥ÀÌÅÍ¶û ±¸µ¶ À¯Áö¿ë
         _model = new PlayerModel();
         _viewModel = new PlayerViewModel(_model);
 
-        _model2 = new InventoryModel(20); // ½½·Ô 20°³ ¿¹½Ã
+        _model2 = new InventoryModel(24);
         _viewModel2 = new InventoryViewModel(_model2);
     }
 
@@ -112,9 +112,9 @@ public class UI_Manager : MonoBehaviour //µ¥ÀÌÅÍ¶û ±¸µ¶ À¯Áö¿ë
 
         _settingPanel.InitPanel();
 
-        _inventory.gameObject.SetActive(true);       // ÀÏ´Ü È°¼ºÈ­
-        _inventory.Init(_viewModel2);               // ½½·Ô »ý¼º + ¹ÙÀÎµù
-        _inventory.gameObject.SetActive(false);     // ´Ù½Ã ²ô±â
+        _inventory.gameObject.SetActive(true);       // ï¿½Ï´ï¿½ È°ï¿½ï¿½È­
+        _inventory.Init(_viewModel2);               // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ + ï¿½ï¿½ï¿½Îµï¿½
+        _inventory.gameObject.SetActive(false);     // ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
         _view.Init(_viewModel);
         BindDeathOnce();
@@ -122,21 +122,21 @@ public class UI_Manager : MonoBehaviour //µ¥ÀÌÅÍ¶û ±¸µ¶ À¯Áö¿ë
 
     void BindDeathOnce()
     {
-        // HP°¡ 0 ÀÌÇÏ°¡ µÇ´Â 'Ã¹ ¼ø°£'¿¡¸¸ ¹ßµ¿
+        // HPï¿½ï¿½ 0 ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ç´ï¿½ 'Ã¹ ï¿½ï¿½ï¿½ï¿½'ï¿½ï¿½ï¿½ï¿½ ï¿½ßµï¿½
         _viewModel.Health
             .Where(h => h <= 0)
             .Take(1)
             .Subscribe(_ =>
             {
-                _gameOver.SetActive(true);        // ÆÐ³Î Ç¥½Ã
-                Time.timeScale = 0f;              // ÀÏ½ÃÁ¤Áö
+                _gameOver.SetActive(true);        // ï¿½Ð³ï¿½ Ç¥ï¿½ï¿½
+                Time.timeScale = 0f;              // ï¿½Ï½ï¿½ï¿½ï¿½ï¿½ï¿½
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
 
-                // (¼±ÅÃ) ÀÔ·Â ¸·±â
+                // (ï¿½ï¿½ï¿½ï¿½) ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½
                 var pc = FindObjectOfType<PlayerController>(true);
                 if (pc != null) pc.LockOnInput(1);
             })
-            .AddTo(this); // UI_Manager°¡ MonoBehaviour¶ó¸é OK
+            .AddTo(this); // UI_Managerï¿½ï¿½ MonoBehaviourï¿½ï¿½ï¿½ OK
     }
 }

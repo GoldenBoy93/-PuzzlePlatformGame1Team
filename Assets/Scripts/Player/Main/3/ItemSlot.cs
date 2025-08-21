@@ -17,6 +17,8 @@ public class ItemSlot : MonoBehaviour
 
     public void Init(ItemSlotViewModel vm, int idx, Action<int> onClick)
     {
+        label.text = "";
+
         index = idx;
 
         // LabelText 자동 갱신
@@ -31,6 +33,12 @@ public class ItemSlot : MonoBehaviour
         var button = GetComponent<Button>();
         if (button != null)
             button.onClick.AddListener(() => onClick?.Invoke(index));
+    }
+
+    public void SetImageActive(bool active)
+    {
+        if (icon != null)
+            icon.enabled = active;
     }
 
     private void OnDestroy() => disposables.Dispose();
