@@ -10,41 +10,31 @@ public class ItemSlotViewModel : IDisposable
 {
     public InventorySlot Slot { get; }
     public ReadOnlyReactiveProperty<string> LabelText { get; }
-
     private CompositeDisposable disposables = new CompositeDisposable();
-
     public ItemSlotViewModel(InventorySlot slot)
     {
         Slot = slot;
-
         LabelText = Observable.CombineLatest(
             Slot.ItemId, Slot.Quantity, Slot.Equipped,
             (id, qty, eq) => string.IsNullOrEmpty(id) ? "" : $"{id} x{qty}" + (eq ? " [E]" : "")
         ).ToReadOnlyReactiveProperty()
          .AddTo(disposables);
     }
-
     public void Dispose() => disposables.Dispose();
 }
-
-
-
 
 public class InventoryViewModel : IDisposable
 {
     public List<ItemSlotViewModel> Slots { get; }
     public ReactiveProperty<int?> EquippedIndex { get; }
-
     private InventoryModel model;
     private CompositeDisposable disposables = new CompositeDisposable();
-
     public InventoryViewModel(InventoryModel model)
     {
         this.model = model;
         Slots = model.Slots.Select(s => new ItemSlotViewModel(s)).ToList();
         EquippedIndex = new ReactiveProperty<int?>(null).AddTo(disposables);
     }
-
     public void AddItem(string itemId, int amount) 
         => model.AddItem(itemId, amount);
     public void RemoveAt(int index, int amount = 1) 
@@ -59,7 +49,6 @@ public class InventoryViewModel : IDisposable
         model.UnEquip(index);
         EquippedIndex.Value = null;
     }
-
     public void Dispose()
     {
         foreach (var s in Slots) s.Dispose();
