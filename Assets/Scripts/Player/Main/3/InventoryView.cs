@@ -15,6 +15,7 @@ public class InventoryView : MonoBehaviour
     public GameObject equipButton;
     public GameObject unequipButton;
     public GameObject dropButton;
+    public Text promptText;
 
     private InventoryViewModel viewModel;
     private ItemSlot[] slots;
@@ -37,6 +38,13 @@ public class InventoryView : MonoBehaviour
         // 첫 슬롯 선택
         if (slots.Length > 0)
             OnSelectItem(0);
+
+        // 이벤트 구독
+        viewModel.OnThreeKeysCollected += () =>
+        {
+            Debug.Log("키 3개 모았다! 문 열기");
+            promptText.text = "키 3개 모았다! 문 열기";
+        };
     }
 
     private void OnSelectItem(int index)
