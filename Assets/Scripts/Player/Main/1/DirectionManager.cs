@@ -44,8 +44,9 @@ public class DirectionManager : MonoBehaviour
     PlayerController _controller;
     [Header("IntroCamera")]
     [SerializeField] private CinemachineVirtualCamera _introCam;
-    [SerializeField] private CinemachineBlendListCamera _cinematicCam;
-    [SerializeField] private CinemachineFreeLook _freeLookCam;
+    [SerializeField] private CinemachineBlendListCamera _startCam;
+    [SerializeField] private CinemachineFreeLook _mainCam;
+
 
     [Header("InGameCamera")]
     private int eq;
@@ -56,55 +57,73 @@ public class DirectionManager : MonoBehaviour
         _controller = SafeFetchHelper.GetOrError<PlayerController>(Player.Instance.gameObject);
         _controller.LockOnInput(1);
     }
-
-
     public void Direction_Intro()
     {
         StartCoroutine(IntroSequence());
         Destroy(_introCam);
     }
+    public IEnumerator IntroSequence()
+    {
+        if (_startCam != null)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            _startCam.Priority = 10;
+            // 연출 시간 대기
+            yield return new WaitForSecondsRealtime(4f);
+            // 연출 끝나면 입력 활성화
+            _startCam.Priority = 0;
+            _mainCam.Priority = 10;
+            _controller.LockOnInput(0);
+        }
+    }
+
+    public void Direction()
+    {
+        StartCoroutine(Sequence());
+    }
+    public IEnumerator Sequence()
+    {
+        if (_mainCam != null)
+        {
+            _controller.LockOnInput(1);
+            _mainCam.Priority = 0;
+            // 연출 시간 대기
+            yield return new WaitForSecondsRealtime(4f);
+            // 연출 끝나면 입력 활성화
+            _controller.LockOnInput(0);
+            _mainCam.Priority = 10;
+        }
+    }
+
 
     public void OnDirection(bool start)
     {
         if (start)
         {
-            _freeLookCam.Priority = 0;
+            _mainCam.Priority = 0;
         }
         else
         {
-            _freeLookCam.Priority = 10;
+            _mainCam.Priority = 10;
         }
     }
 
-    public IEnumerator IntroSequence()
-    {
-        if (_cinematicCam != null)
-        {
-            _controller.LockOnInput(1);
-            Cursor.lockState = CursorLockMode.Locked;
-            _cinematicCam.Priority = 10;
-            // 연출 시간 대기
-            yield return new WaitForSecondsRealtime(4f);
-            // 연출 끝나면 입력 활성화
-            _cinematicCam.Priority = 0;
-            _freeLookCam.Priority = 10;
-            _controller.LockOnInput(0);
-        }
-    }
+
+
 
     public void LockOnCam(bool canmove)
     {
         if (canmove)
         {
             // 인벤토리 열렸을 때 → 카메라 멈춤
-            _freeLookCam.m_XAxis.m_InputAxisName = "";
-            _freeLookCam.m_YAxis.m_InputAxisName = "";
+            _mainCam.m_XAxis.m_InputAxisName = "";
+            _mainCam.m_YAxis.m_InputAxisName = "";
         }
         else
         {
             // 인벤토리 닫혔을 때 → 다시 움직임
-            _freeLookCam.m_XAxis.m_InputAxisName = "Mouse X";
-            _freeLookCam.m_YAxis.m_InputAxisName = "Mouse Y";
+            _mainCam.m_XAxis.m_InputAxisName = "Mouse X";
+            _mainCam.m_YAxis.m_InputAxisName = "Mouse Y";
         }
     }
 }

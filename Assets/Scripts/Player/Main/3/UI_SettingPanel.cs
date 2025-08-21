@@ -14,14 +14,14 @@ public class UI_SettingPanel : MonoBehaviour
     GameObject save;
 
     PlayerController _controller;
-    Inventory _inventory;
+    InventoryView _inventory;
 
     public void InitPanel()
     {
         start = UI_Manager.Instance._start;
         save = UI_Manager.Instance._save;
         _controller = SafeFetchHelper.GetChildOrError<PlayerController>(Player.Instance.gameObject);
-        _inventory = SafeFetchHelper.GetChildOrError<Inventory>(UI_Manager.Instance.gameObject);
+        //_inventory = SafeFetchHelper.GetChildOrError<InventoryView>(UI_Manager.Instance.gameObject);
     }
 
     public void OpenUI()
