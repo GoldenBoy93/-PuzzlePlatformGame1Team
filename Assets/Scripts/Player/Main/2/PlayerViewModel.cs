@@ -36,6 +36,7 @@ public class PlayerViewModel : IDisposable
         if (amount <= 0) return;
         model.Health = Mathf.Max(0, model.Health - amount);
         Health.Value = model.Health;
+        Debug.Log(Health.Value);
     }
 
     public void Heal(int amount)

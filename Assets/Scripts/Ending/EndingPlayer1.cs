@@ -34,9 +34,14 @@ public class EndingPlayer1 : MonoBehaviour
         animator.Play("Player1_Shame");
     }
 
-    public void Idle()
+    public void HandsUp()
     {
-        animator.Play("Player1_Idle");
+        animator.Play("Player1_HandsUp");
+    }
+
+    public void JoyfulJump()
+    {
+        animator.Play("Player1_JoyfulJump");
     }
 
     public void Walk()
@@ -97,6 +102,11 @@ public class EndingPlayer1 : MonoBehaviour
     public void Walk3()
     {
         animator.Play("Player1_Walk3");
+    }
+
+    public void Dance()
+    {
+        animator.Play("Player1_Dance");
     }
 
     public void Nice()

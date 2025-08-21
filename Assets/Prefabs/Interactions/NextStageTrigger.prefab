@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4000038303473696925}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: NextStageTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 8084001689787894464}
   - component: {fileID: 144891922517480890}
   - component: {fileID: 7322525362837844348}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

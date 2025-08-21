@@ -21,6 +21,9 @@ public partial class GameManager : MonoBehaviour
     private GameState _currentState;
     bool IsPause = false;
 
+    // 현재 씬을 저장 할 변수 세팅
+    private Scene currentScene;
+
     public static GameManager Instance
     {
         get
@@ -78,6 +81,8 @@ public partial class GameManager : MonoBehaviour
             }
         }
 
+        // 현재 씬을 가져와서 변수에 저장
+        currentScene = SceneManager.GetActiveScene();
     }
 
     // GameState 전환 함수
@@ -151,6 +156,14 @@ public partial class GameManager : MonoBehaviour
             Debug.Log("좌표변경");
             // 플레이어의 위치를 특정 좌표로 변경
             Player.Instance.transform.position = new Vector3(7, -6, 10);
+
+            int scenebuildIndex = currentScene.buildIndex;
+
+            if (scenebuildIndex == 2)
+            {
+                Debug.Log("11111111111");
+                AudioManager.Instance.PlayBGM("Game2");
+            }
         }
     }
 
