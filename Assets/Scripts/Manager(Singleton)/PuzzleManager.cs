@@ -6,7 +6,6 @@ using UnityEngine;
 public class PuzzleManager : MonoBehaviour
 {
     private static PuzzleManager _instance;
-    public TextMeshProUGUI promptText;
 
     public static PuzzleManager Instance
     {
@@ -51,10 +50,10 @@ public class PuzzleManager : MonoBehaviour
             ////인벤토리에 열쇠가 있는지 확인
             //if (playerInventory != null && playerInventory.HasItem(keyName))
             //{
-            //    Destroy(wallCollider);
+            //    Destroy(wall);
             //    Debug.Log("문을 열었습니다.");
             //    audioSource.PlayOneShot(soundEffect);
-            //return true;
+            //    return true;
             //}
 
             Destroy(wall);

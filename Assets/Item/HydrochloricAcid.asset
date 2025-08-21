@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: "\uC5FC\uC0B0"
   description: "\uACFC\uD559\uC2E4\uD5D8\uC5D0 \uC0AC\uC6A9\uD558\uB294 \uD76C\uC11D
     \uB41C \uC5FC\uC0B0\uC774\uB2E4"
-  type: 0
+  type: 3
   icon: {fileID: 0}
   itemPrefab: {fileID: 7700791217749200964, guid: 7fc6bb0b946303246bc5a9cb7731d0f3, type: 3}
   stackable: 0
