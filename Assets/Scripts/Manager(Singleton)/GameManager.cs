@@ -157,13 +157,11 @@ public partial class GameManager : MonoBehaviour
             // 플레이어의 위치를 특정 좌표로 변경
             Player.Instance.transform.position = new Vector3(7, -6, 10);
 
-            // 플레이어의 Y축을 기준으로 180도 회전
-            Player.Instance.transform.rotation = Quaternion.Euler(0, 90, 0);
-
             int scenebuildIndex = currentScene.buildIndex;
 
             if (scenebuildIndex == 2)
             {
+                Debug.Log("11111111111");
                 AudioManager.Instance.PlayBGM("Game2");
             }
         }
