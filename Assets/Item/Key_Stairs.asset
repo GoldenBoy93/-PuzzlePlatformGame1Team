@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Key_Stairs
   m_EditorClassIdentifier: 
   id: 3342306bf16e4c69a609da4c9c870955
-  displayName: "\uACC4\uB2E8\uC2E4 \uC5F4\uC1E0"
+  displayName: "\uACC4\uB2E8\uC2E4\uC5F4\uC1E0"
   description: "\uB2E4\uB978 \uCE35\uC73C\uB85C \uD1B5\uD558\uB294 \uACC4\uB2E8\uC2E4\uC758
     \uC5F4\uC1E0\uB2E4"
   type: 3
