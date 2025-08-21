@@ -50,13 +50,27 @@ public class InventoryView : MonoBehaviour
     {
         var slot = viewModel.Slots[index].Slot;
 
-        nameText.text = string.IsNullOrEmpty(slot.ItemId.Value) ? "" : slot.ItemId.Value;
+        if (slot.IsEmpty.Value)
+        {
+            nameText.text = "";
+            descriptionText.text = "";
+            useButton.SetActive(false);
+            equipButton.SetActive(false);
+            unequipButton.SetActive(false);
+            dropButton.SetActive(false);
+            slots[index].SetImageActive(false); // 빈 슬롯 이미지 숨기기
+            return;
+        }
+
+        nameText.text = slot.ItemId.Value;
         descriptionText.text = $"Quantity: {slot.Quantity.Value}";
 
-        useButton.SetActive(!string.IsNullOrEmpty(slot.ItemId.Value) && slot.ItemId.Value.Contains("Consumable"));
-        equipButton.SetActive(!slot.IsEmpty.Value && !slot.Equipped.Value);
+        useButton.SetActive(slot.ItemId.Value.Contains("Consumable"));
+        equipButton.SetActive(!slot.Equipped.Value);
         unequipButton.SetActive(slot.Equipped.Value);
-        dropButton.SetActive(!slot.IsEmpty.Value);
+        dropButton.SetActive(true);
+
+        slots[index].SetImageActive(true);
     }
 
     private void UpdateOutlineUI(int index)
@@ -66,13 +80,11 @@ public class InventoryView : MonoBehaviour
             var outline = slots[i].GetComponent<Outline>();
             if (outline == null)
             {
-                // Outline이 없으면 자동으로 붙여줌
                 outline = slots[i].gameObject.AddComponent<Outline>();
-                outline.effectColor = Color.yellow;   // 원하는 색상
-                outline.effectDistance = new Vector2(5, 5); // 두께
+                outline.effectColor = Color.yellow;
+                outline.effectDistance = new Vector2(5, 5);
             }
 
-            // 선택된 슬롯만 Outline 켜기
             outline.enabled = (i == index);
         }
     }

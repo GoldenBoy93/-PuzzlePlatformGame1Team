@@ -88,7 +88,7 @@ public class UI_Manager : MonoBehaviour //데이터랑 구독 유지용
         _model = new PlayerModel();
         _viewModel = new PlayerViewModel(_model);
 
-        _model2 = new InventoryModel(20); // 슬롯 20개 예시
+        _model2 = new InventoryModel(24);
         _viewModel2 = new InventoryViewModel(_model2);
     }
 
@@ -114,5 +114,7 @@ public class UI_Manager : MonoBehaviour //데이터랑 구독 유지용
         _inventory.gameObject.SetActive(true);       // 일단 활성화
         _inventory.Init(_viewModel2);               // 슬롯 생성 + 바인딩
         _inventory.gameObject.SetActive(false);     // 다시 끄기
+
+        _view.Init(_viewModel);
     }
 }
