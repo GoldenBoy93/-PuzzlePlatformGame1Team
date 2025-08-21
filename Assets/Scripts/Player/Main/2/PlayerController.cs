@@ -7,13 +7,14 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.SceneManagement;
 
-public partial class PlayerController : MonoBehaviour //Character Controller ����
+public partial class PlayerController : MonoBehaviour //Character Controller
 { 
     [Header("Movement")]
     public float speed = 2f;
     public float runSpeed = 4f;
     public float smooth = 20f;
     public float gravity = -9.81f;
+    public int runStaminaPerSeceond = 20;
 
     [Header("Object")]
     public bool toggleCameraRotation;
@@ -30,6 +31,7 @@ public partial class PlayerController : MonoBehaviour //Character Controller �
     Vector3 velocity;
     bool isRun;
     bool isGrounded;
+    float _staminaDrainAcc;
 
 
     private void Awake()
@@ -65,7 +67,7 @@ public partial class PlayerController : MonoBehaviour //Character Controller �
         _uiAction = SafeFetchHelper.GetChildOrError<UI_ActionKey>(UI_Manager.Instance.gameObject);
         _settingPanel = SafeFetchHelper.GetChildOrError<UI_SettingPanel>(UI_Manager.Instance.gameObject);
 
-        TryRebindPortalManager(); // 포탈 매니저 바인딩 시도
+        TryRebindPortalManager(); // try bind Portal Manager
     }
     private void Update()
     {
@@ -80,6 +82,7 @@ public partial class PlayerController : MonoBehaviour //Character Controller �
 
         _controller.Move( (new Vector3(0f, velocity.y, 0f)) * Time.deltaTime);
         Move();
+        DrainStaminaWhileRunning();
     }
     private void LateUpdate()
     {
@@ -236,4 +239,41 @@ public partial class PlayerController : MonoBehaviour //Character Controller �
         if (!context.started) return;
         PlacePortal(false);
     }
+
+    void DrainStaminaWhileRunning()
+    {
+        var vm = UI_Manager.Instance?._viewModel;
+        if (vm == null) return;
+
+        // cunsume only when actually move and run
+        bool moving = dir.sqrMagnitude > 0.0001f;
+        if (!isRun || !moving)
+        {
+            _staminaDrainAcc = 0f;
+            return;
+        }
+
+        // stop running when not enough stamina
+        if (vm.Stamina.Value <= 0)
+        {
+            isRun = false;
+            _staminaDrainAcc = 0f;
+            return;
+        }
+
+        // real recover of VM ≈ FPS/s →  dynamic tracking based on deltaTime
+        int effectiveRecoverPerSec = Mathf.CeilToInt(1f / Time.deltaTime);
+        int desiredNetDrain = 10; // 10 net decrease per sec when running
+        int drainPerSec = effectiveRecoverPerSec + desiredNetDrain;
+
+        // accumulate and reduce consumption per sec in int units
+        _staminaDrainAcc += runStaminaPerSeceond * Time.deltaTime;
+        if (_staminaDrainAcc >= 1f)
+        {
+            int amount = Mathf.FloorToInt(_staminaDrainAcc);
+            vm.ConsumeStamina(amount);
+            _staminaDrainAcc -= amount;
+        }
+    }
+
 }
