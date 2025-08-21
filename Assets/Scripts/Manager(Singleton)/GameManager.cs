@@ -151,15 +151,42 @@ public partial class GameManager : MonoBehaviour
         //}
 
         // 새 씬의 이름이 "00"일 경우
-        if (scene.name == "MainScene_Floor1")
+        if (scene.name == "IntroScene")
         {
+            DirectionManager.Instance.Direction_Intro();
+            
+        }
+
+        // 새 씬의 이름이 "00"일 경우
+        if (scene.name == "MainScene_Floor2")
+        {
+            DirectionManager.Instance._mainCam.gameObject.SetActive(true);
+            Player.Instance._controller.LockOnInput(0);
+            Cursor.lockState = CursorLockMode.Locked;
+
+            // AudioManager의 bgmGame2 변수에 할당된 오디오 클립을 가져와 재생
+            AudioManager.Instance.bgmSource.clip = AudioManager.Instance.bgmGame;
+            // 소리 재생
+            AudioManager.Instance.bgmSource.Play();
+        }
+        // 새 씬의 이름이 "00"일 경우
+        else if (scene.name == "MainScene_Floor1")
+        {
+            // AudioManager의 bgmGame2 변수에 할당된 오디오 클립을 가져와 재생
+            AudioManager.Instance.bgmSource.clip = AudioManager.Instance.bgmGame;
+            // 소리 재생
+            AudioManager.Instance.bgmSource.Play();
+
             Debug.Log("좌표변경");
             // 플레이어의 위치를 특정 좌표로 변경
             Player.Instance.transform.position = new Vector3(7, -6, -18);
         }
         else if (scene.name == "EndingScene")
         {
-            AudioManager.Instance.PlayBGM("Game2");
+            // AudioManager의 bgmGame2 변수에 할당된 오디오 클립을 가져와 재생
+            AudioManager.Instance.bgmSource.clip = AudioManager.Instance.bgmGame2;
+            // 소리 재생
+            AudioManager.Instance.bgmSource.Play();
         }
     }
 

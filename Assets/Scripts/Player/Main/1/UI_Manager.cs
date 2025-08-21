@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UniRx;
 
 public interface IDamageble //공격받을수있는 물체면 상속
 {
@@ -106,7 +107,7 @@ public class UI_Manager : MonoBehaviour //데이터랑 구독 유지용
         _save.SetActive(false);
         _equipment.SetActive(true);
         _conditions.SetActive(true);
-        _start.SetActive(true);
+        //_start.SetActive(true);
         _pauseButton.SetActive(true);
 
         _settingPanel.InitPanel();
@@ -114,5 +115,28 @@ public class UI_Manager : MonoBehaviour //데이터랑 구독 유지용
         _inventory.gameObject.SetActive(true);       // 일단 활성화
         _inventory.Init(_viewModel2);               // 슬롯 생성 + 바인딩
         _inventory.gameObject.SetActive(false);     // 다시 끄기
+
+        _view.Init(_viewModel);
+        BindDeathOnce();
+    }
+
+    void BindDeathOnce()
+    {
+        // HP가 0 이하가 되는 '첫 순간'에만 발동
+        _viewModel.Health
+            .Where(h => h <= 0)
+            .Take(1)
+            .Subscribe(_ =>
+            {
+                _gameOver.SetActive(true);        // 패널 표시
+                Time.timeScale = 0f;              // 일시정지
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+
+                // (선택) 입력 막기
+                var pc = FindObjectOfType<PlayerController>(true);
+                if (pc != null) pc.LockOnInput(1);
+            })
+            .AddTo(this); // UI_Manager가 MonoBehaviour라면 OK
     }
 }

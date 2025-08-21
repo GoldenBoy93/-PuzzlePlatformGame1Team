@@ -103,10 +103,22 @@ public class NPC : MonoBehaviour
             case AIState.Wandering:
                 agent.speed = walkSpeed;
                 agent.isStopped = false;
+
+                // AudioManager의 bgmGame2 변수에 할당된 오디오 클립을 가져와 재생
+                AudioManager.Instance.bgmSource.clip = AudioManager.Instance.bgmGame;
+                // 소리 재생
+                AudioManager.Instance.bgmSource.Play();
+
                 break;
             case AIState.Attacking:
                 agent.speed = runSpeed;
                 agent.isStopped = false;
+
+                // AudioManager의 bgmGame2 변수에 할당된 오디오 클립을 가져와 재생
+                AudioManager.Instance.bgmSource.clip = AudioManager.Instance.bgmGame3;
+                // 소리 재생
+                AudioManager.Instance.bgmSource.Play();
+
                 break;
         }
 
@@ -132,6 +144,8 @@ public class NPC : MonoBehaviour
         if (aggro == true && playerDistance < detectDistance && hit.mask == walkableAreaMask)
         {
             SetState(AIState.Attacking);
+
+            
         }
     }
 
@@ -185,7 +199,8 @@ public class NPC : MonoBehaviour
             // 공격범위 안에는 없지만 감지범위 안에는 있을 때
             if (playerDistance < detectDistance)
             {
-                AudioManager.Instance.PlayBGM("Game3");
+                
+
                 agent.isStopped = false;
                 NavMeshPath path = new NavMeshPath();
                 if (agent.CalculatePath(Player.Instance.transform.position, path))
@@ -202,7 +217,8 @@ public class NPC : MonoBehaviour
             // 감지범위 밖으로 나갔을 때
             else
             {
-                AudioManager.Instance.PlayBGM("bgmGame3");
+                
+
                 agent.SetDestination(transform.position);
                 agent.isStopped = true;
                 SetState(AIState.Wandering);

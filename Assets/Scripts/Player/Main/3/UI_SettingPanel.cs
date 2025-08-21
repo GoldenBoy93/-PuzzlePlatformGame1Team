@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Scene = UnityEngine.SceneManagement.Scene;
 
 public class UI_SettingPanel : MonoBehaviour
 {
@@ -110,8 +111,10 @@ public class UI_SettingPanel : MonoBehaviour
     public void OnStart()
     {
         start.SetActive(false);
-        DirectionManager.Instance.Direction_Intro();
-        AudioManager.Instance.PlayBGM("Game");
+        //DirectionManager.Instance.Direction_Intro();
+        //AudioManager.Instance.PlayBGM("Game");
+
+        SceneManager.LoadScene("MainScene_Floor2");
     }
 
     public void OnGameOver()
