@@ -88,9 +88,12 @@ public partial class PlayerController : MonoBehaviour
         // 화면 중앙(조준선) 레이
         Ray ray = GetRayFromCrosshair(_camera, crosshair);
 
-        // Portal 레이어 제외 전부 허용, 충돌체 정보 저장
+        // Portal, Blind 레이어 제외 전부 허용, 충돌체 정보 저장
         int portalLayer = LayerMask.NameToLayer("Portal");
-        int mask = (portalLayer >= 0) ? ~(1 << portalLayer) : Physics.DefaultRaycastLayers;
+        int blindLayer = LayerMask.NameToLayer("Blind");
+        int mask = Physics.DefaultRaycastLayers;
+        if (portalLayer >= 0) mask &= ~(1 << portalLayer);
+        if (blindLayer >= 0) mask &= ~(1 << blindLayer);
 
         // RaycastAll로 전부 맞춘 뒤, 가장 가까운 유효 히트를 선택
         var hits = Physics.RaycastAll(ray, maxPlaceDistance, mask, QueryTriggerInteraction.Ignore);
@@ -105,8 +108,15 @@ public partial class PlayerController : MonoBehaviour
             // 내 플레이어 콜라이더면 건너뛰기
             if (h.collider.GetComponentInParent<PlayerController>() == this) continue;
 
-            // 부모까지 올라가며 PortalSurface 태그 확인
+            // 블라인드(창문)이면 건너뛰기
+            if (HasTagInParents(h.collider.transform, "Blind")) continue;
+
+            // 부모까지 올라가며 PortalSurface 태그 확인, 없으면 건너뛰기
             if (!HasTagInParents(h.collider.transform, "PortalSurface")) continue;
+
+            // 본인만 PortalSurface 태그 확인
+            //if (!h.collider.transform.CompareTag("PortalSurface")) continue;
+
 
             hit = h;
             found = true;
@@ -135,7 +145,15 @@ public partial class PlayerController : MonoBehaviour
         if (Physics.CheckBox(checkCenter, portalHalfExtents, rot, mask, QueryTriggerInteraction.Ignore))
         {
             var cols = Physics.OverlapBox(checkCenter, portalHalfExtents, rot, mask, QueryTriggerInteraction.Ignore);
-            foreach (var c in cols) Debug.Log($"[Portal] obstructed by {c.name} (layer={LayerMask.LayerToName(c.gameObject.layer)})");
+            foreach (var c in cols)
+            {
+                // 기존 포탈/내 플레이어/블라인드는 무시
+                if (c.GetComponentInParent<Portal>() != null) continue;
+                if (c.GetComponentInParent<PlayerController>() == this) continue;
+                if (HasTagInParents(c.transform, "Blind")) continue;
+                
+                Debug.Log($"[Portal] obstructed by {c.name} (layer={LayerMask.LayerToName(c.gameObject.layer)})");
+            }
             return;
         }
 
