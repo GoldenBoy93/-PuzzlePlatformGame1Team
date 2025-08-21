@@ -57,9 +57,21 @@ public class DirectionManager : MonoBehaviour
     }
 
 
-    public void Direction()
+    public void Direction_Intro()
     {
         StartCoroutine(IntroSequence());
+    }
+
+    public void OnDirection(bool start)
+    {
+        if (start)
+        {
+            _freeLookCam.Priority = 0;
+        }
+        else
+        {
+            _freeLookCam.Priority = 10;
+        }
     }
 
     public IEnumerator IntroSequence()
@@ -72,6 +84,8 @@ public class DirectionManager : MonoBehaviour
             // 연출 시간 대기
             yield return new WaitForSecondsRealtime(4f);
             // 연출 끝나면 입력 활성화
+            _cinematicCam.Priority = 0;
+            _freeLookCam.Priority = 10;
             _controller.LockOnInput(false);
         }
     }

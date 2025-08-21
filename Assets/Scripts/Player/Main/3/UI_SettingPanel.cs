@@ -108,7 +108,7 @@ public class UI_SettingPanel : MonoBehaviour
     public void OnStart()
     {
         start.SetActive(false);
-        DirectionManager.Instance.Direction();
+        DirectionManager.Instance.Direction_Intro();
     }
 
     public void OnGameOver()
