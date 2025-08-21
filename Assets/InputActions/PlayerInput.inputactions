@@ -78,6 +78,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Inventory",
+                    "type": "Button",
+                    "id": "4eadf7cd-77da-459b-821f-72ea6f5d280c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Menu",
                     "type": "Button",
                     "id": "13088985-771f-4df9-b9ae-c0b474e1846e",
@@ -108,15 +117,6 @@
                     "name": "MouseR",
                     "type": "Button",
                     "id": "3780d18c-b108-4608-8478-a7f38791e1ff",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Inventory",
-                    "type": "Button",
-                    "id": "4eadf7cd-77da-459b-821f-72ea6f5d280c",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",

@@ -27,8 +27,11 @@ public class DirectionManager : MonoBehaviour
     }
     void Awake()
     {
+        Debug.Log("UI_Manager Awake in scene: " + gameObject.scene.name);
         if (_instance != null && _instance != this)
         {
+            Debug.Log("Duplicate UIManager found, destroying this one: " + gameObject.name);
+            transform.SetParent(null); // 부모(Canvas)에서 분리
             Destroy(gameObject); // 이미 다른 있으면 파괴
             return;
         }
@@ -50,8 +53,7 @@ public class DirectionManager : MonoBehaviour
     {
         _animator = SafeFetchHelper.GetOrError<Animator>(Player.Instance.gameObject);
         _controller = SafeFetchHelper.GetOrError<PlayerController>(Player.Instance.gameObject);
-
-        _controller.LockInputOn();
+        _controller.LockOnInput(true);
     }
 
 
@@ -64,17 +66,17 @@ public class DirectionManager : MonoBehaviour
     {
         if (_cinematicCam != null)
         {
+            _controller.LockOnInput(true);
             Cursor.lockState = CursorLockMode.Locked;
             _cinematicCam.Priority = 10;
             // 연출 시간 대기
             yield return new WaitForSecondsRealtime(4f);
             // 연출 끝나면 입력 활성화
-
-            _controller.LockInputOff();
+            _controller.LockOnInput(false);
         }
     }
 
-    public void LockCamOn(bool canmove)
+    public void LockOnCam(bool canmove)
     {
         if (canmove)
         {

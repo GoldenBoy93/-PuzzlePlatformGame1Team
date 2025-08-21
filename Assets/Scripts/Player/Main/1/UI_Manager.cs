@@ -75,7 +75,7 @@ public class UI_Manager : MonoBehaviour //데이터랑 구독 유지용
         {
             Debug.Log("Duplicate UIManager found, destroying this one: " + gameObject.name);
             transform.SetParent(null); // 부모(Canvas)에서 분리
-            //Destroy(gameObject);
+            Destroy(gameObject);
             return;
         }
 

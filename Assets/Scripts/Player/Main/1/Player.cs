@@ -29,8 +29,11 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("Player Awake in scene: " + gameObject.scene.name);
         if (_instance != null && _instance != this)
         {
+            Debug.Log("Duplicate Player found, destroying this one: " + gameObject.name);
+            transform.SetParent(null); // 부모(Canvas)에서 분리
             Destroy(gameObject); // 이미 다른 있으면 파괴
             return;
         }
