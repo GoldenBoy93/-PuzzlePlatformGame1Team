@@ -6369,7 +6369,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6836150268090924048}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.12082743, y: -0.033208273, z: 0.00870001, w: -0.99207985}
+  m_LocalRotation: {x: -0.120827414, y: -0.033208236, z: 0.008700001, w: -0.99207985}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -8498,7 +8498,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2252439858694250536}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.1052092, y: -0.033340998, z: 0.008176641, w: -0.99385744}
+  m_LocalRotation: {x: -0.1052092, y: -0.03334096, z: 0.008176631, w: -0.99385744}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9573,10 +9573,7 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_ShowDebugText: 0
   m_Loop: 0
-  m_ChildCameras:
-  - {fileID: 5064883830722446956}
-  - {fileID: 6755365436720656157}
-  - {fileID: 8502121761627209711}
+  m_ChildCameras: []
   m_Instructions:
   - m_VirtualCamera: {fileID: 5064883830722446956}
     m_Hold: 1
@@ -28413,6 +28410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 393514a4180359f49b59cbe72785cfcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _introCam: {fileID: 6836394323860846066}
   _cinematicCam: {fileID: 2119700530570848059}
   _freeLookCam: {fileID: 5768478250613254262}
 --- !u!223 &8042451326197972494
