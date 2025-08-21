@@ -13,12 +13,13 @@ public interface IInteractable
 public class Interaction : MonoBehaviour //,IInteractable
 {
 
-    private HashSet<GameObject> collisions = new HashSet<GameObject>();
+    private HashSet<GameObject> collisions = new HashSet<GameObject>(); //중복방지
+
 
 
     private void Update()
     {
-        collisions.RemoveWhere(go =>
+        collisions.RemoveWhere(go =>  //충돌체크 
         {
             if (go == null) return true; // 파괴된 경우
             if (!GetComponent<CharacterController>().bounds.Intersects(go.GetComponent<Collider>().bounds))
@@ -28,6 +29,20 @@ public class Interaction : MonoBehaviour //,IInteractable
             }
             return false;
         });
+
+        // 아이템 줍기 입력
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            foreach (var go in collisions)
+            {
+                var item = go.GetComponent<Interaction>();
+                if (item != null)
+                {
+                    PickupItem(item);
+                    break; // 하나만 먹고 종료
+                }
+            }
+        }
     }
 
 
@@ -46,7 +61,13 @@ public class Interaction : MonoBehaviour //,IInteractable
         Destroy(gameObject);
     }
 
-
+    private void PickupItem(Interaction item)
+    {
+        var playerInventory = UI_Manager.Instance._inventory;
+        playerInventory.data = item.data;   // 임시로 Inventory에 넣고 AddItem 호출
+        playerInventory.AddItem();
+        Destroy(item.gameObject);
+    }
 
     //private void SetPromptText()
     //{
