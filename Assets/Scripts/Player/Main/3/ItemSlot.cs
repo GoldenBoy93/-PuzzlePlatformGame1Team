@@ -2,59 +2,47 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ItemSlot : MonoBehaviour
 {
-    public Inventory inventory;
-    public Button button;
-    public Image icon;
-    public TextMeshProUGUI quantityText;
-    private Outline outline;
+    public int index;
+    public TextMeshProUGUI label;
 
-    [HideInInspector] public int index;
-    //[HideInInspector] public InventoryView inventoryView;
+    private ItemSlotViewModel viewModel;
+    private System.Action<int> onClick;
+    private CompositeDisposable disposables = new CompositeDisposable();
 
-    public ItemData data;
-    public string itemName;
-    public int quantity;
-    public bool equipped;
-
-
-
-    private void Awake() => outline = GetComponent<Outline>();
-
-    private void OnEnable()
+    public void Init(ItemSlotViewModel vm, System.Action<int> onClick)
     {
-        if (data == null) outline.enabled = false;
-        else outline.enabled = equipped;
-    }
+        this.viewModel = vm;
+        this.onClick = onClick;
 
-    public void Set(ItemData data, int quantity, bool choice = false)
-    {
-        this.data = data;
-        this.itemName = data.displayName;
-        this.quantity = quantity;
-        this.equipped = choice;
-
-        icon.gameObject.SetActive(true);
-        icon.sprite = data.icon;
-        quantityText.text = quantity > 1 ? quantity.ToString() : "";
-        if (outline != null) outline.enabled = choice;
+        // 슬롯 데이터가 바뀌면 UI 갱신
+        viewModel.Slot.Subscribe(_ => Refresh()).AddTo(disposables);
     }
 
     public void Clear()
     {
-        itemName = null;
-        quantity = 0;
-        equipped = false;
-        icon.gameObject.SetActive(false);
-        quantityText.text = "";
-        if (outline != null) outline.enabled = false;
+        viewModel = null;
+        label.text = "";
     }
 
-    public void OnClickButton() => inventory.SelectItem(index);
+    public void Refresh()
+    {
+        if (viewModel != null)
+            label.text = viewModel.LabelText;
+    }
 
+    public void OnClick()
+    {
+        onClick?.Invoke(index);
+    }
 
+    private void OnDestroy()
+    {
+        disposables.Dispose();
+    }
 }

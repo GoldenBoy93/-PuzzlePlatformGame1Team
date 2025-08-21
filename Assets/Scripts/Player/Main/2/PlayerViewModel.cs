@@ -5,41 +5,35 @@ using UniRx;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerViewModel //값이 바뀌면 자동으로 구독자에게 알림
+public class PlayerViewModel : IDisposable
 {
-    public PlayerModel model;
-
-    public Action addItem;
-
-
-
-    public ReactiveDictionary<ItemData, int> Inventory { get; private set; }
-    public ReactiveProperty<int> Health { get; private set; }
-    public int MaxHealth { get; private set; }
-
-    // ReactiveProperty를 통해 UI 자동 갱신
-    public ReactiveProperty<int> Stamina { get; private set; }
-    public int MaxStamina => model.MaxStamina;
-    // 인벤토리: 아이템 이름과 개수를 반응형으로
-
-
-
-    // 스태미나 자동 회복/소모 관리용
+    private readonly PlayerModel model;
     private IDisposable staminaRecoverLoop;
+
+    public ReactiveProperty<int> Health { get; }
+    public int MaxHealth => model.MaxHealth;
+
+    public ReactiveProperty<int> Stamina { get; }
+    public int MaxStamina => model.MaxStamina;
+
+    // 플레이어가 인벤토리를 '소유' (분리된 VM)
+    public InventoryViewModel InventoryVM { get; }
 
     public PlayerViewModel(PlayerModel model)
     {
-        this.model = model;
-        Health = new ReactiveProperty<int>(model.Health);
-        Stamina = new ReactiveProperty<int>(model.Stamina);
-        Inventory = new ReactiveDictionary<ItemData, int>(model.Inventory.Items);
+        this.model = model ?? throw new ArgumentNullException(nameof(model));
 
-        // 스태미나 자동 회복 시작
-        RecoveryStamina();
+        Health = new ReactiveProperty<int>(this.model.Health);
+        Stamina = new ReactiveProperty<int>(this.model.Stamina);
+
+        InventoryVM = new InventoryViewModel(this.model.Inventory);
+
+        StartStaminaRecovery();
     }
 
     public void TakeDamage(int amount)
     {
+        if (amount <= 0) return;
         model.Health = Mathf.Max(0, model.Health - amount);
         Health.Value = model.Health;
         Debug.Log(Health.Value);
@@ -47,69 +41,40 @@ public class PlayerViewModel //값이 바뀌면 자동으로 구독자에게 알림
 
     public void Heal(int amount)
     {
+        if (amount <= 0) return;
         model.Health = Mathf.Min(model.MaxHealth, model.Health + amount);
         Health.Value = model.Health;
     }
 
     public void ConsumeStamina(int amount)
     {
+        if (amount <= 0) return;
         model.Stamina = Mathf.Max(0, model.Stamina - amount);
         Stamina.Value = model.Stamina;
     }
 
-    private void RecoveryStamina()
+    // 프레임 독립 회복 (초당 10 회복 예시)
+    private void StartStaminaRecovery()
     {
-        staminaRecoverLoop = Observable.Interval(TimeSpan.FromSeconds(0.1f))
+        const float recoverPerSec = 10f;
+
+        staminaRecoverLoop = Observable.EveryUpdate()
             .Subscribe(_ =>
             {
-                if (model.Stamina < model.MaxStamina) // 최대치 제한
+                if (model.Stamina < model.MaxStamina)
                 {
-                    model.Stamina += 10;
+                    int delta = Mathf.CeilToInt(recoverPerSec * Time.deltaTime);
+                    model.Stamina = Mathf.Min(model.MaxStamina, model.Stamina + delta);
                     Stamina.Value = model.Stamina;
                 }
             });
     }
 
-    // 인벤토리 조작 메서드 (View에서 직접 호출 가능)
-    public void AddItem(ItemData data, int amount = 1)
-    {
-        Inventory[data] = Inventory.ContainsKey(data) ? Inventory[data] + amount : amount;
-    }
-
-    public void RemoveItem(ItemData data, int amount = 1)
-    {
-        if (Inventory.ContainsKey(data))
-        {
-            Inventory[data] -= amount;
-            if (Inventory[data] <= 0) Inventory.Remove(data);
-        }
-    }
-
-    #region --- UIInventoryView + ItemSlot ---
-    #endregion
-
-
-    // ViewModel이 더 이상 필요 없을 때 정리
     public void Dispose()
     {
         staminaRecoverLoop?.Dispose();
+        InventoryVM?.Dispose();
+        Health?.Dispose();
+        Stamina?.Dispose();
     }
-
-
-    //// 현재 장비
-    //private Equip _currentEquip;
-    //public IObservable<Equip> CurrentEquipChanged => _currentEquipSubject;
-    //private readonly Subject<Equip> _currentEquipSubject = new Subject<Equip>();
-    //
-    //public void Equip(Equip newEquip)
-    //{
-    //    _currentEquip = newEquip;
-    //    _currentEquipSubject.OnNext(newEquip); // 구독자에게 통보
-    //}
-    //
-    //public void Unequip()
-    //{
-    //    _currentEquip = null;
-    //    _currentEquipSubject.OnNext(null);
-    //}
 }

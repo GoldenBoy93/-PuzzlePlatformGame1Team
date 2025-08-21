@@ -15,14 +15,9 @@ public class ItemObject : MonoBehaviour
     {
         if (data == null) return;
 
-        // PlayerModel 참조 가져오기
-        var playerModel = UI_Manager.Instance._model;
-
-        // InventoryModel에 저장
-        playerModel.Inventory.AddItem(data, 1);
-
-        // 옵저버/이벤트로 UI 갱신 (예: UI_Manager에게 알리기)
-        UI_Manager.Instance._inventory.RefreshUI();
+        // ViewModel에 아이템 추가
+        var viewModel = UI_Manager.Instance._viewModel;
+        //viewModel.AddItem(data, 1);
 
         Destroy(gameObject);
     }
