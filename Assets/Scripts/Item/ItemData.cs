@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum ItemType { Simple, Consumable, Tool }
+public enum ItemType { Simple, Consumable, Tool, key }
 
 public abstract class ItemData : ScriptableObject
 {

@@ -217,7 +217,7 @@ MonoBehaviour:
   walkSpeed: 1
   runSpeed: 3
   detectionRadius: 1
-  attackPower: 2
+  attackPower: 1
   detectDistance: 15
   minWanderDistance: 5
   maxWanderDistance: 10
