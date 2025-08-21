@@ -6,8 +6,12 @@ public class ItemObject : MonoBehaviour
 
     public string GetInteractPrompt()
     {
-        string str = $"{data.displayName}\n{data.description}";
-        return str;
+        if (data == null)
+        {
+            string str = $"{data.displayName}\n{data.description}";
+            return str;
+        }
+        return null;
     }
 
     // 매개변수로 현재 상호작용 중인 게임 오브젝트를 받음

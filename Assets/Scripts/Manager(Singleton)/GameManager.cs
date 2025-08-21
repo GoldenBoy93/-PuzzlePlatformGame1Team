@@ -151,6 +151,9 @@ public partial class GameManager : MonoBehaviour
             Debug.Log("좌표변경");
             // 플레이어의 위치를 특정 좌표로 변경
             Player.Instance.transform.position = new Vector3(7, -6, 10);
+
+            // 플레이어의 Y축을 기준으로 180도 회전
+            Player.Instance.transform.rotation = Quaternion.Euler(0, 180, 0);
         }
     }
 
