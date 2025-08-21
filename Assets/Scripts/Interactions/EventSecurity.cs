@@ -30,23 +30,9 @@ public class EventSecurity : MonoBehaviour
             Debug.Log("Security call");
             Instantiate(securityGuard, new Vector3(7, -7, -19), Quaternion.Euler(0, 0, 0));
 
-            
-        }
-    }
+            DirectionManager.Instance.Direction();
 
-    public IEnumerator Sec()
-    {
-        if (_cinematicCam != null)
-        {
-            Player.Instance._controller.LockOnInput(1);
-            Cursor.lockState = CursorLockMode.Locked;
-            // 연출 시간 대기
-            _cinematicCam.Priority = 0;
-            yield return new WaitForSeconds(4f);
-            // 연출 끝나면 입력 활성화
-            _cinematicCam.Priority = 10;
-            Cursor.lockState = CursorLockMode.None;
-            Player.Instance._controller.LockOnInput(0);
+            audioSource.PlayOneShot(audioSource.clip);
         }
     }
 }
