@@ -41,7 +41,8 @@ public class Portal : MonoBehaviour
 
     private void TryTeleport(Collider hit)
     {
-        if (!target) return;
+        // 타겟이 없거나 비활성화면 텔레포트 금지
+        if (!target || !target.gameObject.activeInHierarchy) return;
 
         // 여행자 확인
         var traveler = hit.GetComponentInParent<PortalTraveler>();
@@ -88,7 +89,7 @@ public class Portal : MonoBehaviour
             travelerTransform.SetPositionAndRotation(outPos, outRot);
             cc.enabled = true;
         }
-        else if (!travelerTransform.TryGetComponent<Rigidbody>(out _)) // RB/CC 둘 다 아니면 직접 세팅
+        else // RB/CC 둘 다 아니면 직접 세팅
         {
             travelerTransform.SetPositionAndRotation(outPos, outRot);
         }

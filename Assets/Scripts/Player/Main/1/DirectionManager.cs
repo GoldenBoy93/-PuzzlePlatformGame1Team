@@ -43,6 +43,7 @@ public class DirectionManager : MonoBehaviour
     Animator _animator;
     PlayerController _controller;
     [Header("IntroCamera")]
+    [SerializeField] private CinemachineVirtualCamera _introCam;
     [SerializeField] private CinemachineBlendListCamera _cinematicCam;
     [SerializeField] private CinemachineFreeLook _freeLookCam;
 
@@ -60,6 +61,7 @@ public class DirectionManager : MonoBehaviour
     public void Direction_Intro()
     {
         StartCoroutine(IntroSequence());
+        Destroy(_introCam);
     }
 
     public void OnDirection(bool start)
