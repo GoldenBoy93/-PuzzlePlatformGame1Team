@@ -25,7 +25,7 @@ public class EventDropBook : MonoBehaviour
 
             hasTriggered = true;
 
-            DirectionManager.Instance.Direction();
+            DirectionManager.Instance.Direction_Intro();
 
         }
     }
