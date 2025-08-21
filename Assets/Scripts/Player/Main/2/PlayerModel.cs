@@ -27,19 +27,19 @@ public sealed class PlayerModel
 [Serializable]
 public class InventorySlot
 {
-    public ReactiveProperty<string> ItemId { get; }
+    public ReactiveProperty<ItemData> Item { get; }
     public ReactiveProperty<int> Quantity { get; }
     public ReactiveProperty<bool> Equipped { get; }
 
     public ReadOnlyReactiveProperty<bool> IsEmpty { get; }
 
-    public InventorySlot(string itemId = null, int quantity = 0, bool equipped = false)
+    public InventorySlot(ItemData item = null, int quantity = 0, bool equipped = false)
     {
-        ItemId = new ReactiveProperty<string>(itemId);
+        Item = new ReactiveProperty<ItemData>(item);
         Quantity = new ReactiveProperty<int>(quantity);
         Equipped = new ReactiveProperty<bool>(equipped);
 
-        IsEmpty = ItemId.Select(id => string.IsNullOrEmpty(id)).ToReadOnlyReactiveProperty();
+        IsEmpty = Item.Select(i => i == null).ToReadOnlyReactiveProperty();
     }
 }
 
@@ -54,22 +54,27 @@ public sealed class InventoryModel
         for (int i = 0; i < maxSlots; i++)
             Slots.Add(new InventorySlot());
     }
-    public void AddItem(string itemId, int amount, int maxStack)
+    public void AddItem(ItemData item, int amount)
     {
-        // 스택 가능하면 기존 슬롯에 합치기
-        var slot = Slots.FirstOrDefault(s => s.ItemId.Value == itemId && s.Quantity.Value < maxStack);
-        if (slot != null)
+        if (item == null) return;
+
+        // 스택 가능한 슬롯 찾기
+        if (item.stackable)
         {
-            slot.Quantity.Value = Mathf.Min(slot.Quantity.Value + amount, maxStack);
-            return;
+            var slot = Slots.FirstOrDefault(s => s.Item.Value == item && s.Quantity.Value < item.maxStack);
+            if (slot != null)
+            {
+                slot.Quantity.Value = Mathf.Min(slot.Quantity.Value + amount, item.maxStack);
+                return;
+            }
         }
 
         // 빈 슬롯 찾아서 새 아이템 넣기
-        slot = Slots.FirstOrDefault(s => string.IsNullOrEmpty(s.ItemId.Value));
-        if (slot != null)
+        var emptySlot = Slots.FirstOrDefault(s => s.Item.Value == null);
+        if (emptySlot != null)
         {
-            slot.ItemId.Value = itemId;
-            slot.Quantity.Value = Mathf.Min(amount, maxStack);
+            emptySlot.Item.Value = item;
+            emptySlot.Quantity.Value = Mathf.Min(amount, item.maxStack);
         }
     }
     public void RemoveItem(int index, int amount)
@@ -78,7 +83,7 @@ public sealed class InventoryModel
         slot.Quantity.Value -= amount;
         if (slot.Quantity.Value <= 0)
         {
-            slot.ItemId.Value = null;
+            slot.Item.Value = null;
             slot.Quantity.Value = 0;
             slot.Equipped.Value = false;
         }
