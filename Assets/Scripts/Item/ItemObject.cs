@@ -6,12 +6,15 @@ public class ItemObject : MonoBehaviour
 
     public string GetInteractPrompt()
     {
-        if (data == null)
+        // data가 null이 아닐 때만 유효한 문자열을 반환
+        if (data != null)
         {
-            string str = $"{data.displayName}\n{data.description}";
-            return str;
+            // C# 6.0 이상에서 사용 가능한 문자열 보간법 (Interpolated String)
+            return $"{data.displayName}\n{data.description}";
         }
-        return null;
+
+        // data가 null일 경우, 빈 문자열을 반환하여 오류를 방지
+        return "";
     }
 
     // 매개변수로 현재 상호작용 중인 게임 오브젝트를 받음

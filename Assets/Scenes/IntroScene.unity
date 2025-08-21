@@ -12572,6 +12572,7 @@ MonoBehaviour:
   equipButton: {fileID: 3846373154354590067}
   unequipButton: {fileID: 4082689701007514969}
   dropButton: {fileID: 6527969481352389335}
+  promptText: {fileID: 0}
 --- !u!114 &2604055049662289406
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -29056,8 +29057,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3681451507457122759}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.30002734, y: 0.32355523, z: -0.108982824, w: 0.8907404}
-  m_LocalPosition: {x: -1.771502, y: 3.2973857, z: -2.1167097}
+  m_LocalRotation: {x: 0.35122833, y: 0.4842139, z: -0.22076985, w: 0.77034813}
+  m_LocalPosition: {x: -2.4654946, y: 4.3496833, z: -1.186347}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
