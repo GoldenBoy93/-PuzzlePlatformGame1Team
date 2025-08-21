@@ -47,6 +47,7 @@ public class ToggleCameras : MonoBehaviour
 
     public void Enter()
     {
+        DirectionManager.Instance.OnDirection(true);
         if (inFocus) return; inFocus = true;
         if (playerCam) { playerCam.enabled = false; if (playerAL) playerAL.enabled = false; }
         if (keypadCam) { keypadCam.enabled = true; if (keypadAL) keypadAL.enabled = true; }
@@ -57,6 +58,7 @@ public class ToggleCameras : MonoBehaviour
 
     public void Exit()
     {
+        DirectionManager.Instance.OnDirection(false);
         if (!inFocus) return; inFocus = false;
         if (keypadCam) { keypadCam.enabled = false; if (keypadAL) keypadAL.enabled = false; }
         if (playerCam) { playerCam.enabled = true; if (playerAL) playerAL.enabled = true; }
