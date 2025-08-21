@@ -36,7 +36,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip bgmStart;
     public AudioClip bgmGame;
     public AudioClip bgmGame2;
-    private AudioSource bgmSource;
+    public AudioClip bgmGame3;
+    public AudioSource bgmSource;
 
     [Header("SFX Clips")]
     public List<NamedSFX> sfxClips;

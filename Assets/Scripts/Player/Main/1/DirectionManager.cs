@@ -45,7 +45,7 @@ public class DirectionManager : MonoBehaviour
     [Header("IntroCamera")]
     [SerializeField] private CinemachineVirtualCamera _introCam;
     [SerializeField] private CinemachineBlendListCamera _startCam;
-    [SerializeField] private CinemachineFreeLook _mainCam;
+    [SerializeField] public CinemachineFreeLook _mainCam;
 
 
     [Header("InGameCamera")]
@@ -66,14 +66,14 @@ public class DirectionManager : MonoBehaviour
     {
         if (_startCam != null)
         {
-            Cursor.lockState = CursorLockMode.Locked;
+            //Cursor.lockState = CursorLockMode.Locked;
             _startCam.Priority = 10;
             // 연출 시간 대기
             yield return new WaitForSecondsRealtime(4f);
             // 연출 끝나면 입력 활성화
             _startCam.Priority = 0;
             _mainCam.Priority = 10;
-            _controller.LockOnInput(0);
+            //_controller.LockOnInput(0);
         }
     }
 

@@ -45,8 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgmStart: {fileID: 8300000, guid: b64af4f1d05491b45a5b17508246ff34, type: 3}
-  bgmGame: {fileID: 8300000, guid: 1cb63f0f2a7507d47b4d4287d31b0079, type: 3}
-  bgm1: {fileID: 0}
+  bgmGame: {fileID: 8300000, guid: 7b10fa2ea050ab94992238bb4ab0fd16, type: 3}
+  bgmGame2: {fileID: 8300000, guid: 7573cd7544d6c554ebb1f8485af77451, type: 3}
+  bgmGame3: {fileID: 8300000, guid: 8739a2838e26ffd44a02269a9aa1aa7f, type: 3}
+  bgmSource: {fileID: 0}
   sfxClips: []
   sfxPoolSize: 5
   bgmVolume: 0.24
