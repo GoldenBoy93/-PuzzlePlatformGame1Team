@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 
 public sealed class PlayerModel
@@ -22,91 +23,75 @@ public sealed class PlayerModel
         MaxStamina = maxStamina;
         health = MaxHealth;
         stamina = MaxStamina;
-        Inventory = new InventoryModel(100);
+        Inventory = new InventoryModel(20);
     }
 }
 [Serializable]
 public class InventorySlot
 {
-    public string ItemId;     // 비어있으면 null/empty
-    public int Quantity;
-    public bool Equipped;
-    public bool IsEmpty => string.IsNullOrEmpty(ItemId);
-}
+    public ReactiveProperty<string> ItemId { get; }
+    public ReactiveProperty<int> Quantity { get; }
+    public ReactiveProperty<bool> Equipped { get; }
 
+    public ReadOnlyReactiveProperty<bool> IsEmpty { get; }
+
+    public InventorySlot(string itemId = null, int quantity = 0, bool equipped = false)
+    {
+        ItemId = new ReactiveProperty<string>(itemId);
+        Quantity = new ReactiveProperty<int>(quantity);
+        Equipped = new ReactiveProperty<bool>(equipped);
+
+        IsEmpty = ItemId.Select(id => string.IsNullOrEmpty(id)).ToReadOnlyReactiveProperty();
+    }
+}
 public sealed class InventoryModel
 {
     public int MaxSlots { get; }
-    public List<InventorySlot> Slots { get; }  // index가 곧 '슬롯 인덱스'
+    public List<InventorySlot> Slots { get; }
 
     public InventoryModel(int maxSlots)
     {
         MaxSlots = maxSlots;
-        Slots = new List<InventorySlot>(maxSlots);
-        for (int i = 0; i < maxSlots; i++) Slots.Add(new InventorySlot());
+        Slots = new List<InventorySlot>();
+        for (int i = 0; i < maxSlots; i++)
+            Slots.Add(new InventorySlot());
     }
 
-    // stackable 아이템 추가: 기존 스택 채우고 → 빈 슬롯 생성
-    // 반환값: 다 못 넣고 남은 개수(0이면 전부 성공)
-    public int AddStackable(string itemId, int amount, int maxStack)
+    public void AddItem(string itemId, int amount)
     {
-        if (amount <= 0) return 0;
-
-        // 1) 기존 스택 채우기
-        for (int i = 0; i < Slots.Count && amount > 0; i++)
+        foreach (var slot in Slots)
         {
-            var s = Slots[i];
-            if (s.ItemId == itemId && s.Quantity < maxStack)
+            if (slot.IsEmpty.Value)
             {
-                int add = Math.Min(maxStack - s.Quantity, amount);
-                s.Quantity += add;
-                amount -= add;
+                slot.ItemId.Value = itemId;
+                slot.Quantity.Value = amount;
+                break;
             }
         }
-        // 2) 빈 슬롯에 새 스택 생성
-        for (int i = 0; i < Slots.Count && amount > 0; i++)
+    }
+
+    public void RemoveItem(int index, int amount)
+    {
+        var slot = Slots[index];
+        slot.Quantity.Value -= amount;
+        if (slot.Quantity.Value <= 0)
         {
-            var s = Slots[i];
-            if (s.IsEmpty)
-            {
-                int add = Math.Min(maxStack, amount);
-                s.ItemId = itemId;
-                s.Quantity = add;
-                amount -= add;
-            }
+            slot.ItemId.Value = null;
+            slot.Quantity.Value = 0;
+            slot.Equipped.Value = false;
         }
-        return amount;
     }
 
-    public bool RemoveAt(int slotIndex, int amount = 1)
+    public void Equip(int index)
     {
-        if (slotIndex < 0 || slotIndex >= Slots.Count) return false;
-        var s = Slots[slotIndex];
-        if (s.IsEmpty || amount <= 0) return false;
+        for (int i = 0; i < Slots.Count; i++)
+            Slots[i].Equipped.Value = false;
 
-        s.Quantity -= amount;
-        if (s.Quantity <= 0)
-        {
-            s.ItemId = null;
-            s.Quantity = 0;
-            s.Equipped = false;
-        }
-        return true;
+        Slots[index].Equipped.Value = true;
     }
 
-    public void Equip(int slotIndex)
+    public void UnEquip(int index)
     {
-        if (slotIndex < 0 || slotIndex >= Slots.Count) return;
-        if (Slots[slotIndex].IsEmpty) return;
-
-        // 단일 장착형 예시: 전부 해제 후 해당 슬롯만 장착
-        for (int i = 0; i < Slots.Count; i++) Slots[i].Equipped = false;
-        Slots[slotIndex].Equipped = true;
-    }
-
-    public void UnEquip(int slotIndex)
-    {
-        if (slotIndex < 0 || slotIndex >= Slots.Count) return;
-        Slots[slotIndex].Equipped = false;
+        Slots[index].Equipped.Value = false;
     }
 }

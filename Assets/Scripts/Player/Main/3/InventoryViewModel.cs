@@ -1,75 +1,67 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UniRx;
 using UnityEngine;
 
 // 슬롯을 ReactiveProperty로 감싸는 ViewModel
-public class ItemSlotViewModel
+public class ItemSlotViewModel : IDisposable
 {
-    public ReactiveProperty<InventorySlot> Slot { get; }
+    public InventorySlot Slot { get; }
+    public ReadOnlyReactiveProperty<string> LabelText { get; }
+
+    private CompositeDisposable disposables = new CompositeDisposable();
 
     public ItemSlotViewModel(InventorySlot slot)
     {
-        Slot = new ReactiveProperty<InventorySlot>(slot);
+        Slot = slot;
+
+        LabelText = Observable.CombineLatest(
+            Slot.ItemId, Slot.Quantity, Slot.Equipped,
+            (id, qty, eq) => string.IsNullOrEmpty(id) ? "" : $"{id} x{qty}" + (eq ? " [E]" : "")
+        ).ToReadOnlyReactiveProperty()
+         .AddTo(disposables);
     }
 
-    public string LabelText => Slot.Value.IsEmpty ? "" : $"{Slot.Value.ItemId} x{Slot.Value.Quantity}" + (Slot.Value.Equipped ? " [E]" : "");
+    public void Dispose() => disposables.Dispose();
 }
-// 인벤토리 전체 ViewModel
+
+
+
+
 public class InventoryViewModel : IDisposable
 {
     public List<ItemSlotViewModel> Slots { get; }
     public ReactiveProperty<int?> EquippedIndex { get; }
 
     private InventoryModel model;
+    private CompositeDisposable disposables = new CompositeDisposable();
 
     public InventoryViewModel(InventoryModel model)
     {
         this.model = model;
-        Slots = new List<ItemSlotViewModel>();
-        foreach (var s in model.Slots)
-            Slots.Add(new ItemSlotViewModel(s));
-
-        EquippedIndex = new ReactiveProperty<int?>(null);
+        Slots = model.Slots.Select(s => new ItemSlotViewModel(s)).ToList();
+        EquippedIndex = new ReactiveProperty<int?>(null).AddTo(disposables);
     }
 
-    public void AddItem(string itemId, int amount, int maxStack)
-    {
-        model.AddStackable(itemId, amount, maxStack);
-        RefreshSlots();
-    }
-
-    public void RemoveAt(int index, int amount = 1)
-    {
-        if (model.RemoveAt(index, amount))
-            Slots[index].Slot.Value = model.Slots[index];
-    }
-
+    public void AddItem(string itemId, int amount) => model.AddItem(itemId, amount);
+    public void RemoveAt(int index, int amount = 1) => model.RemoveItem(index, amount);
     public void Equip(int index)
     {
         model.Equip(index);
         EquippedIndex.Value = index;
-        RefreshSlots();
     }
-
     public void UnEquip(int index)
     {
         model.UnEquip(index);
         EquippedIndex.Value = null;
-        Slots[index].Slot.Value = model.Slots[index];
-    }
-
-    private void RefreshSlots()
-    {
-        for (int i = 0; i < Slots.Count; i++)
-            Slots[i].Slot.Value = model.Slots[i];
     }
 
     public void Dispose()
     {
-        foreach (var s in Slots)
-            s.Slot.Dispose();
-        EquippedIndex?.Dispose();
+        foreach (var s in Slots) s.Dispose();
+        EquippedIndex.Dispose();
+        disposables.Dispose();
     }
 }
