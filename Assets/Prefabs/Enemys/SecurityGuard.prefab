@@ -216,7 +216,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 1
   runSpeed: 2
-  detectDistance: 5
+  detectionRadius: 1
+  detectDistance: 15
   minWanderDistance: 5
   maxWanderDistance: 10
   minWanderWaitTime: 1
@@ -238,9 +239,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f578f3f7f6993646b6ab32ee91a4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  footstepClip: {fileID: 8300000, guid: bef747ba25799424eacbaae2e115f250, type: 3}
-  footstepThreshold: 0.1
-  footstepRate: 0.1
+  footstepClip: {fileID: 8300000, guid: 25960fc0102751246b17f1f7dabe5c8a, type: 3}
+  footstepThreshold: 0.5
+  footstepRate: 0.5
 --- !u!82 &2984510803097416297
 AudioSource:
   m_ObjectHideFlags: 0
@@ -253,7 +254,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.325
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -261,10 +262,10 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 0
-  MinDistance: 2
-  MaxDistance: 4
+  MinDistance: 1
+  MaxDistance: 20
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -273,22 +274,31 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
+      value: 1.0130959
+      inSlope: -1.1451136
+      outSlope: -1.1451136
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0.29782254
     - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      time: 0.1769867
+      value: 0.5458298
+      inSlope: -0.8988478
+      outSlope: -0.8988478
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0.3928574
+    - serializedVersion: 3
+      time: 0.99557495
+      value: 0
+      inSlope: -0.33346638
+      outSlope: -0.33346638
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
