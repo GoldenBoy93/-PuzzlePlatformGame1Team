@@ -13,7 +13,7 @@ public class PlayerViewModel //값이 바뀌면 자동으로 구독자에게 알림
 
 
 
-    public ReactiveDictionary<string, int> Inventory { get; private set; }
+    public ReactiveDictionary<ItemData, int> Inventory { get; private set; }
     public ReactiveProperty<int> Health { get; private set; }
     public int MaxHealth { get; private set; }
 
@@ -32,7 +32,7 @@ public class PlayerViewModel //값이 바뀌면 자동으로 구독자에게 알림
         this.model = model;
         Health = new ReactiveProperty<int>(model.Health);
         Stamina = new ReactiveProperty<int>(model.Stamina);
-        Inventory = new ReactiveDictionary<string, int>(model.Inventory.Items);
+        Inventory = new ReactiveDictionary<ItemData, int>(model.Inventory.Items);
 
         // 스태미나 자동 회복 시작
         RecoveryStamina();
@@ -70,21 +70,19 @@ public class PlayerViewModel //값이 바뀌면 자동으로 구독자에게 알림
     }
 
     // 인벤토리 조작 메서드 (View에서 직접 호출 가능)
-    public void AddItem(string name, int amount = 1)
+    public void AddItem(ItemData data, int amount = 1)
     {
-        Inventory[name] = Inventory.ContainsKey(name) ? Inventory[name] + amount : amount;
+        Inventory[data] = Inventory.ContainsKey(data) ? Inventory[data] + amount : amount;
     }
 
-
-    public void RemoveItem(string name, int amount = 1)
+    public void RemoveItem(ItemData data, int amount = 1)
     {
-        if (Inventory.ContainsKey(name))
+        if (Inventory.ContainsKey(data))
         {
-            Inventory[name] -= amount;
-            if (Inventory[name] <= 0) Inventory.Remove(name);
+            Inventory[data] -= amount;
+            if (Inventory[data] <= 0) Inventory.Remove(data);
         }
     }
-
 
     #region --- UIInventoryView + ItemSlot ---
     #endregion

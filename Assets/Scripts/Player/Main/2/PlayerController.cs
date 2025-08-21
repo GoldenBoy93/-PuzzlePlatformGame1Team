@@ -29,7 +29,6 @@ public partial class PlayerController : MonoBehaviour //Character Controller �
     Vector3 velocity;
     bool isRun;
     bool isGrounded;
-    bool toggle = false;
 
 
     private void Awake()
@@ -118,9 +117,9 @@ public partial class PlayerController : MonoBehaviour //Character Controller �
     }
 
     
-    public void LockOnInput(bool canmove)
+    public void LockOnInput(int value)
     {
-        if(canmove)
+        if(value==1)
         {
             _input.Player.Disable();
             _input.UI.Enable();
@@ -131,6 +130,7 @@ public partial class PlayerController : MonoBehaviour //Character Controller �
             _input.Player.Enable();
         }
     }
+
 
     void OnMove(InputAction.CallbackContext context)
     {
@@ -209,9 +209,10 @@ public partial class PlayerController : MonoBehaviour //Character Controller �
 
 
 
-
+    bool toggle = false;
     void OnPotalGun(InputAction.CallbackContext context) //Ctrl
     {
+        toggle = !toggle;
         _animator.SetLayerWeight(2, toggle ? 1f : 0f);
         _animator.SetBool("IsGun", toggle);
 

@@ -11,23 +11,29 @@ public class ItemObject : MonoBehaviour
     }
 
     // 매개변수로 현재 상호작용 중인 게임 오브젝트를 받음
-    public void OnInteract(GameObject curInteractGameObject)
+    public void OnInteract(GameObject interactor)
     {
-        //// 주울 수 있는 아이템이라면,
-        //if (data.isGetable)
-        //{
-        //    //Player 스크립트에 상호작용 아이템 data 넘기기.
-        //    GameManager.Instance.Player.itemData = data;
-        //    GameManager.Instance.Player.addItem?.Invoke();
-        //    Destroy(gameObject);
-        //}
-        //else if (curInteractGameObject.GetComponent<Door>() != null)
-        //{
-        //    // 현재 상호작용 게임 오브젝트가 Door 컴포넌트를 가지고 있다면,
-        //    // Door의 SetState 메서드를 호출하여 상태를 변경
-        //    curInteractGameObject.GetComponent<Door>().SetState();
-        //}
+        if (data == null) return;
 
-        //return;
+        // PlayerModel 참조 가져오기
+        var playerModel = UI_Manager.Instance._model;
+
+        // InventoryModel에 저장
+        playerModel.Inventory.AddItem(data, 1);
+
+        // 옵저버/이벤트로 UI 갱신 (예: UI_Manager에게 알리기)
+        UI_Manager.Instance._inventory.RefreshUI();
+
+        Destroy(gameObject);
     }
+
+
+
+    //else if (curInteractGameObject.GetComponent<Door>() != null)
+    //{
+    //    // 현재 상호작용 게임 오브젝트가 Door 컴포넌트를 가지고 있다면,
+    //    // Door의 SetState 메서드를 호출하여 상태를 변경
+    //    curInteractGameObject.GetComponent<Door>().SetState();
+    //}
+
 }
