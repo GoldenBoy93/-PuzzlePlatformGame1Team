@@ -28,11 +28,13 @@ public class UI_SettingPanel : MonoBehaviour
     {
         Time.timeScale = 0.1f;
         DirectionManager.Instance.LockOnCam(true);
+        Cursor.lockState = CursorLockMode.None;
     }
     public void CloseUI()
     {
         Time.timeScale = 1f;
         DirectionManager.Instance.LockOnCam(false);
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void OnToggleSettings()
@@ -109,6 +111,7 @@ public class UI_SettingPanel : MonoBehaviour
     {
         start.SetActive(false);
         DirectionManager.Instance.Direction_Intro();
+        AudioManager.Instance.PlayBGM("Game");
     }
 
     public void OnGameOver()

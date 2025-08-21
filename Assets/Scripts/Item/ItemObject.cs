@@ -19,13 +19,18 @@ public class ItemObject : MonoBehaviour
     {
         if (data == null) return;
 
-        // ViewModel에 아이템 추가
-        var viewModel = UI_Manager.Instance._viewModel;
-        //viewModel.AddItem(data, 1);
+        // 인벤토리 ViewModel 가져오기
+        var viewModel2 = UI_Manager.Instance._viewModel2;
+        if (viewModel2 != null)
+        {
+            // stackable이라면 maxStack 가져와서 추가
+            int maxStack = data.maxStack; // ItemData에 maxStack 필드가 있다고 가정
+            viewModel2.AddItem(data.id, 1);
+        }
 
+        // 아이템 월드에서 제거
         Destroy(gameObject);
     }
-
 
 
     //else if (curInteractGameObject.GetComponent<Door>() != null)

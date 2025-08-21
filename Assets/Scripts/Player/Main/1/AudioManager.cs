@@ -35,7 +35,7 @@ public class AudioManager : MonoBehaviour
     [Header("BGM Clips")]
     public AudioClip bgmStart;
     public AudioClip bgmGame;
-    public AudioClip bgm1;
+    public AudioClip bgmGame2;
     private AudioSource bgmSource;
 
     [Header("SFX Clips")]
@@ -106,6 +106,19 @@ public class AudioManager : MonoBehaviour
                 AudioManager.Instance.PlayClickSFX();
             }
         }
+    }
+
+    public void PlayBGM(string name)
+    {
+        AudioClip clipToPlay = null;
+        switch (name)
+        {
+            case "Start": clipToPlay = bgmStart; break;
+            case "Game": clipToPlay = bgmGame; break;
+            case "Game2": clipToPlay = bgmGame2; break;
+            default: Debug.LogWarning("Unknown BGM name: " + name); return;
+        }
+        PlayBGM(clipToPlay);
     }
 
     public void PlayBGM(AudioClip clip)
