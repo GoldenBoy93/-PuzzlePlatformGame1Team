@@ -8,32 +8,39 @@ using UnityEngine.UI;
 
 public class UI_SettingPanel : MonoBehaviour
 {
-    public UI_SettingPanel settings;
     public Slider bgmSlider;
     public Slider sfxSlider;
     GameObject start;
     GameObject save;
 
-    PlayerInput input;
-
-    void Start()
-    {
-    }
+    PlayerController _controller;
+    Inventory _inventory;
 
     public void InitPanel()
     {
-        settings = SafeFetchHelper.GetChildOrError<UI_SettingPanel>(UI_Manager.Instance.gameObject);
         start = UI_Manager.Instance._start;
         save = UI_Manager.Instance._save;
-        input = new PlayerInput();
+        _controller = SafeFetchHelper.GetChildOrError<PlayerController>(Player.Instance.gameObject);
+        _inventory = SafeFetchHelper.GetChildOrError<Inventory>(UI_Manager.Instance.gameObject);
+    }
+
+    public void OpenUI()
+    {
+        Time.timeScale = 0.1f;
+        DirectionManager.Instance.LockOnCam(true);
+    }
+    public void CloseUI()
+    {
+        Time.timeScale = 1f;
+        DirectionManager.Instance.LockOnCam(false);
     }
 
     public void OnToggleSettings()
     {
-        if (settings.gameObject.activeSelf) //true라면
+        if (!gameObject.activeSelf)
         {
-            CloseUI();
-            settings.gameObject.SetActive(false);
+            OpenUI();
+            gameObject.SetActive(true);
 
             // 리스너 해제 (안 해도 되지만 깔끔하게 하려면 유지)
             bgmSlider.onValueChanged.RemoveListener(OnBgmSlider);
@@ -41,8 +48,8 @@ public class UI_SettingPanel : MonoBehaviour
         }
         else
         {
-            OpenUI();
-            settings.gameObject.SetActive(true);
+            CloseUI();
+            gameObject.SetActive(false);
 
             // 슬라이더 값 세팅
             bgmSlider.value = AudioManager.Instance.bgmVolume;
@@ -53,21 +60,22 @@ public class UI_SettingPanel : MonoBehaviour
 
         }
     }
+    public void OnToggleInventory()
+    {
+        if (!_inventory.gameObject.activeSelf)
+        {
+            OpenUI();
+            _inventory.gameObject.SetActive(true);
+        }
+        else
+        {
+            CloseUI();
+            _inventory.gameObject.SetActive(false);
+        }
+    }
 
-    public void OpenUI()
-    {
-        Time.timeScale = 0.1f;
-        input.Player.Disable();
-        input.UI.Enable();
-        DirectionManager.Instance.CameraMove(false);
-    }
-    public void CloseUI()
-    {
-        Time.timeScale = 1f;
-        input.UI.Disable();
-        input.Player.Enable();
-        DirectionManager.Instance.CameraMove(true);
-    }
+
+
     public void OnCloseTheScene()
     {
         SceneManager.LoadScene(0);
@@ -99,7 +107,7 @@ public class UI_SettingPanel : MonoBehaviour
 
     public void OnStart()
     {
-        start.SetActive(!start.activeSelf);
+        start.SetActive(false);
         DirectionManager.Instance.Direction();
     }
 

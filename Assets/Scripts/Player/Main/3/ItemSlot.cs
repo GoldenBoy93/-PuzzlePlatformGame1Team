@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ItemSlot : MonoBehaviour
 {
-    public ItemData data;
     public Inventory inventory;
     public Button button;
     public Image icon;
@@ -16,6 +16,7 @@ public class ItemSlot : MonoBehaviour
     [HideInInspector] public int index;
     //[HideInInspector] public InventoryView inventoryView;
 
+    public ItemData data;
     public string itemName;
     public int quantity;
     public bool equipped;
@@ -24,22 +25,23 @@ public class ItemSlot : MonoBehaviour
 
     private void Awake() => outline = GetComponent<Outline>();
 
-    private void OnEnable() => outline.enabled = equipped;
-
-
-    public void Set(string itemName, int quantity, bool equipped = false)
+    private void OnEnable()
     {
-        this.itemName = itemName;
-        this.quantity = quantity;
-        this.equipped = equipped;
+        if (data == null) outline.enabled = false;
+        else outline.enabled = equipped;
+    }
 
-        //var data = GetItemData(itemName);
-        if (data == null) return;
-        
+    public void Set(ItemData data, int quantity, bool choice = false)
+    {
+        this.data = data;
+        this.itemName = data.displayName;
+        this.quantity = quantity;
+        this.equipped = choice;
+
         icon.gameObject.SetActive(true);
         icon.sprite = data.icon;
         quantityText.text = quantity > 1 ? quantity.ToString() : "";
-        if (outline != null) outline.enabled = equipped;
+        if (outline != null) outline.enabled = choice;
     }
 
     public void Clear()
@@ -55,9 +57,4 @@ public class ItemSlot : MonoBehaviour
     public void OnClickButton() => inventory.SelectItem(index);
 
 
-    //public ItemData GetItemData(string name)
-    //{
-    //    if (string.IsNullOrEmpty(name)) return null;
-    //    return data.displayName(name);
-    //}
 }

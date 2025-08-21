@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 
 public interface IInteractable
@@ -13,21 +15,45 @@ public interface IInteractable
 public class Interaction : MonoBehaviour //,IInteractable
 {
 
-    private HashSet<GameObject> collisions = new HashSet<GameObject>();
+    private HashSet<GameObject> collisions = new HashSet<GameObject>(); //중복방지
 
+    GameObject promptText;
+    TextMeshProUGUI text;
+
+
+
+    private void Start()
+    {
+        promptText = UI_Manager.Instance._promptText;
+        text = promptText.GetComponentInChildren<TextMeshProUGUI>();
+    }
 
     private void Update()
     {
-        collisions.RemoveWhere(go =>
+        collisions.RemoveWhere(go =>  //범위벗어날떄
         {
             if (go == null) return true; // 파괴된 경우
             if (!GetComponent<CharacterController>().bounds.Intersects(go.GetComponent<Collider>().bounds))
             {
-                Debug.Log("Exit : " + go.name);
+                promptText.SetActive(false);
                 return true;
             }
             return false;
         });
+
+        if (Input.GetKeyDown(KeyCode.E)) //아이템줍기
+        {
+            foreach (var go in collisions)
+            {
+                var item = go.GetComponent<Interaction>();
+                if (item != null)
+                {
+                    promptText.SetActive(false);
+                    PickupItem(item);
+                    break; // 하나만 먹고 종료
+                }
+            }
+        }
     }
 
 
@@ -46,7 +72,13 @@ public class Interaction : MonoBehaviour //,IInteractable
         Destroy(gameObject);
     }
 
-
+    private void PickupItem(Interaction item)
+    {
+        var playerInventory = UI_Manager.Instance._inventory;
+        playerInventory.data = item.data;   // 임시로 Inventory에 넣고 AddItem 호출
+        playerInventory.AddItem();
+        Destroy(item.gameObject);
+    }
 
     //private void SetPromptText()
     //{
@@ -70,8 +102,14 @@ public class Interaction : MonoBehaviour //,IInteractable
     {
         if (!collisions.Contains(hit.gameObject))
         {
-            Debug.Log("Enter : " + hit.gameObject.name);
             collisions.Add(hit.gameObject);
+
+            var item = hit.gameObject.GetComponent<Interaction>();
+            if (item != null)
+            {
+                promptText.SetActive(true);
+                text.text = item.GetInteractPrompt();
+            }
         }
     }
 }

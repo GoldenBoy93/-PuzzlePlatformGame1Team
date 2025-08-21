@@ -48570,51 +48570,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4481949333202216, guid: 8430fd56cfcb15941a1f31ea7f8f1915, type: 3}
   m_PrefabInstance: {fileID: 1695278355}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1698153294
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1698153296}
-  - component: {fileID: 1698153295}
-  m_Layer: 0
-  m_Name: PuzzleManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1698153295
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1698153294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5e50d2938124fe4bb1340e239c57a3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  promptText: {fileID: 568699433}
---- !u!4 &1698153296
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1698153294}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1705777905
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -62009,7 +61964,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000038303473696925, guid: 75083875341c2ab42b06679b6e845cc2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.484
+      value: 7.82
       objectReference: {fileID: 0}
     - target: {fileID: 4000038303473696925, guid: 75083875341c2ab42b06679b6e845cc2, type: 3}
       propertyPath: m_LocalPosition.y
@@ -62017,7 +61972,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000038303473696925, guid: 75083875341c2ab42b06679b6e845cc2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -21.223
+      value: -24.83
       objectReference: {fileID: 0}
     - target: {fileID: 4000038303473696925, guid: 75083875341c2ab42b06679b6e845cc2, type: 3}
       propertyPath: m_LocalRotation.w
@@ -62384,6 +62339,5 @@ SceneRoots:
   - {fileID: 559969518}
   - {fileID: 1501005903}
   - {fileID: 415771777}
-  - {fileID: 1698153296}
   - {fileID: 249164256349331670}
   - {fileID: 8082660870754666166}
