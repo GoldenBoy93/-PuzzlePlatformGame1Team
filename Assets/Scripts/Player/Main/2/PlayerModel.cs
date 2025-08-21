@@ -22,20 +22,20 @@ public class PlayerModel //단순데이터 저장
 public class InventoryModel
 {
     // 단순 아이템 저장 (이름 + 수량)
-    public Dictionary<string, int> Items { get; private set; } = new Dictionary<string, int>();
+    public Dictionary<ItemData, int> Items { get; private set; } = new Dictionary<ItemData, int>();
 
-    public void AddItem(string itemName, int amount = 1)
+    public void AddItem(ItemData data, int amount = 1)
     {
-        if (Items.ContainsKey(itemName)) Items[itemName] += amount;
-        else Items[itemName] = amount;
+        if (Items.ContainsKey(data)) Items[data] += amount;
+        else Items[data] = amount;
     }
 
-    public void RemoveItem(string itemName, int amount = 1)
+    public void RemoveItem(ItemData data, int amount = 1)
     {
-        if (Items.ContainsKey(itemName))
+        if (Items.ContainsKey(data))
         {
-            Items[itemName] -= amount;
-            if (Items[itemName] <= 0) Items.Remove(itemName);
+            Items[data] -= amount;
+            if (Items[data] <= 0) Items.Remove(data);
         }
     }
 }
