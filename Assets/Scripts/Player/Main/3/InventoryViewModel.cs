@@ -45,8 +45,10 @@ public class InventoryViewModel : IDisposable
         EquippedIndex = new ReactiveProperty<int?>(null).AddTo(disposables);
     }
 
-    public void AddItem(string itemId, int amount) => model.AddItem(itemId, amount);
-    public void RemoveAt(int index, int amount = 1) => model.RemoveItem(index, amount);
+    public void AddItem(string itemId, int amount) 
+        => model.AddItem(itemId, amount);
+    public void RemoveAt(int index, int amount = 1) 
+        => model.RemoveItem(index, amount);
     public void Equip(int index)
     {
         model.Equip(index);
