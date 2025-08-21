@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UniRx;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryView : MonoBehaviour
 {
@@ -24,13 +25,13 @@ public class InventoryView : MonoBehaviour
     {
         viewModel = vm;
 
-        slots = new ItemSlot[viewModel.Slots.Count];
-        for (int i = 0; i < slots.Length; i++)
+        // slotPanel 자식들을 슬롯으로 가져오기
+        slots = slotPanel.GetComponentsInChildren<ItemSlot>();
+
+        // ViewModel 바인딩
+        for (int i = 0; i < slots.Length && i < viewModel.Slots.Count; i++)
         {
-            var go = Instantiate(slotPrefab, slotPanel);
-            slots[i] = go.GetComponent<ItemSlot>();
-            slots[i].index = i;
-            slots[i].Init(viewModel.Slots[i], OnSelectItem);
+            slots[i].Init(viewModel.Slots[i], i, (index) => OnSelectItem(index));
         }
 
         // 첫 슬롯 선택
@@ -42,6 +43,7 @@ public class InventoryView : MonoBehaviour
     {
         selectedIndex.Value = index;
         UpdateSelectedUI(index);
+        UpdateOutlineUI(index);
     }
 
     private void UpdateSelectedUI(int index)
@@ -55,6 +57,24 @@ public class InventoryView : MonoBehaviour
         equipButton.SetActive(!slot.IsEmpty.Value && !slot.Equipped.Value);
         unequipButton.SetActive(slot.Equipped.Value);
         dropButton.SetActive(!slot.IsEmpty.Value);
+    }
+
+    private void UpdateOutlineUI(int index)
+    {
+        for (int i = 0; i < slots.Length; i++)
+        {
+            var outline = slots[i].GetComponent<Outline>();
+            if (outline == null)
+            {
+                // Outline이 없으면 자동으로 붙여줌
+                outline = slots[i].gameObject.AddComponent<Outline>();
+                outline.effectColor = Color.yellow;   // 원하는 색상
+                outline.effectDistance = new Vector2(5, 5); // 두께
+            }
+
+            // 선택된 슬롯만 Outline 켜기
+            outline.enabled = (i == index);
+        }
     }
 
     public void OnEquipButton()

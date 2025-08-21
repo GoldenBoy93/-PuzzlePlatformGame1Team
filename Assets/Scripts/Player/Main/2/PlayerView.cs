@@ -9,10 +9,8 @@ public class PlayerView : MonoBehaviour
 {
     public Image healthImage;
     public Image staminaImage;
-
     private PlayerViewModel viewModel;
     private CompositeDisposable disposables = new CompositeDisposable();
-
     public void Init(PlayerViewModel vm)
     {
         viewModel = vm;
@@ -20,6 +18,5 @@ public class PlayerView : MonoBehaviour
         viewModel.Health.Subscribe(h => healthImage.fillAmount = (float)h / vm.MaxHealth).AddTo(disposables);
         viewModel.Stamina.Subscribe(s => staminaImage.fillAmount = (float)s / vm.MaxStamina).AddTo(disposables);
     }
-
     void OnDestroy() => disposables.Dispose();
 }
