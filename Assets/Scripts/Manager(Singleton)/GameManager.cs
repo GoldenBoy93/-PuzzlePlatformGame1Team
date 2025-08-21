@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 // 게임의 UI 상태를 정의하는 열거형
@@ -36,19 +37,6 @@ public partial class GameManager : MonoBehaviour
     }
 
 
-    private UI_Manager _UIManager;
-    public UI_Manager UIManager
-    {
-        get { return _UIManager; }
-        set { _UIManager = value; }
-    }
-
-    private Player _PlayerManager;
-    public Player PlayerManager
-    {
-        get { return _PlayerManager; }
-        set { _PlayerManager = value; }
-    }
 
 
 
@@ -72,6 +60,7 @@ public partial class GameManager : MonoBehaviour
     {
         var direction = DirectionManager.Instance;
         var audio = AudioManager.Instance;
+
 
         // Awake가 호출 될 때라면 이미 매니저 오브젝트는 생성되어 있는 것이고, '_instance'에 자신을 할당
         if (_instance == null)
@@ -155,5 +144,19 @@ public partial class GameManager : MonoBehaviour
                 ChangeGameState(GameState.Playing);
                 break;
         }
+
+        // 새 씬의 이름이 "00"일 경우
+        if (scene.name == "Floor1")
+        {
+            Debug.Log("좌표변경");
+            // 플레이어의 위치를 특정 좌표로 변경
+            Player.Instance.transform.position = new Vector3(7, -6, 10);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        // 오브젝트가 파괴될 때 이벤트 등록 해제
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

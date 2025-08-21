@@ -19,8 +19,8 @@ public class PortalManager : MonoBehaviour
             return;
         }
 
-        if (!portalA) portalA = Instantiate(portalPrefabA, Vector3.zero, Quaternion.identity, transform);
-        if (!portalB) portalB = Instantiate(portalPrefabB, Vector3.right * 2f, Quaternion.identity, transform);
+        if (!portalA) portalA = Instantiate(portalPrefabA, new Vector3(0, -10, 0), Quaternion.identity, transform);
+        if (!portalB) portalB = Instantiate(portalPrefabB, new Vector3(2, -10, 0), Quaternion.identity, transform);
 
         // 서로 연결
         LinkBoth();
@@ -29,6 +29,8 @@ public class PortalManager : MonoBehaviour
     // === 외부에서 호출: PlayerController_Portal.cs가 사용 ===
     public void PlaceA(Vector3 pos, Quaternion rot)
     {
+        Debug.Log("포탈 A 설치");
+
         // 기존 A 있으면 파괴 → 새로 생성
         if (portalA) Destroy(portalA.gameObject);
         portalA = Instantiate(portalPrefabA, pos, rot, transform);
@@ -37,6 +39,8 @@ public class PortalManager : MonoBehaviour
 
     public void PlaceB(Vector3 pos, Quaternion rot)
     {
+        Debug.Log("포탈 B 설치");
+
         if (portalB) Destroy(portalB.gameObject);
         portalB = Instantiate(portalPrefabB, pos, rot, transform);
         LinkBoth();

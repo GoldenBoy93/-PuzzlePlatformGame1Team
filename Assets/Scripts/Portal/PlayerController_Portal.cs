@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public partial class PlayerController : MonoBehaviour
@@ -12,11 +13,11 @@ public partial class PlayerController : MonoBehaviour
     [Header("Portal (Placement)")]
     [SerializeField] PortalManager portalManager;             // 인스펙터 할당
     [SerializeField] GameObject crosshair;                    // Ctrl로 표시/비표시
-    [SerializeField] LayerMask portalSurfaceMask;             // 설치 가능 표면
-    [SerializeField] LayerMask portalObstructMask;            // 설치 공간 방해 레이어
+    //[SerializeField] LayerMask portalSurfaceMask;             // 설치 가능 표면
+    //[SerializeField] LayerMask portalObstructMask;            // 설치 공간 방해 레이어
     [SerializeField] float maxPlaceDistance = 40f;            // 레이 거리
     [SerializeField] float portalDepthOffset = 0.01f;         // 표면 안 파고들지 않게
-    [SerializeField] Vector3 portalHalfExtents = new(0.5f, 1.0f, 0.05f); // 포탈 대략 크기
+    //[SerializeField] Vector3 portalHalfExtents = new(0.5f, 1.0f, 0.05f); // 포탈 대략 크기
 
     // 조준 모드 (Ctrl로 토글)
     bool _portalMode;
@@ -25,19 +26,19 @@ public partial class PlayerController : MonoBehaviour
     [SerializeField, Range(0f, 1f)] float floorDot = 0.5f; // 출구가 '위쪽'을 향한다고 볼 임계값(코사인)
 
     // hooks
-    private void OnEnablePortal() 
-    { 
-        _portalMode = false;
-        if (crosshair) crosshair.SetActive(false);
-    }
-    private void OnDisablePortal() 
+    private void OnEnablePortal()
     {
         _portalMode = false;
         if (crosshair) crosshair.SetActive(false);
-        _skipGravityThisFrame = false; 
+    }
+    private void OnDisablePortal()
+    {
+        _portalMode = false;
+        if (crosshair) crosshair.SetActive(false);
+        _skipGravityThisFrame = false;
     }
     private void UpdatePortal() { /* 필요 시 사용*/ }
-    
+
     // Portal.cs가 호출
     public void OnTeleported(Transform from, Transform to)
     {
@@ -73,26 +74,106 @@ public partial class PlayerController : MonoBehaviour
     // 우클릭 = A(파랑), 좌클릭 = B(빨강)
     void PlacePortal(bool isA)
     {
-        if (!_portalMode || portalManager == null || _camera == null) return;
+        // Debug.Log("포탈 설치 메서드 진입");
 
-        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
-        if (!Physics.Raycast(ray, out var hit, maxPlaceDistance, portalSurfaceMask, QueryTriggerInteraction.Ignore))
+        if (!_portalMode || portalManager == null || _camera == null)
+        {
+
+            Debug.Log("포탈 모드가 아니거나 할당이 안되어 있음");
             return;
+        }
+
+        // 화면 중앙(조준선) 레이
+        Ray ray = GetRayFromCrosshair(_camera, crosshair);
+
+        // Portal 레이어 제외 전부 허용, 충돌체 정보 저장
+        int portalLayer = LayerMask.NameToLayer("Portal");
+        int mask = (portalLayer >= 0) ? ~(1 << portalLayer) : Physics.DefaultRaycastLayers;
+
+        // RaycastAll로 전부 맞춘 뒤, 가장 가까운 유효 히트를 선택
+        var hits = Physics.RaycastAll(ray, maxPlaceDistance, mask, QueryTriggerInteraction.Collide);
+        if (hits.Length == 0) return;       // 충돌 없을 시 리턴
+        Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+
+        // 유효 태그 찾기 - 없으면 메서드 종료
+        RaycastHit hit = default;
+        bool found = false;
+        foreach (var h in hits)
+        {
+            // 내 플레이어 콜라이더면 건너뛰기
+            if (h.collider.GetComponentInParent<PlayerController>() == this) continue;
+
+            // 부모까지 올라가며 PortalSurface 태그 확인
+            if (!HasTagInParents(h.collider.transform, "PortalSurface")) continue;
+
+            hit = h;
+            found = true;
+            break;
+        }
+
+        if (!found)
+        {
+            // Debug.Log("[Portal] No valid surface in ray path (player or no PortalSurface tag).");
+            return;
+        }
+
+        /*
+        // 맞은 콜라이더 정보 디버깅
+        var col = hit.collider;
+        Debug.Log($"[Portal] Hit='{col.name}', tag='{col.tag}', layer='{LayerMask.LayerToName(col.gameObject.layer)}', path='{GetTransformPath(col.transform)}'");
 
         // 설치 가능 표면 확인(태그)
-        if (!hit.collider.CompareTag("PortalSurface"))
+        Transform taggedRoot = FindTagInParents(col.transform, "PortalSurface");
+        if (taggedRoot == null)
+        {
+            Debug.Log("[Portal] 부모까지 'PortalSurface]' 테그가 없음");
             return;
+        }
+        */
 
         // 표면 법선에 수직 정렬
         Vector3 pos = hit.point + hit.normal * portalDepthOffset;
         Quaternion rot = Quaternion.LookRotation(-hit.normal, Vector3.up);
         rot *= Quaternion.Euler(0f, 180f, 0f);  // 프리팹에 맞게 y축 기준으로 뒤집기
 
+        /*
         // 공간 여유 체크(겹치면 취소)
         if (Physics.CheckBox(pos, portalHalfExtents, rot, portalObstructMask, QueryTriggerInteraction.Ignore))
             return;
+        */
 
         if (isA) portalManager.PlaceA(pos, rot);  // 파랑
         else portalManager.PlaceB(pos, rot);  // 빨강
+    }
+
+    Ray GetRayFromCrosshair(Camera cam, GameObject crosshair)
+    {
+        if (crosshair == null)
+            return cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+
+        var rt = crosshair.GetComponent<RectTransform>();
+        if (rt == null)
+            return cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+
+        var canvas = rt.GetComponentInParent<Canvas>();
+        Vector3 screenPos;
+
+        // Screen Space - Overlay 는 월드→스크린 변환 불필요
+        if (canvas && canvas.renderMode == RenderMode.ScreenSpaceOverlay)
+            screenPos = rt.position;
+        else
+            screenPos = RectTransformUtility.WorldToScreenPoint(cam, rt.position);
+
+        return cam.ScreenPointToRay(screenPos);
+    }
+
+    bool HasTagInParents(Transform t, string tagName)
+    {
+        while (t != null)
+        {
+            if (t.CompareTag(tagName)) return true;
+            t = t.parent;
+        }
+        return false;
     }
 }

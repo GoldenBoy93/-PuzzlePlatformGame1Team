@@ -102,6 +102,15 @@ namespace UnityEngine.InputSystem
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Inventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""4eadf7cd-77da-459b-821f-72ea6f5d280c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Menu"",
                     ""type"": ""Button"",
                     ""id"": ""13088985-771f-4df9-b9ae-c0b474e1846e"",
@@ -132,15 +141,6 @@ namespace UnityEngine.InputSystem
                     ""name"": ""MouseR"",
                     ""type"": ""Button"",
                     ""id"": ""3780d18c-b108-4608-8478-a7f38791e1ff"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Inventory"",
-                    ""type"": ""Button"",
-                    ""id"": ""4eadf7cd-77da-459b-821f-72ea6f5d280c"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -1070,11 +1070,11 @@ namespace UnityEngine.InputSystem
             m_Player_CameraToggle = m_Player.FindAction("CameraToggle", throwIfNotFound: true);
             m_Player_Action = m_Player.FindAction("Action", throwIfNotFound: true);
             m_Player_Interaction = m_Player.FindAction("Interaction", throwIfNotFound: true);
+            m_Player_Inventory = m_Player.FindAction("Inventory", throwIfNotFound: true);
             m_Player_Menu = m_Player.FindAction("Menu", throwIfNotFound: true);
             m_Player_PotalGun = m_Player.FindAction("PotalGun", throwIfNotFound: true);
             m_Player_MouseL = m_Player.FindAction("MouseL", throwIfNotFound: true);
             m_Player_MouseR = m_Player.FindAction("MouseR", throwIfNotFound: true);
-            m_Player_Inventory = m_Player.FindAction("Inventory", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1156,11 +1156,11 @@ namespace UnityEngine.InputSystem
         private readonly InputAction m_Player_CameraToggle;
         private readonly InputAction m_Player_Action;
         private readonly InputAction m_Player_Interaction;
+        private readonly InputAction m_Player_Inventory;
         private readonly InputAction m_Player_Menu;
         private readonly InputAction m_Player_PotalGun;
         private readonly InputAction m_Player_MouseL;
         private readonly InputAction m_Player_MouseR;
-        private readonly InputAction m_Player_Inventory;
         public struct PlayerActions
         {
             private @PlayerInput m_Wrapper;
@@ -1173,11 +1173,11 @@ namespace UnityEngine.InputSystem
             public InputAction @CameraToggle => m_Wrapper.m_Player_CameraToggle;
             public InputAction @Action => m_Wrapper.m_Player_Action;
             public InputAction @Interaction => m_Wrapper.m_Player_Interaction;
+            public InputAction @Inventory => m_Wrapper.m_Player_Inventory;
             public InputAction @Menu => m_Wrapper.m_Player_Menu;
             public InputAction @PotalGun => m_Wrapper.m_Player_PotalGun;
             public InputAction @MouseL => m_Wrapper.m_Player_MouseL;
             public InputAction @MouseR => m_Wrapper.m_Player_MouseR;
-            public InputAction @Inventory => m_Wrapper.m_Player_Inventory;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1211,6 +1211,9 @@ namespace UnityEngine.InputSystem
                 @Interaction.started += instance.OnInteraction;
                 @Interaction.performed += instance.OnInteraction;
                 @Interaction.canceled += instance.OnInteraction;
+                @Inventory.started += instance.OnInventory;
+                @Inventory.performed += instance.OnInventory;
+                @Inventory.canceled += instance.OnInventory;
                 @Menu.started += instance.OnMenu;
                 @Menu.performed += instance.OnMenu;
                 @Menu.canceled += instance.OnMenu;
@@ -1223,9 +1226,6 @@ namespace UnityEngine.InputSystem
                 @MouseR.started += instance.OnMouseR;
                 @MouseR.performed += instance.OnMouseR;
                 @MouseR.canceled += instance.OnMouseR;
-                @Inventory.started += instance.OnInventory;
-                @Inventory.performed += instance.OnInventory;
-                @Inventory.canceled += instance.OnInventory;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -1254,6 +1254,9 @@ namespace UnityEngine.InputSystem
                 @Interaction.started -= instance.OnInteraction;
                 @Interaction.performed -= instance.OnInteraction;
                 @Interaction.canceled -= instance.OnInteraction;
+                @Inventory.started -= instance.OnInventory;
+                @Inventory.performed -= instance.OnInventory;
+                @Inventory.canceled -= instance.OnInventory;
                 @Menu.started -= instance.OnMenu;
                 @Menu.performed -= instance.OnMenu;
                 @Menu.canceled -= instance.OnMenu;
@@ -1266,9 +1269,6 @@ namespace UnityEngine.InputSystem
                 @MouseR.started -= instance.OnMouseR;
                 @MouseR.performed -= instance.OnMouseR;
                 @MouseR.canceled -= instance.OnMouseR;
-                @Inventory.started -= instance.OnInventory;
-                @Inventory.performed -= instance.OnInventory;
-                @Inventory.canceled -= instance.OnInventory;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -1459,11 +1459,11 @@ namespace UnityEngine.InputSystem
             void OnCameraToggle(InputAction.CallbackContext context);
             void OnAction(InputAction.CallbackContext context);
             void OnInteraction(InputAction.CallbackContext context);
+            void OnInventory(InputAction.CallbackContext context);
             void OnMenu(InputAction.CallbackContext context);
             void OnPotalGun(InputAction.CallbackContext context);
             void OnMouseL(InputAction.CallbackContext context);
             void OnMouseR(InputAction.CallbackContext context);
-            void OnInventory(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {
