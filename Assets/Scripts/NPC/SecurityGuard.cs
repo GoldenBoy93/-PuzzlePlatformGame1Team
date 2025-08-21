@@ -15,6 +15,7 @@ public class NPC : MonoBehaviour
     [Header("Stats")]
     public float walkSpeed;
     public float runSpeed;
+    public float detectionRadius = 1.0f; // 플레이어가 NavMesh에서 벗어났는지 감지할 반경
 
     [Header("AI")]
     private NavMeshAgent agent;
@@ -43,17 +44,23 @@ public class NPC : MonoBehaviour
     public float fieldOfView = 120f;
 
     private Animator animator;
+    private NavMeshAgent navMeshAgent;
+    private int walkableAreaMask;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
     private void Start()
     {
         // 최초 상태는 Wandering으로 설정
         SetState(AIState.Wandering);
+
+        int walkableAreaIndex = 0;
+        walkableAreaMask = 1 << walkableAreaIndex;
     }
 
 
@@ -105,6 +112,11 @@ public class NPC : MonoBehaviour
 
     void PassiveUpdate()
     {
+        NavMeshHit hit;
+
+        // 플레이어 위치를 샘플링하여 유효한 NavMesh 지점을 찾기
+        bool isPlayerOnNavMesh = NavMesh.SamplePosition(Player.Instance.transform.position, out hit, detectionRadius, NavMesh.AllAreas);
+
         // Wandering 상태이고, 목표한 지점에 거의 다 왔을 때
         if (aiState == AIState.Wandering && agent.remainingDistance < 0.1f)
         {
@@ -113,7 +125,7 @@ public class NPC : MonoBehaviour
         }
 
         // 플레이어와의 거리가 감지 범위 안에 있을 때
-        if (aggro == true && playerDistance < detectDistance)
+        if (aggro == true && playerDistance < detectDistance && hit.mask == walkableAreaMask)
         {
             SetState(AIState.Attacking);
         }
@@ -148,8 +160,10 @@ public class NPC : MonoBehaviour
 
     void AttackingUpdate()
     {
-        // 플레이어와의 거리가 공격범위 안에 있고 시야각 안에 있을 때
-        if (playerDistance < attackDistance && IsPlayerInFieldOfView())
+        // 플레이어와의 거리가 공격범위 안에 있고,
+        // 시야각 안에 있고,
+        if (playerDistance < attackDistance
+            && IsPlayerInFieldOfView())
         {
             agent.isStopped = true;
             if (Time.time - lastAttackTime > attackRate)
