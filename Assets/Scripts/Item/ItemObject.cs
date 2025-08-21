@@ -1,8 +1,10 @@
+using TMPro;
 using UnityEngine;
 
 public class ItemObject : MonoBehaviour
 {
     public ItemData data;
+    public TextMeshProUGUI text;
 
     public string GetInteractPrompt()
     {

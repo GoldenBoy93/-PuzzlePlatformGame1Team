@@ -39,12 +39,6 @@ public class InventoryView : MonoBehaviour
         if (slots.Length > 0)
             OnSelectItem(0);
 
-        // 이벤트 구독
-        viewModel.OnThreeKeysCollected += () =>
-        {
-            Debug.Log("키 3개 모았다! 문 열기");
-            promptText.text = "키 3개 모았다! 문 열기";
-        };
     }
 
     private void OnSelectItem(int index)
