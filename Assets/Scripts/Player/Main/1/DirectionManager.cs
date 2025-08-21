@@ -53,7 +53,7 @@ public class DirectionManager : MonoBehaviour
     {
         _animator = SafeFetchHelper.GetOrError<Animator>(Player.Instance.gameObject);
         _controller = SafeFetchHelper.GetOrError<PlayerController>(Player.Instance.gameObject);
-        _controller.LockOnInput(true);
+        _controller.LockOnInput(1);
     }
 
 
@@ -78,7 +78,7 @@ public class DirectionManager : MonoBehaviour
     {
         if (_cinematicCam != null)
         {
-            _controller.LockOnInput(true);
+            _controller.LockOnInput(1);
             Cursor.lockState = CursorLockMode.Locked;
             _cinematicCam.Priority = 10;
             // 연출 시간 대기
@@ -86,7 +86,7 @@ public class DirectionManager : MonoBehaviour
             // 연출 끝나면 입력 활성화
             _cinematicCam.Priority = 0;
             _freeLookCam.Priority = 10;
-            _controller.LockOnInput(false);
+            _controller.LockOnInput(0);
         }
     }
 
