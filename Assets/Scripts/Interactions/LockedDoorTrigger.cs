@@ -1,29 +1,38 @@
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
 public class LockedDoorTrigger : MonoBehaviour
 {
-    public GameObject wallCollider;
-    public string keyName;
-    private AudioSource audioSource;
+    public InventoryViewModel inventoryVM; // 플레이어 인벤토리
+    public ItemType requiredKey;           // 이 문을 여는 키
+    private bool isOpen = false;
+    public TextMeshProUGUI text;
 
-    private void Awake()
+    private void OnTriggerEnter(Collider other)
     {
-        audioSource = GetComponent<AudioSource>();
+        if (isOpen) return;
+        if (!other.CompareTag("Player")) return;
+
+        // 플레이어 인벤토리에 requiredKey 있는지 체크
+        bool hasKey = inventoryVM.Slots
+            .Any(s => s.Slot.Item.Value != null && s.Slot.Item.Value.type == requiredKey);
+
+        if (hasKey)
+        {
+            Open();
+        }
+        else
+        {
+            text.text = ($"문을 열기 위해 {requiredKey} 키가 필요합니다.");
+        }
     }
 
-    void OnTriggerEnter(Collider other)
+    private void Open()
     {
-        // 퍼즐매니저의 키체크 함수를 호출
-        if (PuzzleManager.Instance.KeyCheck(other, wallCollider))
-        {
-            // 오브젝트가 파괴되기 직전에 임시오브젝트 생성(사운드 꺼질때까지)
-            AudioSource.PlayClipAtPoint(audioSource.clip, transform.position);
-
-            // 임시 오브젝트를 파괴
-            Destroy(gameObject);
-        }
-
-        return;
+        isOpen = true;
+        text.text = ($"{requiredKey} 키로 문 열림!");
+        // 필요 시 애니메이션, 사운드, 충돌체 비활성화 등 처리
+        Destroy(gameObject); // 문 오브젝트 제거
     }
 }
