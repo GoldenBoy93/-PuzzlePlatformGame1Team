@@ -163,8 +163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6ce41064850ad74c97354d9d6857264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  label: {fileID: 5311661515883208508}
   icon: {fileID: 7987232469941249238}
+  label: {fileID: 5311661515883208508}
   index: 0
 --- !u!1 &3154798913370976779
 GameObject:
@@ -233,8 +233,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 12
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4522970474644384f8106301a05ce542, type: 2}
+  m_sharedMaterial: {fileID: 38413159035276410, guid: 4522970474644384f8106301a05ce542, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

@@ -62,15 +62,22 @@ public class InventoryView : MonoBehaviour
             return;
         }
 
-        nameText.text = slot.ItemId.Value;
+        var item = slot.Item.Value;
+
+        nameText.text = item.displayName;
         descriptionText.text = $"Quantity: {slot.Quantity.Value}";
 
-        useButton.SetActive(slot.ItemId.Value.Contains("Consumable"));
+        useButton.SetActive(item.type == ItemType.Consumable);
         equipButton.SetActive(!slot.Equipped.Value);
         unequipButton.SetActive(slot.Equipped.Value);
         dropButton.SetActive(true);
 
         slots[index].SetImageActive(true);
+
+        // 아이콘 표시
+        var icon = slots[index].icon; // ItemSlot에 Image 컴포넌트가 있다고 가정
+        if (icon != null)
+            icon.sprite = item.icon;
     }
 
     private void UpdateOutlineUI(int index)

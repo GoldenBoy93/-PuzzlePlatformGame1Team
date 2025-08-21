@@ -25,7 +25,7 @@ public class ItemObject : MonoBehaviour
         {
             // stackable이라면 maxStack 가져와서 추가
             int maxStack = data.maxStack; // ItemData에 maxStack 필드가 있다고 가정
-            viewModel2.AddItem(data.id, 1, data.maxStack);
+            viewModel2.AddItem(data, 1);
         }
         // 아이템 월드에서 제거
         Destroy(gameObject);

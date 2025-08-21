@@ -10,16 +10,32 @@ public class ItemSlotViewModel : IDisposable
 {
     public InventorySlot Slot { get; }
     public ReadOnlyReactiveProperty<string> LabelText { get; }
+    public ReadOnlyReactiveProperty<Sprite> Icon { get; }
+
     private CompositeDisposable disposables = new CompositeDisposable();
+
     public ItemSlotViewModel(InventorySlot slot)
     {
         Slot = slot;
-        LabelText = Observable.CombineLatest(
-            Slot.ItemId, Slot.Quantity, Slot.Equipped,
-            (id, qty, eq) => string.IsNullOrEmpty(id) ? "" : $"{id} x{qty}" + (eq ? " [E]" : "")
-        ).ToReadOnlyReactiveProperty()
-         .AddTo(disposables);
-    }
+
+LabelText = Observable.CombineLatest(
+    Slot.Item, Slot.Quantity, Slot.Equipped,
+    (item, qty, eq) =>
+    {
+        if (item == null) return "";   // 빈 슬롯이면 빈 문자열
+
+        // ItemData 안의 displayName 사용
+        return $"{item.displayName} x{qty}" + (eq ? " [E]" : "");
+    })
+    .ToReadOnlyReactiveProperty()
+    .AddTo(disposables);
+
+// 아이콘도 ItemData에서 바로 가져오기
+Icon = Slot.Item
+    .Select(item => item?.icon)
+    .ToReadOnlyReactiveProperty()
+    .AddTo(disposables);    }
+
     public void Dispose() => disposables.Dispose();
 }
 
@@ -35,8 +51,8 @@ public class InventoryViewModel : IDisposable
         Slots = model.Slots.Select(s => new ItemSlotViewModel(s)).ToList();
         EquippedIndex = new ReactiveProperty<int?>(null).AddTo(disposables);
     }
-    public void AddItem(string itemId, int amount, int maxStack)
-    => model.AddItem(itemId, amount, maxStack);
+    public void AddItem(ItemData item, int amount)
+    => model.AddItem(item, amount);
     public void RemoveAt(int index, int amount = 1) 
         => model.RemoveItem(index, amount);
     public void Equip(int index)
