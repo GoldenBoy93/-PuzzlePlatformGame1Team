@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public partial class PlayerController : MonoBehaviour
 {
@@ -77,6 +78,12 @@ public partial class PlayerController : MonoBehaviour
     void PlacePortal(bool isA)
     {
         // Debug.Log("포탈 설치 메서드 진입");
+
+        if (!TryRebindPortalManager()) //필요할 때만 리바인드 시도
+        {
+            Debug.LogWarning("[Portal] PortalManager not found in current scene.");
+            return;
+        }
 
         if (!_portalMode || portalManager == null || _camera == null)
         {
@@ -190,5 +197,37 @@ public partial class PlayerController : MonoBehaviour
             t = t.parent;
         }
         return false;
+    }
+
+    bool TryRebindPortalManager()
+    {
+        // 이미 유효하게 연결되어 있으면 통과
+        if (portalManager != null && portalManager.gameObject && portalManager.gameObject.scene.IsValid())
+            return true;
+
+        // 활성 씬에서만 탐색
+        var pm = FindPortalManagerInActiveScene();
+        if (pm != null)
+        {
+            portalManager = pm;
+            Debug.Log($"[Portal] Rebound PortalManager: {pm.name}");
+            return true;
+        }
+
+        return false;
+    }
+
+    PortalManager FindPortalManagerInActiveScene()
+    {
+        var scene = SceneManager.GetActiveScene();
+        if (!scene.IsValid()) return null;
+
+        var roots = scene.GetRootGameObjects();
+        for (int i = 0; i < roots.Length; i++)
+        {
+            var pm = roots[i].GetComponentInChildren<PortalManager>(true); // 비활성 포함
+            if (pm != null) return pm;
+        }
+        return null;
     }
 }
