@@ -15,7 +15,7 @@ public class LockedDoorTrigger : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         // 퍼즐매니저의 키체크 함수를 호출
-        if (PuzzleManager.Instance.KeyCheck(other, wallCollider))
+        if (PuzzleManager.Instance.KeyCheck(other, wallCollider, keyName))
         {
             // 오브젝트가 파괴되기 직전에 임시오브젝트 생성(사운드 꺼질때까지)
             AudioSource.PlayClipAtPoint(audioSource.clip, transform.position);

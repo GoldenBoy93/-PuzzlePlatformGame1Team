@@ -91,4 +91,12 @@ public class InventoryViewModel : IDisposable
 
     // 이벤트 선언
     public event Action OnThreeKeysCollected;
+
+    public bool HasItem(string itemName)
+    {
+        // Linq의 Any() 메소드를 사용하여 조건에 맞는 아이템이 하나라도 있는지 확인
+        return Slots.Any(slotViewModel =>
+            slotViewModel.Slot.Item.Value != null &&
+            slotViewModel.Slot.Item.Value.displayName == itemName);
+    }
 }
