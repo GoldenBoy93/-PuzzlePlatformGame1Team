@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -12,11 +14,14 @@ public class Portal : MonoBehaviour
     [Tooltip("출구에서 살짝 앞으로 밀어낼 거리")]
     public float exitOffset = 0.5f;
 
-    [Tooltip("재진입 방지 시간(초)")]
-    public float reenterBlockTime = 1f;
+    [Tooltip("재진입 방지 시간(fps)")]
+    public int reenterBlockFPS = 60;
 
     [Tooltip("포탈 앞면에서만 진입 허용")]
-    public bool requireEntryFromFront = true; // 선택 기능 
+    public bool requireEntryFromFront = true;
+
+    readonly HashSet<PortalTraveler> _blockedTravelers = new();
+    static readonly HashSet<PortalTraveler> s_justTeleported = new();
 
     private void Reset()
     {
@@ -49,13 +54,23 @@ public class Portal : MonoBehaviour
         if (!traveler) return;
         if (traveler.IsBlocked(this)) return;
 
-        // 뒷면 진입 차단
+        if (s_justTeleported.Contains(traveler)) return;
+        // 블락된 Traveler 금지
+        if (_blockedTravelers.Contains(traveler)) return;
+
+        // 뒷면 진입 차단 - 정면으로만 진입가능
         if (requireEntryFromFront)
         {
             Vector3 closest = hit.ClosestPoint(transform.position);
             Vector3 toObj = closest - transform.position;
             if (Vector3.Dot(transform.forward, toObj) < 0f) return;
         }
+
+        // 출구 포탈 잠시 막기 (1초)
+        target.StartCoroutine(target.BlockTraveler(traveler, reenterBlockFPS));
+        // 입구 포탈도 잠시 막기 (중복 호출 방지)
+        StartCoroutine(BlockTraveler(traveler, 1));
+
 
         var travelerTransform = traveler.transform;
 
@@ -98,9 +113,26 @@ public class Portal : MonoBehaviour
         if (travelerTransform.TryGetComponent<PlayerController>(out var pc))
             pc.OnTeleported(fromFrame, toFrame);
 
-        // 재진입 쿨다운(양쪽 모두 스탬프: 안전망 강화)
-        traveler.SetCooldown(target, reenterBlockTime);
-        traveler.SetCooldown(this, reenterBlockTime);
+        s_justTeleported.Add(traveler);
+        StartCoroutine(ClearJustTeleportedNextFixed(traveler));
+        
+
+    }
+
+    IEnumerator BlockTraveler(PortalTraveler t, int blockFPS)
+    {
+        _blockedTravelers.Add(t);
+        for (int i = 0; i < blockFPS; i++)
+        {
+            yield return new WaitForFixedUpdate();
+        }
+        _blockedTravelers.Remove(t);
+    }
+
+    IEnumerator ClearJustTeleportedNextFixed(PortalTraveler t)
+    {
+        yield return new WaitForFixedUpdate();
+        s_justTeleported.Remove(t);
     }
 
     // view in editor
