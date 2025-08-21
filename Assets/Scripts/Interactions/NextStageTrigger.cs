@@ -23,11 +23,6 @@ public class NextStageTrigger : MonoBehaviour
 
             // 현재 씬번호의 다음 씬을 불러옴
             SceneManager.LoadScene(scenebuildIndex + 1);
-
-            if (scenebuildIndex == 2)
-            { 
-                //AudioManager.Instance.PlayBGM("Game1");
-            }
         }
     }
 }

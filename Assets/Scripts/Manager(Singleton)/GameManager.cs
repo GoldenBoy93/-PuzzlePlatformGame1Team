@@ -21,6 +21,9 @@ public partial class GameManager : MonoBehaviour
     private GameState _currentState;
     bool IsPause = false;
 
+    // 현재 씬을 저장 할 변수 세팅
+    private Scene currentScene;
+
     public static GameManager Instance
     {
         get
@@ -78,6 +81,8 @@ public partial class GameManager : MonoBehaviour
             }
         }
 
+        // 현재 씬을 가져와서 변수에 저장
+        currentScene = SceneManager.GetActiveScene();
     }
 
     // GameState 전환 함수
@@ -153,7 +158,14 @@ public partial class GameManager : MonoBehaviour
             Player.Instance.transform.position = new Vector3(7, -6, 10);
 
             // 플레이어의 Y축을 기준으로 180도 회전
-            Player.Instance.transform.rotation = Quaternion.Euler(0, 180, 0);
+            Player.Instance.transform.rotation = Quaternion.Euler(0, 90, 0);
+
+            int scenebuildIndex = currentScene.buildIndex;
+
+            if (scenebuildIndex == 2)
+            {
+                AudioManager.Instance.PlayBGM("Game2");
+            }
         }
     }
 
