@@ -58,11 +58,11 @@ ModelImporter:
       curves: []
       events:
       - time: 0
-        functionName: LockInputOn
+        functionName: LockOnInput
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
-        intParameter: 0
+        intParameter: 1
         messageOptions: 0
       - time: 0
         functionName: EquipFlash
@@ -72,7 +72,7 @@ ModelImporter:
         intParameter: 0
         messageOptions: 0
       - time: 1
-        functionName: LockInputOff
+        functionName: LockOnInput
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
