@@ -8,8 +8,8 @@ public class InventoryView : MonoBehaviour
 {
     public Transform slotPanel;
     public GameObject slotPrefab;
-    public TextMeshProUGUI name;
-    public TextMeshProUGUI description;
+    public TextMeshProUGUI nameText;
+    public TextMeshProUGUI descriptionText;
     public GameObject useButton;
     public GameObject equipButton;
     public GameObject unequipButton;
@@ -17,77 +17,63 @@ public class InventoryView : MonoBehaviour
 
     private InventoryViewModel viewModel;
     private ItemSlot[] slots;
-    private int selectedIndex = -1;
-
+    private ReactiveProperty<int?> selectedIndex = new ReactiveProperty<int?>(null);
     private CompositeDisposable disposables = new CompositeDisposable();
 
     public void Init(InventoryViewModel vm)
     {
         viewModel = vm;
 
-        // 슬롯 생성
         slots = new ItemSlot[viewModel.Slots.Count];
         for (int i = 0; i < slots.Length; i++)
         {
             var go = Instantiate(slotPrefab, slotPanel);
             slots[i] = go.GetComponent<ItemSlot>();
             slots[i].index = i;
-            slots[i].Init(viewModel.Slots[i], SelectItem);
-            slots[i].Clear();
+            slots[i].Init(viewModel.Slots[i], OnSelectItem);
         }
 
-        RefreshSlots();
+        // 첫 슬롯 선택
+        if (slots.Length > 0)
+            OnSelectItem(0);
     }
 
-    // 슬롯 UI 전체 갱신
-    public void RefreshSlots()
+    private void OnSelectItem(int index)
     {
-        for (int i = 0; i < slots.Length; i++)
-        {
-            var slotData = viewModel.Slots[i].Slot.Value;
-
-            if (slotData.IsEmpty)
-            {
-                slots[i].Clear();
-            }
-            else
-            {
-                slots[i].Clear();
-            }
-        }
+        selectedIndex.Value = index;
+        UpdateSelectedUI(index);
     }
-    public void SelectItem(int index)
+
+    private void UpdateSelectedUI(int index)
     {
-        if (viewModel.Slots[index].Slot.Value.IsEmpty) return;
+        var slot = viewModel.Slots[index].Slot;
 
-        selectedIndex = index;
-        var slotData = viewModel.Slots[index].Slot.Value;
+        nameText.text = string.IsNullOrEmpty(slot.ItemId.Value) ? "" : slot.ItemId.Value;
+        descriptionText.text = $"Quantity: {slot.Quantity.Value}";
 
-        name.text = slotData.ItemId;
-        description.text = $"Quantity: {slotData.Quantity}";
-
-        useButton.SetActive(slotData.ItemId.Contains("Consumable")); // 타입 체크
-        equipButton.SetActive(!slotData.IsEmpty);
-        unequipButton.SetActive(slotData.Equipped);
-        dropButton.SetActive(!slotData.IsEmpty);
+        useButton.SetActive(!string.IsNullOrEmpty(slot.ItemId.Value) && slot.ItemId.Value.Contains("Consumable"));
+        equipButton.SetActive(!slot.IsEmpty.Value && !slot.Equipped.Value);
+        unequipButton.SetActive(slot.Equipped.Value);
+        dropButton.SetActive(!slot.IsEmpty.Value);
     }
+
     public void OnEquipButton()
     {
-        if (selectedIndex < 0) return;
-        viewModel.Equip(selectedIndex);
+        if (selectedIndex.Value == null) return;
+        viewModel.Equip(selectedIndex.Value.Value);
     }
 
     public void OnUnEquipButton()
     {
-        if (selectedIndex < 0) return;
-        viewModel.UnEquip(selectedIndex);
+        if (selectedIndex.Value == null) return;
+        viewModel.UnEquip(selectedIndex.Value.Value);
     }
 
     public void OnDropButton()
     {
-        if (selectedIndex < 0) return;
-        viewModel.RemoveAt(selectedIndex, 1);
+        if (selectedIndex.Value == null) return;
+        viewModel.RemoveAt(selectedIndex.Value.Value);
     }
 
-    void OnDestroy() => disposables.Dispose();
+    private void OnDestroy() => disposables.Dispose();
 }
