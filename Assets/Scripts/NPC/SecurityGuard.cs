@@ -16,6 +16,7 @@ public class NPC : MonoBehaviour
     public float walkSpeed;
     public float runSpeed;
     public float detectionRadius = 1.0f; // 플레이어가 NavMesh에서 벗어났는지 감지할 반경
+    public int attackPower = 1;
 
     [Header("AI")]
     private NavMeshAgent agent;
@@ -46,12 +47,14 @@ public class NPC : MonoBehaviour
     private Animator animator;
     private NavMeshAgent navMeshAgent;
     private int walkableAreaMask;
+    PlayerViewModel player;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        player = UI_Manager.Instance._viewModel;
     }
 
     private void Start()
@@ -170,6 +173,8 @@ public class NPC : MonoBehaviour
             {
                 lastAttackTime = Time.time;
                 animator.speed = 2;
+
+                player.TakeDamage(attackPower);
                 animator.SetTrigger("IsAttack");
                 GameManager.Instance.GameOver();
             }

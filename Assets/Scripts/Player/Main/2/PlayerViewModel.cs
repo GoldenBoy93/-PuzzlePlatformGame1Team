@@ -42,6 +42,7 @@ public class PlayerViewModel //값이 바뀌면 자동으로 구독자에게 알림
     {
         model.Health = Mathf.Max(0, model.Health - amount);
         Health.Value = model.Health;
+        Debug.Log(Health.Value);
     }
 
     public void Heal(int amount)

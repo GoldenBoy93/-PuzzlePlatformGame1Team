@@ -24,9 +24,6 @@ public class EventDropBook : MonoBehaviour
             audioSource.PlayOneShot(audioSource.clip);
 
             hasTriggered = true;
-
-            DirectionManager.Instance.Direction_Intro();
-
         }
     }
 }
