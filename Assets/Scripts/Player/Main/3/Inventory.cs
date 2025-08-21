@@ -29,10 +29,12 @@ public class Inventory : MonoBehaviour
     int selectedItemIndex = 0;
     int curEquipIndex;
 
-
+    public PlayerModel _model;
 
     private void Start()
     {
+        RefreshUI();
+
         slots = new ItemSlot[slotPanel.childCount];
 
         for (int i = 0; i < slots.Length; i++)
@@ -47,10 +49,31 @@ public class Inventory : MonoBehaviour
 
     public void InitPanel()
     {
+        _model = new PlayerModel();
         viewModel = UI_Manager.Instance._viewModel;
         viewModel.addItem += AddItem;
     }
 
+    public void RefreshUI()
+    {
+        var items = _model.Inventory.Items;
+        int i = 0;
+
+        foreach (var kvp in items)
+        {
+            ItemData data = kvp.Key;
+            int quantity = kvp.Value;
+
+            slots[i].Set(data, quantity); // 아이템 전체랑 수량 넘김
+            i++;
+        }
+
+        // 남은 슬롯 비우기
+        for (; i < slots.Length; i++)
+        {
+            slots[i].Clear();
+        }
+    }
     void Clear()
     {
         selectedItem = null;

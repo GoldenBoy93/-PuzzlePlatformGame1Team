@@ -47,44 +47,58 @@ public class PlayerView : MonoBehaviour
         // 달리기 스태미나 소모
         if (Input.GetKey(KeyCode.LeftShift)) viewModel.ConsumeStamina(1);
 
-        // 인벤토리 테스트
-        if (Input.GetKeyDown(KeyCode.Alpha1)) viewModel.AddItem("Potion", 1);
-        if (Input.GetKeyDown(KeyCode.Alpha2)) viewModel.RemoveItem("Potion", 1);
     }
 
 
 
 
-    private void OnItemAdded(string itemName, int amount)
+    private void OnItemAdded(ItemData data, int amount)
     {
         var go = Instantiate(inventoryItemPrefab, inventoryContent);
-        go.GetComponentInChildren<Text>().text = $"{itemName} x{amount}";
-        go.name = itemName;
+        go.name = data.id; // 고유 ID 사용
+
+        // 슬롯 UI 세팅
+        var slot = go.GetComponent<ItemSlot>();
+        if (slot != null)
+        {
+            slot.Set(data, amount);
+        }
+        else
+        {
+            // 예: 단순 텍스트 UI일 경우
+            go.GetComponentInChildren<Text>().text = $"{data.displayName} x{amount}";
+        }
     }
 
-    private void OnItemRemoved(string itemName)
+    private void OnItemRemoved(ItemData data)
     {
-        var go = inventoryContent.Find(itemName);
+        var go = inventoryContent.Find(data.id);
         if (go != null) Destroy(go.gameObject);
     }
 
-    private void OnItemUpdated(string itemName, int amount)
+    private void OnItemUpdated(ItemData data, int amount)
     {
-        var go = inventoryContent.Find(itemName);
-        if (go != null) go.GetComponentInChildren<Text>().text = $"{itemName} x{amount}";
+        var go = inventoryContent.Find(data.id);
+        if (go != null)
+        {
+            var slot = go.GetComponent<ItemSlot>();
+            if (slot != null)
+                slot.Set(data, amount);
+            else
+                go.GetComponentInChildren<Text>().text = $"{data.displayName} x{amount}";
+        }
     }
 
 
 
 
-
-   //viewModel.CurrentEquipChanged.Subscribe(equip =>
-   //{
-   //if (equip != null)
-   //    animator.SetTrigger("Equip");
-   //else
-   //    animator.SetTrigger("Unequip");
-   //});
+    //viewModel.CurrentEquipChanged.Subscribe(equip =>
+    //{
+    //if (equip != null)
+    //    animator.SetTrigger("Equip");
+    //else
+    //    animator.SetTrigger("Unequip");
+    //});
 
 
 
