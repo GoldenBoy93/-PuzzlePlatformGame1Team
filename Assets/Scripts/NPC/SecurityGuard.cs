@@ -140,12 +140,10 @@ public class NPC : MonoBehaviour
             Invoke("WanderToNewLocation", Random.Range(minWanderWaitTime, maxWanderWaitTime));
         }
 
-        // 플레이어와의 거리가 감지 범위 안에 있을 때
+        // 플레이어와의 거리가 감지 범위 안에 있고, (플레이어가) 걸을 수 있는 지역에 있을 경우
         if (aggro == true && playerDistance < detectDistance && hit.mask == walkableAreaMask)
         {
             SetState(AIState.Attacking);
-
-            
         }
     }
 
