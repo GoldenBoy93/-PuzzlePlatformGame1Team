@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Key_ScienceClass
   m_EditorClassIdentifier: 
   id: 993dc2f6ad8a4211bac175530915b045
-  displayName: "\uACFC\uD559\uC2E4 \uC5F4\uC1E0"
+  displayName: "\uACFC\uD559\uC2E4\uC5F4\uC1E0"
   description: "\uACFC\uD559\uC2E4 \uBB38\uC744 \uC5F4 \uC218 \uC788\uC744 \uAC83
     \uAC19\uB2E4."
   type: 3
