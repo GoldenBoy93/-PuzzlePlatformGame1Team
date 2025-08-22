@@ -21,3 +21,4 @@ MonoBehaviour:
   itemPrefab: {fileID: 0}
   stackable: 0
   maxStack: 0
+  getable: 0

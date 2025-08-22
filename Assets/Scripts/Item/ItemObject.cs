@@ -17,6 +17,15 @@ public class ItemObject : MonoBehaviour
         return "";
     }
 
+    public bool CheckGetable()
+    {
+        if (data != null)
+        {
+            return data.getable;
+        }
+        return true;
+    }
+
     // 매개변수로 현재 상호작용 중인 게임 오브젝트를 받음
     public void OnInteract(GameObject interactor)
     {

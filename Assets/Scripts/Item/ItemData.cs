@@ -13,6 +13,7 @@ public abstract class ItemData : ScriptableObject
     public GameObject itemPrefab;
     public bool stackable = true;
     public int maxStack = 99;
+    public bool getable = true;
 
     [ContextMenu("Generate New ID")]
     void GenerateId()
