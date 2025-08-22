@@ -30,15 +30,18 @@
 ![플레이어 컨트롤](https://github.com/user-attachments/assets/d576c7e3-2b71-4e9f-93c3-15fee28e5abe)
 -  **퍼즐 해결 시스템** -
 퍼즐 해결에 필요한 시스템을 구현하고, 퍼즐의 상호작용 및 해결 방법을 설계하였습니다.
+
 ![키패드 퍼즐](https://github.com/user-attachments/assets/af46cdd4-760f-4150-8cff-9dddeb2f1257)
 ![열쇠 퍼즐](https://github.com/user-attachments/assets/b777b883-33f6-4111-ab48-ec9a56b96d23)
 -  **장애물 및 트랩** -
 장애물과 트랩에 해당하는 잠긴 문과 플레이어를 추적하는 경비아저씨를
 게임에 추가하여 플레이어의 도전을 높이고 퍼즐과 조화롭게 결합시켰습니다.
+
 ![경비아저씨](https://github.com/user-attachments/assets/223a4af3-b5a4-40f5-977b-7b33c72a9dc5)
 -  **목표 지점과 포탈 시스템** -
 퍼즐을 풀고 목표 지점에 도달할 수 있는 목표 지점을 제공하고
 목표 지점 도달을 포탈로 만들어 맵을 이동하며 레벨 완료가 처리되게 하였습니다.
+
 ![포탈](https://github.com/user-attachments/assets/69799286-a2d9-46f3-a351-761a4ec49418)
 -  **사운드 및 음악** -
 게임에 사운드 효과와 음악을 추가하여 호러 게임의 분위기를 조성하였습니다.
