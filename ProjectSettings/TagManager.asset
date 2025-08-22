@@ -6,6 +6,14 @@ TagManager:
   tags:
   - CinemachineTarget
   - Door
+  - StairsKey
+  - ScienceClassKey
+  - Collection1
+  - Collection2
+  - HydrochloricAcid
+  - Chocolate
+  - PortalSurface
+  - Blind
   layers:
   - Default
   - TransparentFX
@@ -15,9 +23,9 @@ TagManager:
   - UI
   - Player
   - Door
-  - 
-  - 
-  - 
+  - Portal
+  - Blind
+  - keypad
   - 
   - 
   - 

@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 // 게임의 UI 상태를 정의하는 열거형
@@ -12,14 +13,16 @@ public enum GameState
     GameOver,
 }
 
-public class GameManager : MonoBehaviour
+public partial class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
     // GameState 타입을 사용하는 이벤트 함수 OnGameStateChanged를 선언
     public static event Action<GameState> OnGameStateChanged;
     private GameState _currentState;
-    private UIManager uiManager;
     bool IsPause = false;
+
+    // 현재 씬을 저장 할 변수 세팅
+    private Scene currentScene;
 
     public static GameManager Instance
     {
@@ -36,6 +39,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+
+
+
+
     public GameState CurrentGameState
     {
         // CurrentGameState 호출한 곳에 _currentState 반환
@@ -50,15 +58,13 @@ public class GameManager : MonoBehaviour
     }
 
     // Player 인스턴스에 접근하기 위한 Instance 함수
-    public Player PlayerInstance
-    {
-        get { return _player; }
-        set { _player = value; }
-    }
-    private Player _player;
 
     private void Awake()
     {
+        var direction = DirectionManager.Instance;
+        var audio = AudioManager.Instance;
+
+
         // Awake가 호출 될 때라면 이미 매니저 오브젝트는 생성되어 있는 것이고, '_instance'에 자신을 할당
         if (_instance == null)
         {
@@ -75,7 +81,8 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        uiManager = UIManager.Instance;
+        // 현재 씬을 가져와서 변수에 저장
+        currentScene = SceneManager.GetActiveScene();
     }
 
     // GameState 전환 함수
@@ -133,14 +140,59 @@ public class GameManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // 로드된 씬의 buildIndex에 따라 UI 상태를 다르게 설정
-        switch (scene.buildIndex)
+        //switch (scene.buildIndex)
+        //{
+        //    case 0:
+        //        ChangeGameState(GameState.Intro);
+        //        break;
+        //    case 1:
+        //        ChangeGameState(GameState.Playing);
+        //        break;
+        //}
+
+        // 새 씬의 이름이 "00"일 경우
+        if (scene.name == "IntroScene")
         {
-            case 0:
-                ChangeGameState(GameState.Intro);
-                break;
-            case 1:
-                ChangeGameState(GameState.Playing);
-                break;
+            DirectionManager.Instance.Direction_Intro();
+            
         }
+
+        // 새 씬의 이름이 "00"일 경우
+        if (scene.name == "MainScene_Floor2")
+        {
+            DirectionManager.Instance._mainCam.gameObject.SetActive(true);
+            Player.Instance._controller.LockOnInput(0);
+            Cursor.lockState = CursorLockMode.Locked;
+
+            // AudioManager의 bgmGame2 변수에 할당된 오디오 클립을 가져와 재생
+            AudioManager.Instance.bgmSource.clip = AudioManager.Instance.bgmGame;
+            // 소리 재생
+            AudioManager.Instance.bgmSource.Play();
+        }
+        // 새 씬의 이름이 "00"일 경우
+        else if (scene.name == "MainScene_Floor1")
+        {
+            // AudioManager의 bgmGame2 변수에 할당된 오디오 클립을 가져와 재생
+            AudioManager.Instance.bgmSource.clip = AudioManager.Instance.bgmGame;
+            // 소리 재생
+            AudioManager.Instance.bgmSource.Play();
+
+            Debug.Log("좌표변경");
+            // 플레이어의 위치를 특정 좌표로 변경
+            Player.Instance.transform.position = new Vector3(7, -6, -18);
+        }
+        else if (scene.name == "EndingScene")
+        {
+            // AudioManager의 bgmGame2 변수에 할당된 오디오 클립을 가져와 재생
+            AudioManager.Instance.bgmSource.clip = AudioManager.Instance.bgmGame2;
+            // 소리 재생
+            AudioManager.Instance.bgmSource.Play();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        // 오브젝트가 파괴될 때 이벤트 등록 해제
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }
