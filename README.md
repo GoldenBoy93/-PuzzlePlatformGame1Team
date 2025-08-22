@@ -62,4 +62,9 @@ Test:	테스트(테스트 코드 추가, 수정, 삭제, 비즈니스 로직에 
 Chore:	위에 걸리지 않는 기타 변경사항(빌드 스크립트 수정, assets image, 패키지 매니저 등)  
 Init:	프로젝트 초기 생성  
 Rename:	파일 혹은 폴더명 수정하거나 옮기는 경우  
-Remove:	파일을 삭제하는 작업만 수행하는 경우  
+Remove:	파일을 삭제하는 작업만 수행하는 경우 
+
+---
+
+*출처표기*
+<a href="https://www.flaticon.com/kr/free-icons/" title=" 아이콘"> 아이콘 제작자: Luvdat - Flaticon</a>
