@@ -4,10 +4,15 @@
 
 ##Flow Chart
 ----------
+<img width="2113" height="670" alt="20250821_205844" src="https://github.com/user-attachments/assets/ce009165-ffc5-432f-98b4-d626f6a0e4e0" />
+
 ##Diagram
 ----------
+<img width="2035" height="1151" alt="20250821_095143" src="https://github.com/user-attachments/assets/a1e3a454-e67e-4fb2-ad02-b18f8c5ebf60" />
+
 ##Team
 ----------
+<img width="327" height="267" alt="20250822_095509" src="https://github.com/user-attachments/assets/d70b634c-ca4c-43c3-971d-f2457453de7b" />
 
 
 # 필수 구현 사항
