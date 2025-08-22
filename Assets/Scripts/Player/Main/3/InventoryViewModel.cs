@@ -54,6 +54,8 @@ public class InventoryViewModel : IDisposable
     public void AddItem(ItemData item, int amount)
     {
         model.AddItem(item, amount);
+        CheckKeyCondition();
+
     }
     public void RemoveAt(int index, int amount = 1) 
         => model.RemoveItem(index, amount);
@@ -72,5 +74,29 @@ public class InventoryViewModel : IDisposable
         foreach (var s in Slots) s.Dispose();
         EquippedIndex.Dispose();
         disposables.Dispose();
+    }
+
+    public void CheckKeyCondition()
+    {
+        // ItemType이 Key인 아이템 개수 세기
+        int keyCount = Slots
+            .Where(s => s.Slot.Item.Value != null && s.Slot.Item.Value.type == ItemType.key)
+            .Sum(s => s.Slot.Quantity.Value);
+
+        if (keyCount >= 3)
+        {
+            OnThreeKeysCollected?.Invoke(); // 이벤트 발생
+        }
+    }
+
+    // 이벤트 선언
+    public event Action OnThreeKeysCollected;
+
+    public bool HasItem(string itemName)
+    {
+        // Linq의 Any() 메소드를 사용하여 조건에 맞는 아이템이 하나라도 있는지 확인
+        return Slots.Any(slotViewModel =>
+            slotViewModel.Slot.Item.Value != null &&
+            slotViewModel.Slot.Item.Value.displayName == itemName);
     }
 }

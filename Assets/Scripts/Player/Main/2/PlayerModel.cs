@@ -14,7 +14,7 @@ public sealed class PlayerModel
     private int stamina;
     public int Stamina { get => stamina; set => stamina = Mathf.Clamp(value, 0, MaxStamina); }
     public InventoryModel Inventory { get; }
-    public PlayerModel(int maxHealth = 5, int maxStamina = 1000)
+    public PlayerModel(int maxHealth = 30, int maxStamina = 1000)
     {
         MaxHealth = maxHealth;
         MaxStamina = maxStamina;

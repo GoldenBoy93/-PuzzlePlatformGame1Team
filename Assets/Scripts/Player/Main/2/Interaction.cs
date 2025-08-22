@@ -58,8 +58,15 @@ public class Interaction : MonoBehaviour //,IInteractable
         // E 키 입력 시 가장 가까운 아이템 상호작용
         if (Input.GetKeyDown(KeyCode.E) && itemsInRange.Count > 0)
         {
-            var item = itemsInRange[itemsInRange.Count - 1];
-            item.OnInteract(gameObject); // Player 전달
+            // 주울 수 있는 아이템인지 확인
+            bool getable = itemsInRange[itemsInRange.Count - 1].CheckGetable();
+
+            if (getable)
+            {
+                var item = itemsInRange[itemsInRange.Count - 1];
+                item.OnInteract(gameObject); // Player 전달
+            }
+            return;
         }
     }
 
